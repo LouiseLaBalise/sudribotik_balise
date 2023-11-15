@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_camera.css')}}"> <!-- Load css file-->
+    <link rel="shortcut icon" href="#" /> <!--No favicon-->
+
+</head>
+
+<body>
+
+   <!-- Tabs Title -->
+    <ul class="tabs">
+        <li class="tab" onclick="openTab('onglet1')">Onglet 1</li>
+        <li class="tab" onclick="openTab('onglet2')">Onglet 2</li>
+        <li class="tab" onclick="openTab('onglet3')">Onglet 3</li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div id="onglet1" class="tab-content active">
+        <h2>Prendre une photo</h2>
+        <!-- Photo square -->
+        <div class="photo_taken"></div>
+        <!-- Photo Form Options -->
+        <div class="photo_options">
+            <form action="{{ url_for('camera') }}" method="post" id="photoForm">
+                <ul>
+                    <li>
+                        <label for="photo_name">Renomer&nbsp;la&nbsp;photo&nbsp;:</label>
+                        <input type="text" id="photo_name" name="photo_name" maxlength="30" />
+                        <label class="extension" for="photo_name">.jpg&nbsp;</label>
+                    </li>
+                    <li>
+                        <label for="photo_name_suffixe">Ajouter&nbsp;"_via_ihm"&nbsp;:</label>
+                        <input type="checkbox" id="photo_name_suffixe" name="photo_name_suffixe"
+                        checked/>
+                    </li>
+                    <li>
+                        <label for="photo_tms">Timeout&nbsp;(ms)&nbsp;:</label>
+                        <input type="number" id="photo_tms" name="photo_tms" value="500"
+                        min="0" max="9999" step="100" />
+                    </li>
+                    <li>
+                        <label for="photo_quality">Qualité&nbsp;(%)&nbsp;:</label>
+                        <input type="number" id="photo_quality" name="photo_quality"
+                        min="1" max="100" value="50"/>
+                    </li>
+                </ul>
+                <div class="button_photo">
+                    <button type="button" onclick="submitPhotoForm()">Prendre une photo</button>
+                </div>
+            </form>
+        </div>
+        <div id="resultMessage"><p id="resultMessageParagraph"></p></div>
+    </div>
+
+
+    <div id="onglet2" class="tab-content">
+        <h2>Onglet 2</h2>
+        <p>Contenu de l'onglet 2.</p>
+    </div>
+    <div id="onglet3" class="tab-content">
+        <h2>Onglet 3</h2>
+        <p>Contenu de l'onglet 3.</p>
+    </div>
+
+
+<!-- Scripts -->
+<script src="/static/js/jquery-3.6.4.min.js"></script> <!--Load JQuery library-->
+<!-- or <script src="{{ url_for('static', filename='jquery-3.6.4.min.js') }}"></script>-->
+<script>
+
+    /*Manage tab clicks*/
+    function openTab(tabId) {
+
+        //Hide tabs content
+        var tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach(function (tab) {
+            tab.classList.remove('active');
+        });
+
+        //Display active content 
+        var activeTab = document.getElementById(tabId);
+        activeTab.classList.add('active');
+    }
+
+    /*Manage submit button after photo is taken so a response appear in the page w/o reloading
+    using Ajax to do so, in other word this function is called before sending data forms to the app server*/
+    function submitPhotoForm() {
+    //Get form data
+    var photoFormData = $('#photoForm').serialize();
+
+        //Ajax request with JQuery type Post
+        $.ajax({
+            type: 'POST',
+            url: "/camera",
+            data: photoFormData,
+            success: function(response){ //'reponse' was created in flask app
+
+                var paragraph = document.getElementById("resultMessageParagraph");
+                //Display a response message
+                if (response.success) {         
+                    paragraph.innerHTML = '<pre>' + response.message + '</pre>';                    
+                }
+                //Or display an error message
+                else {
+                    paragraph.textContent = response.error; //error from flask
+                }
+            },
+            error: function(error){ //error from AJAX
+                //Display errors in the console
+                console.log('Error from camera.html:', error);
+                }
+            });
+    }
+
+</script>
+
+</body>    
+
+
+
+</html>
+

@@ -1,0 +1,72 @@
+/* styles.css */
+
+*{
+    font-family: sans-serif;
+}
+
+.tabs {
+    display: flex; /*Use Flexbox for tabs*/
+    list-style: none; /*Remove flees*/
+    padding: 0; /*No intern margin*/
+    width: fit-content; /*set tab width*/
+    
+}
+
+.tab {
+    margin-bottom: 5px; /*Set bottom margin for each tab*/
+    padding: 10px;
+    cursor: pointer; /*Define cursor when hover*/
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+
+.tab-content {
+    display: none; /*Hide by default*/
+    padding: 15px;
+}
+
+.tab-content.active {
+    display: block; /*Display only active content*/
+}
+
+/*1st TAB*/
+.photo_options{
+    padding: 20px;
+    width: fit-content;
+    font-size: 15px;
+    border: 1px solid black;
+    border-radius: 5px 5px 5px 5px
+}
+
+.photo_options label:not(.extension){
+    display: inline-block;
+    width: 150px; 
+    text-align: right;
+    margin-right: 10px;
+}
+
+.photo_options ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+form li {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+form input[type="text"]{
+    margin-right: 0;
+}
+
+form input[type="number"]{
+    width: 50px;
+}
+
