@@ -47,7 +47,7 @@ def camera():
             if (not real_photo_name):
                 print("Problème lors de la prise de photo.")
 
-            #Create message to display
+            #Create the message to display
             message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {real_photo_name}\nQualité : {photo_quality}"
 
             #Create with response with success key True
