@@ -1,7 +1,7 @@
 import sys
-sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path
+#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
 
-from _3_TRAITEMENT_d_IMAGES import takePhoto
+#from _3_TRAITEMENT_d_IMAGES import takePhoto --------------------------------------------------------------------
 from flask import Flask, render_template, request, jsonify
 
 
@@ -35,19 +35,20 @@ def camera():
 
         try:
             #Take photo according to parameters
-            path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
-                                            tms=photo_tms,
-                                            quality=photo_quality)
+            """path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,--------------------------------------------------------------
+                                            tms=photo_tms,----------------------------------------------------------------------
+                                            quality=photo_quality)----------------------------------------------------"""
 
             #Update real_photo_name because if the same user enter the same
             #name the takePhoto() function will add an index to it
-            real_photo_name = path_to_photo_taken.split('/')[-1]
+            #real_photo_name = path_to_photo_taken.split('/')[-1] ----------------------------------------------------------
 
             #If photo is not taken (it will throw a NoneType error)
             if (not real_photo_name):
                 print("Problème lors de la prise de photo.")
 
             #Create the message to display
+            path_to_photo_taken = "" #SUPPRIMER CETTE LIGNE SUR LA RASPBERRY PI 4 ------------------------------------------------------------------------
             message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {real_photo_name}\nQualité : {photo_quality}"
 
             #Create with response with success key True
