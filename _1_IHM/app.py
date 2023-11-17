@@ -88,8 +88,7 @@ def generateFrames():
         yield (b'--frame\r\n' #'frame' is the delimiter of each piece of data
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')#We tell the client that we sent jpeg img
 
-#These routes are used to start and stop video stream from the client size
-# (when user enter/quit a tab)
+#These routes are used to start and stop video stream from the client side when user enter or quit a tab
 @app.route('/start_video')
 def start_video(): 
     video_stream.start()

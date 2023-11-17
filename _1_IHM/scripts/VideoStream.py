@@ -1,7 +1,5 @@
-import io, time, threading
-#To install picamera whereas your are not on a raspberry pi config do : 1-export READTHEDOCS=True 2-pip install picamera
-#import picamera #it won't work but you will have the module -----------------------------------------------------------------
-
+import io, time, threading, subprocess
+from PIL import Image
 
 
 class VideoStream(object):
@@ -26,26 +24,41 @@ class VideoStream(object):
     
     #Stream video capture function
     def captureFrames(self):
-        #Use python context manager to ensure camera is properly closed after use.
-        """with picamera.PiCamera() as camera : -------------------------------------------------------------------------------
-            camera.resolution = (640, 480)
-            camera.framerate = 24
-            time.sleep(0.5) #Let camera time to initialise
+        '''video_width, video_height = 640, 480
+        command = [
+            "raspivid",
+            "-t", "0",                  #capture indefinitely
+            "-w", str(video_width),     #set width
+            "-h", str(video_height),    #set height
+            "-fps", "20",               #set framerate
+            "-o", "-"                   #set output on stdout
+        ]
 
-            stream = io.BytesIO() #stream init
+        #Run the above command on a new processus but redirect the output stream so python can get acces to it
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            #Capture each frame into 'stream'
-            for k in camera.capture_continuous(stream, "jpg", use_video_port=True):
-                if not self.streaming : break
+        try :
+            while self.streaming:
+                #Get the raw frame on the output to get every bytes we multipy img size by 3 (channels of rgb colors)
+                raw_frame = process.stdout.read(video_width * video_height * 3)
 
-                stream.seek(0) #cursor placed at the start to read all the datas
-                self.frame = stream.read() #store the data inputed
+                #Convert raw image into real image using pillow
+                image = Image.frombytes('RGB', (video_width, video_height), raw_frame, 'raw', "RGB")
 
-                stream.seek(0) #cursor at the beginning
-                stream.truncate() #truncate stream to ensure taht everything which will be write after that position is deleted
-                #it optimize ram memory
-                time.sleep(0.1)#regulate capture frame, can be modified"""
+                #Store image on a stream bytes variable, 
+                # its quicker since image is save in buffer and not in hard disk, its easier to transmitt 
+                stream = io.BytesIO()
+                image.save(stream, format='jpg')
 
+                #Then store it into a class variable 
+                self.frame = stream.getValue()
+
+                time.sleep(0.1) #little sleep to re-syncronize with current frame
+
+        except Exception as e :
+            print(f"Erreur lors de la prise de video : {e}")
+        finally:
+            process.terminate() #kill process whatever happend to free all ressources #'''
 
     def getFrame(self):
         return self.frame
