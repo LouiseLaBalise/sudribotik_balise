@@ -62,7 +62,7 @@
         <div class="video_stream_container">
             <img id="video-stream" src="">
         </div>
-        <p>aaaaa</p>
+       
     </div>
     <div id="tab3" class="tab-content">
         <h2>Onglet 3</h2>
@@ -90,11 +90,16 @@
 
         //Display video stream if current tab is 2
         if (tabId === "tab2"){
-            document.getElementById("video-stream").scr="{{url_for('video_feed')}}";
+            fetch('/start_video').catch(error=>console.error("Error", error));
+            console.log("video is streaming");
+            //Get content from video_feed url
+            document.getElementById("video-stream").src="{{url_for('video_feed')}}";
         }
         //Else remove it, might put a default img later...
         else {
-            document.getElementById("video-stream").scr="";
+            fetch('/stop_video').catch(error=>console.error("Error", error));
+            console.log("video is not streaming");
+            document.getElementById("video-stream").src="";
         }
     }
 
