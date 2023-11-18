@@ -13,13 +13,13 @@
 
    <!-- Tabs Title -->
     <ul class="tabs">
-        <li class="tab" onclick="openTab('onglet1')">Prendre une photo</li>
-        <li class="tab" onclick="openTab('onglet2')">Vue de la caméra</li>
-        <li class="tab" onclick="openTab('onglet3')">Onglet 3</li>
+        <li class="tab" onclick="openTab('tab1')">Prendre une photo</li>
+        <li class="tab" onclick="openTab('tab2')">Vue de la caméra</li>
+        <li class="tab" onclick="openTab('tab3')">Onglet 3</li>
     </ul>
 
     <!-- Tabs Content -->
-    <div id="onglet1" class="tab-content active">
+    <div id="tab1" class="tab-content active">
         <h2>Prendre une photo</h2>
         <!-- Photo square -->
         <div class="photo_taken"></div>
@@ -57,13 +57,14 @@
     </div>
 
 
-    <div id="onglet2" class="tab-content">
+    <div id="tab2" class="tab-content">
         <h2>Angle de vue</h2>
         <div class="video_stream_container">
-            <img src="">
+            <img id="video-stream" src="">
         </div>
+        <p>aaaaa</p>
     </div>
-    <div id="onglet3" class="tab-content">
+    <div id="tab3" class="tab-content">
         <h2>Onglet 3</h2>
         <p>Contenu de l'onglet 3.</p>
     </div>
@@ -86,6 +87,15 @@
         //Display active content 
         var activeTab = document.getElementById(tabId);
         activeTab.classList.add('active');
+
+        //Display video stream if current tab is 2
+        if (tabId === "tab2"){
+            document.getElementById("video-stream").scr="{{url_for('video_feed')}}";
+        }
+        //Else remove it, might put a default img later...
+        else {
+            document.getElementById("video-stream").scr="";
+        }
     }
 
     /*Manage submit button after photo is taken so a response appear in the page w/o reloading
