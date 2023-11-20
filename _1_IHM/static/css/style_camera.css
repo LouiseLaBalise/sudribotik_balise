@@ -31,10 +31,6 @@
     padding: 15px;
 }
 
-.tab-content.active {
-    display: block; /*Display only active content*/
-}
-
 /*1st TAB*/
 .photo_options{
     padding: 20px;
@@ -85,3 +81,84 @@ form input[type="number"]{
 .video_stream_container img{
     width:100%;
 }
+
+/*3rd TAB*/
+.item-container{
+    width: 150px;
+    height: fit-content;
+    border: 5px solid black;
+    border-radius: 1px;
+
+}
+.item-photo{
+    height: 25px;
+}
+.item-photo:hover{
+    background-color: gray;
+    cursor: pointer; 
+}
+
+/*Modal photo viewer*/
+.modal{
+    display: none;
+    position: fixed; /*fixe wheter you scroll or not*/
+    z-index: 1; /*on top of everything*/
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;  /*full width and height of the viewport*/
+    height: 100%; 
+    /*overflow: auto; /*if viewport is really tiny compared to image, enable scrolling*/
+    background-color: rgba(0, 0, 0, 0.9); /*semi-transparent bg*/
+}
+
+#img_modal{
+    margin: auto; /*center and reduce the image*/
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#caption_modal{
+    color:white;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.close_modal{
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close_modal:hover{
+    color:#ccc;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

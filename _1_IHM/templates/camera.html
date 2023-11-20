@@ -10,20 +10,17 @@
 </head>
 
 <body>
-
    <!-- Tabs Title -->
     <ul class="tabs">
-        <li class="tab" onclick="openTab('tab1')">Prendre une photo</li>
-        <li class="tab" onclick="openTab('tab2')">Vue de la caméra</li>
-        <li class="tab" onclick="openTab('tab3')">Onglet 3</li>
+        <li class="tab" id="tab1" onclick="openTab('tab1')">Prendre une photo</li>
+        <li class="tab" id="tab2" onclick="openTab('tab2')">Vue de la caméra</li>
+        <li class="tab" id="tab3" onclick="openTab('tab3')">Gallerie des photos</li>
     </ul>
 
-    <!-- Tabs Content -->
-    <div id="tab1" class="tab-content active">
+    <!-- Tabs Content 1-->
+    <div id="tab1_content" class="tab-content">
         <h2>Prendre une photo</h2>
-        <!-- Photo square -->
         <div class="photo_taken"></div>
-        <!-- Photo Form Options -->
         <div class="photo_options">
             <form action="{{ url_for('camera') }}" method="post" id="photoForm">
                 <ul>
@@ -57,83 +54,64 @@
     </div>
 
 
-    <div id="tab2" class="tab-content">
-        <h2>Angle de vue</h2>
+
+
+
+    <!-- Tabs Content 2-->
+    <div id="tab2_content" class="tab-content">
+        <h2>Vue de la caméra</h2>
         <div class="video_stream_container">
             <img id="video-stream" src="">
+        </div>       
+    </div>
+
+
+
+
+    <!-- Tabs Content 3-->
+    <div id="tab3_content" class="tab-content">
+        <h2>Gallerie des photos</h2>
+        <p>Répertoire : {{media_path}}</p>
+        <div class="items-container">
+            <table>
+                <tr>
+                    <td>Nom</td>
+                    <td>Taille</td>
+                    <td>Heure</td>
+                    <td>Date</td>
+                </tr>
+                {% for i in range(0,4) %}
+                {% for photo in list_photos %}
+                    <tr class="item-photo" id="photo{{loop.index0}}" onclick='showPhotoModal("{{loop.index0}}")'>
+                        <td>{{photo["name"]}}</td>
+                        <td>{{photo["size"]}} {{photo["size_unit"]}}</td>
+                        <td>{{photo["hour"]}}</td>
+                        <td>{{photo["date"]}}</td>
+                    </tr>
+                {% endfor %}
+                {% endfor %}
+            </table>
         </div>
-       
-    </div>
-    <div id="tab3" class="tab-content">
-        <h2>Onglet 3</h2>
-        <p>Contenu de l'onglet 3.</p>
+
+        <div class="modal" id="photo_modal">
+            <span class="close_modal" onclick="closeModal()">&times;</span>
+            <img id="img_modal" src="">
+            <div id="caption_modal"></div>
+        </div>
     </div>
 
 
-<!-- Scripts -->
+<!-- Scripts declarations -->
 <script src="/static/js/jquery-3.6.4.min.js"></script> <!--Load JQuery library-->
-<!-- or <script src="{{ url_for('static', filename='jquery-3.6.4.min.js') }}"></script>-->
+
 <script>
-
-    /*Manage tab clicks*/
-    function openTab(tabId) {
-
-        //Hide tabs content
-        var tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(function (tab) {
-            tab.classList.remove('active');
-        });
-
-        //Display active content 
-        var activeTab = document.getElementById(tabId);
-        activeTab.classList.add('active');
-
-        //Display video stream if current tab is 2
-        if (tabId === "tab2"){
-            fetch('/start_video').catch(error=>console.error("Error", error));
-            console.log("video is streaming");
-            //Get content from video_feed url
-            document.getElementById("video-stream").src="{{url_for('video_feed')}}";
-        }
-        //Else remove it, might put a default img later...
-        else {
-            fetch('/stop_video').catch(error=>console.error("Error", error));
-            console.log("video is not streaming");
-            document.getElementById("video-stream").src="";
-        }
-    }
-
-    /*Manage submit button after photo is taken so a response appear in the page w/o reloading
-    using Ajax to do so, in other word this function is called before sending data forms to the app server*/
-    function submitPhotoForm() {
-    //Get form data
-    var photoFormData = $('#photoForm').serialize();
-
-        //Ajax request with JQuery type Post
-        $.ajax({
-            type: 'POST',
-            url: "/camera",
-            data: photoFormData,
-            success: function(response){ //'reponse' was created in flask app
-
-                var paragraph = document.getElementById("resultMessageParagraph");
-                //Display a response message
-                if (response.success) {         
-                    paragraph.innerHTML = '<pre>' + response.message + '</pre>';                    
-                }
-                //Or display an error message
-                else {
-                    paragraph.textContent = response.error; //error from flask
-                }
-            },
-            error: function(error){ //error from AJAX
-                //Display errors in the console
-                console.log('Error from camera.html:', error);
-                }
-            });
-    }
-
+    //Declare ALL python variables so that Jinja2 can render them for JavaScipt to use
+    var video_stream_link = "{{url_for('videoStream')}}";
+    var list_photos = JSON.parse('{{list_photos | tojson | safe}}'); //convert python variables to json
+    var media_path = JSON.parse('{{media_path | tojson | safe}}');
+    var photo_modal_link = "{{url_for('getPhotoModal', filename='')}}";
 </script>
+<script type=text/JavaScript src="/static/js/camera-route.js"></script> <!--Load script for this route -->
 
 </body>    
 
