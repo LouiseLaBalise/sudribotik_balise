@@ -1,10 +1,10 @@
 import sys
 import os
 import cv2
-from flask import Flask, render_template, request, Response, send_from_directory
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
-#from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
+sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
+from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
 
 from scripts.formatdata import formatBytes, formatSeconds
 
@@ -13,7 +13,7 @@ from scripts.formatdata import formatBytes, formatSeconds
 
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/"#"/home/ubuntu/EUROBOT_2024/_3_TRAITEMENT_d_IMAGES/medias/"
+MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open camera to see the view (2nd tab of camera)
@@ -44,7 +44,7 @@ def camera():
         PHOTO_NAME_SUFFIXE if photo_name_suffixe else "",
         PHOTO_EXTENSION)
 
-        """try:
+        try:
             #Take photo according to parameters
             path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
                                                      tms=photo_tms,
@@ -74,7 +74,7 @@ def camera():
         #Get method after submit form for photo
         return jsonify(response)#"""
 
-    #Main get method 
+    #Main get method
     return render_template("camera.html", list_photos=list_photos, media_path=MEDIA_FOLDER_PATH)
 
 
@@ -119,14 +119,18 @@ def stopVideoStream():
 arg : path:str
 Return : list of dict -> [{"name":kyoto.jpg, "size":150, "unit":MB, "date":25 nov. 2022, "hour": 21:54:07}]"""
 def makePhotoList(path:str):
-    photo_list = []
-    for item in os.scandir(MEDIA_FOLDER_PATH):
+    photos_list = []
+
+    #Sort list by time: most recent is first
+    photos = sorted(os.scandir(MEDIA_FOLDER_PATH), key=lambda photo: photo.stat().st_mtime, reverse=True)
+    for item in photos:
         name = item.name
         size, unit = formatBytes(item.stat().st_size)
         date, hour = formatSeconds(item.stat().st_mtime)
-        photo_list.append({"name": name, "size":size, "size_unit":unit, "hour": hour, "date":date})
+        photos_list.append({"name": name, "size":size, "size_unit":unit, "hour": hour, "date":date})
 
-    return photo_list
+
+    return photos_list
 
 
 """Route called when click on the list of photos in the gallery
@@ -137,7 +141,7 @@ def getPhotoModal(filename):
     #Return photo with the correct filename in the photo folder
     return send_from_directory(MEDIA_FOLDER_PATH, filename)
 
-    
+
 
 
 

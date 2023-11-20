@@ -80,7 +80,6 @@
                     <td>Heure</td>
                     <td>Date</td>
                 </tr>
-                {% for i in range(0,4) %}
                 {% for photo in list_photos %}
                     <tr class="item-photo" id="photo{{loop.index0}}" onclick='showPhotoModal("{{loop.index0}}")'>
                         <td>{{photo["name"]}}</td>
@@ -88,7 +87,6 @@
                         <td>{{photo["hour"]}}</td>
                         <td>{{photo["date"]}}</td>
                     </tr>
-                {% endfor %}
                 {% endfor %}
             </table>
         </div>
