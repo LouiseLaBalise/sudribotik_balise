@@ -3,8 +3,8 @@ import os
 import cv2
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
-from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
+#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
+#from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
 
 from scripts.formatdata import formatBytes, formatSeconds
 
@@ -13,19 +13,19 @@ from scripts.formatdata import formatBytes, formatSeconds
 
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
+MEDIA_FOLDER_PATH = "/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/"#"/home/ubuntu/EUROBOT_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
-streaming_mode=False #true when client open camera to see the view (2nd tab of camera)
+streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
 
 #Homepage route
 @app.route('/')
 def index():
     return render_template('index.html') #look for the index.html template in ./templates/
 
-#Camera route
-@app.route('/camera', methods=['GET', 'POST'])
-def camera():
+#balise route
+@app.route('/balise', methods=['GET', 'POST'])
+def balise():
 
     #Get photo of all photos in PHOTO_PATH
     list_photos = makePhotoList(MEDIA_FOLDER_PATH)
@@ -43,7 +43,7 @@ def camera():
         real_photo_name = "{}{}{}".format(photo_name,
         PHOTO_NAME_SUFFIXE if photo_name_suffixe else "",
         PHOTO_EXTENSION)
-
+        """
         try:
             #Take photo according to parameters
             path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
@@ -75,10 +75,11 @@ def camera():
         return jsonify(response)#"""
 
     #Main get method
-    return render_template("camera.html", list_photos=list_photos, media_path=MEDIA_FOLDER_PATH)
+    return render_template("balise.html", list_photos=list_photos, media_path=MEDIA_FOLDER_PATH)
 
 
-#Video for camera tab2
+
+#Video for balise tab2
 @app.route('/video_stream')
 def videoStream():
     #When this function is called it returns a 'multipart/x-mixed-replace' in a HTTP response.

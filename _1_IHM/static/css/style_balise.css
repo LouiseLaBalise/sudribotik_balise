@@ -1,56 +1,44 @@
-/* styles.css */
+/*Style de la page balise*/
 
-*{
-    font-family: sans-serif;
-}
-
-.tabs {
-    display: flex; /*Use Flexbox for tabs*/
-    list-style: none; /*Remove flees*/
-    padding: 0; /*No intern margin*/
-    width: fit-content; /*set tab width*/
-    
-}
-
-.tab {
-    margin-bottom: 5px; /*Set bottom margin for each tab*/
-    padding: 10px;
-    cursor: pointer; /*Define cursor when hover*/
-    background-color: #eee;
-    border: 1px solid #ccc;
-    border-radius: 5px 5px 0 0;
-}
-
-.tab:hover {
-    background-color: #ddd;
-}
-
-
-.tab-content {
-    display: none; /*Hide by default*/
-    padding: 15px;
+.page-content{
+    display: flex;
+    flex-direction: column; /*items in columns*/
+    height: 100vh; /*100% viewport height*/
+    overflow: auto; /* scroll bar only if necessary*/
+    align-items: center; /* align items in the center horizontally */
 }
 
 /*1st TAB*/
-.photo_options{
-    padding: 20px;
-    width: fit-content;
-    font-size: 15px;
-    border: 1px solid black;
-    border-radius: 5px 5px 5px 5px
+#photoForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px; /*set margin-top*/
+    padding: 0; /*set padding*/
+    font-size: 15px; /*set font-size*/
+    border: 2px black solid;/*set border*/
 }
 
-.photo_options label:not(.extension){
-    display: inline-block;
-    width: 150px; 
-    text-align: right;
-    margin-right: 10px;
+#photoForm ul {
+    list-style: none; /*no disc*/
 }
 
-.photo_options ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+#photoForm input,
+#photoForm input:focus{
+    outline: none; /*remove outline*/
+    border: none; /*removes the default border*/
+    background-color: transparent; /*background transparent.*/
+    border-bottom: 1px solid black; /* add a line at the bottom*/
+}
+
+#photoForm .options{
+    display: grid;
+    grid-template-columns: 150px auto; /* Adjust the width of the label column as needed */
+    align-items: center;
+}
+
+
+#photoForm label:not(.extension){
 }
 
 form li {
@@ -62,13 +50,13 @@ form input[type="text"]{
     margin-right: 0;
 }
 
-form input[type="number"]{
+#photoForm input[type="number"]{
     width: 50px;
 }
 
 /*2nd TAB*/
 .video_stream_container{
-    width:50%;
+    width:fit-content;
     border: 5px solid black;
     border-radius: 6px;
     overflow: hidden; 

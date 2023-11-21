@@ -1,7 +1,7 @@
 //Check url for anchors
 window.onload = checkAnchor;
 
-//Check anchors from url to go on a specific tab
+/*Check anchors from url to go on a specific tab*/
 function checkAnchor() {
     var anchor = window.location.hash.substring(1); //get anchor
     if (anchor) {
@@ -17,13 +17,30 @@ function openTab(tabId) {
 
     //Hide tabs content
     var tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(function (tab) {
-        tab.style.display = "none";
+    tabContents.forEach(function (content) {
+        content.style.display = "none";       
     });
 
-    //Display the right content 
+    //Remove all 'current' and set z-index
+    var tabs = document.querySelectorAll('.tab');
+    var tab_index = 1;
+    var z_index = 50;
+    tabs.forEach(function(tab){
+        tab.classList.remove("current");
+        if ("tab"+tab_index !== tabId) {
+            document.getElementById("tab"+tab_index).style.zIndex = z_index;
+        }
+        else{
+            document.getElementById("tab"+tab_index).style.zIndex = 99;            
+        }
+        tab_index++;
+        z_index--;
+    });
+
+    //Display the right content
     var activeTab = document.getElementById(tabId+"_content");
     activeTab.style.display = "block";
+    document.getElementById(tabId).classList.add("current");//put tab on class 'current'
 
     //Display video stream if current tab is 2
     if (tabId === "tab2"){
@@ -38,7 +55,7 @@ function openTab(tabId) {
     }
 
     //Change url to delete the anchor
-    history.replaceState({ tabId: tabId }, null, "/camera");
+    history.replaceState({ tabId: tabId }, null, "/balise");
 }
 
 /*Manage submit button after photo is taken so a response appear in the page w/o reloading
@@ -50,7 +67,7 @@ var photoFormData = $('#photoForm').serialize();
     //Ajax request with JQuery type Post
     $.ajax({
         type: 'POST',
-        url: "/camera",
+        url: "/balise",
         data: photoFormData,
         success: function(response){ //'reponse' was created in flask app
 
@@ -66,7 +83,7 @@ var photoFormData = $('#photoForm').serialize();
         },
         error: function(error){ //error from AJAX
             //Display errors in the console
-            console.log('Error from camera.html:', error);
+            console.log('Error from balise.html:', error);
             }
         });
 }
@@ -84,12 +101,12 @@ function showPhotoModal(index){
     modal.style.display = "block"; //show modal
 }
 
-/*Quit modal in click on 'X'*/
+/*Quit modal if click on 'X'*/
 function closeModal(){
     var modal = document.getElementById("photo_modal");//get modal
     modal.style.display = "none"; //modal disappear
 }
-//Quit the modal if the user clicks outside of it
+/*Quit modal if user clicks outside of it*/
 window.onclick = function(event) {
     var modal = document.getElementById("photo_modal");
     if (event.target === modal) {

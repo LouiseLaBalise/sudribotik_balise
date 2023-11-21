@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
+{% include 'navbar.html' %}<!--import navbar-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_camera.css')}}"> <!-- Load css file-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_balise.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_tabs.css')}}">
     <link rel="shortcut icon" href="#" /> <!--No favicon-->
-
 </head>
 
-<body>
-   <!-- Tabs Title -->
+<body><div class="page-content">
+   <!-- All TABS must set <ul class='tabs'> and <li class='tabs'> to match css-->
     <ul class="tabs">
         <li class="tab" id="tab1" onclick="openTab('tab1')">Prendre une photo</li>
         <li class="tab" id="tab2" onclick="openTab('tab2')">Vue de la caméra</li>
-        <li class="tab" id="tab3" onclick="openTab('tab3')">Gallerie des photos</li>
+        <li class="tab" id="tab3" onclick="openTab('tab3')">Galerie des photos</li>
     </ul>
 
     <!-- Tabs Content 1-->
     <div id="tab1_content" class="tab-content">
-        <h2>Prendre une photo</h2>
-        <div class="photo_taken"></div>
-        <div class="photo_options">
-            <form action="{{ url_for('camera') }}" method="post" id="photoForm">
+            <form action="{{ url_for('balise') }}" method="post" id="photoForm">
+                <h3>Options basiques</h3>
+                <div class="options" id="basic_options">
                 <ul>
                     <li>
                         <label for="photo_name">Renomer&nbsp;la&nbsp;photo&nbsp;:</label>
@@ -31,12 +30,12 @@
                     </li>
                     <li>
                         <label for="photo_name_suffixe">Ajouter&nbsp;"_via_ihm"&nbsp;:</label>
-                        <input type="checkbox" id="photo_name_suffixe" name="photo_name_suffixe"
-                        checked/>
+                        <input type="radio" id="photo_name_suffixe" name="photo_name_suffixe" value="yes" checked>Oui</input>
+                        <input type="radio" id="photo_name_suffixe" name="photo_name_suffixe" value="no" >Non</input>
                     </li>
                     <li>
                         <label for="photo_tms">Timeout&nbsp;(ms)&nbsp;:</label>
-                        <input type="number" id="photo_tms" name="photo_tms" value="500"
+                        <input type="number" id="photo_tms" name="photo_tms" value="200"
                         min="0" max="9999" step="100" />
                     </li>
                     <li>
@@ -45,11 +44,43 @@
                         min="1" max="100" value="50"/>
                     </li>
                 </ul>
+                </div>
+
+                <h3>Options avanceés</h3>
+                <div class="options" id="advanced_options">
+                    <ul>
+                        <li>
+                            <label for="aruco_yes_no">Marquer&nbsp;les&nbsp;tags&nbsp;ArUco&nbsp;?&nbsp;:</label>
+                            <input type="radio" name="aruco_yes_no" value="yes" >Oui</input>
+                            <input type="radio" name="aruco_yes_no" value="no" checked >Non</input>
+                        </li>                        
+                        <li>
+                            <label for="color_yes_no">Détecter&nbsp;une&nbsp;plage&nbsp;de&nbsp;couleurs&nbsp;:</label>
+                            <input type="radio" name="color_yes_no" value="yes" >Oui</input>
+                            <input type="radio" name="color_yes_no" value="no" checked >Non</input>
+                        </li>
+                        <li>
+                            <label for="red_min">RGB&nbsp;min&nbsp;:</label>
+                            <input type="number" id="red_min" name="rgb_min" value="0" min="0" max="255"/>
+                            <input type="number" id="green_min" name="rgb_min" value="0" min="0" max="255"/>
+                            <input type="number" id="blue_min" name="rgb_min" value="0" min="0" max="255"/>
+                        </li>
+                        <li>
+                            <label for="red_max">RGB&nbsp;max&nbsp;:</label>
+                            <input type="number" id="red_max" name="rgb_max" value="0" min="0" max="255"/>
+                            <input type="number" id="green_max" name="rgb_max" value="0" min="0" max="255"/>
+                            <input type="number" id="blue_max" name="rgb_max" value="0" min="0" max="255"/>
+                        </li>
+                    </ul>
+                    </div>
+
+
+
+
                 <div class="button_photo">
                     <button type="button" onclick="submitPhotoForm()">Prendre une photo</button>
                 </div>
             </form>
-        </div>
         <div id="resultMessage"><p id="resultMessageParagraph"></p></div>
     </div>
 
@@ -59,7 +90,6 @@
 
     <!-- Tabs Content 2-->
     <div id="tab2_content" class="tab-content">
-        <h2>Vue de la caméra</h2>
         <div class="video_stream_container">
             <img id="video-stream" src="">
         </div>       
@@ -70,7 +100,6 @@
 
     <!-- Tabs Content 3-->
     <div id="tab3_content" class="tab-content">
-        <h2>Gallerie des photos</h2>
         <p>Répertoire : {{media_path}}</p>
         <div class="items-container">
             <table>
@@ -101,17 +130,17 @@
 
 <!-- Scripts declarations -->
 <script src="/static/js/jquery-3.6.4.min.js"></script> <!--Load JQuery library-->
-
 <script>
     //Declare ALL python variables so that Jinja2 can render them for JavaScipt to use
+    // at term it will better to use async request and move all dynamic in this page in the js
     var video_stream_link = "{{url_for('videoStream')}}";
     var list_photos = JSON.parse('{{list_photos | tojson | safe}}'); //convert python variables to json
     var media_path = JSON.parse('{{media_path | tojson | safe}}');
     var photo_modal_link = "{{url_for('getPhotoModal', filename='')}}";
 </script>
-<script type=text/JavaScript src="/static/js/camera-route.js"></script> <!--Load script for this route -->
+<script type=text/JavaScript src="/static/js/balise-route.js"></script> <!--Load script for this route -->
 
-</body>    
+</div></body>    
 
 
 
