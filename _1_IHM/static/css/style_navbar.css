@@ -4,18 +4,23 @@
     --navbar-background-color: #8689A0;;
     --navbar-selected-color: #606271;
 
-    --webpage-background-color: white;/*#3D3D3D;/**/
+    --webpage-background-color: #E5EAF5;/*#3D3D3D;/**/
 
-    --balise-background-color: #CFD8BD;
-    --balise-tab-background-color: #F5E5CC;
-    --balise-tab-current-background-color: var(--balise-background-color);;
+    --balise-background-color: #494D5F;
+    --balise-text-color: ivory;
+    --balise-secondary-color: #845BB3;
+    --balise-tab-background-color: var(--balise-secondary-color);
+    --balise-tab-current-background-color: var(--balise-background-color);
     --balise-tab-hover-background-color: var(--balise-background-color);
+    --balise-button-photo-background-color: palevioletred;
+    --balise-button-hover-photo-background-color: rgb(182, 72, 114);
+    --balise-table-hover-background-color: #a982f3;
 }
 
 /*Basic settings of every body of this site */
 body{
     margin: 0;
-    font-family: sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--webpage-background-color);
 }
 

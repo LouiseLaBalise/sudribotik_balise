@@ -60,7 +60,7 @@ def balise():
 
             #Create the message to display
             path_to_photo_taken = "" #COMMENTER CETTE LIGNE SUR LA RASPBERRY PI 4
-            message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {real_photo_name}\nQualité : {photo_quality}"
+            message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {real_photo_name}"
 
             #Create with response with success key True
             response = {'success': True, 'message': message}

@@ -31,7 +31,8 @@ function openTab(tabId) {
             document.getElementById("tab"+tab_index).style.zIndex = z_index;
         }
         else{
-            document.getElementById("tab"+tab_index).style.zIndex = 99;            
+            /*Set current z-index at 89*/ 
+            document.getElementById("tab"+tab_index).style.zIndex = 89; 
         }
         tab_index++;
         z_index--;
