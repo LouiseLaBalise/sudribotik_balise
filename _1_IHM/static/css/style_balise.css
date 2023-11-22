@@ -143,8 +143,8 @@ input::-webkit-outer-spin-button,
 #img_modal{
     margin: auto; /*center the image*/
     display: block;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 80%;
+    max-height: 80%;
 }
 
 #caption_modal{

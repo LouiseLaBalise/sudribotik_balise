@@ -3,8 +3,8 @@ import os
 import cv2
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
-#from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
+sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
+from _3_TRAITEMENT_d_IMAGES import takePhoto #--------------------------------------------------------------------
 
 from scripts.formatdata import formatBytes, formatSeconds
 
@@ -13,7 +13,7 @@ from scripts.formatdata import formatBytes, formatSeconds
 
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/"#"/home/ubuntu/EUROBOT_2024/_3_TRAITEMENT_d_IMAGES/media/"
+MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
@@ -43,7 +43,7 @@ def balise():
         real_photo_name = "{}{}{}".format(photo_name,
         PHOTO_NAME_SUFFIXE if photo_name_suffixe else "",
         PHOTO_EXTENSION)
-        """
+        #"""
         try:
             #Take photo according to parameters
             path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
