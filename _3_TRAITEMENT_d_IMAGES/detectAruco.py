@@ -85,10 +85,11 @@ def main(argv):
     corners, ids, rejected_corners = cv2.aruco.detectMarkers(img,
                                                              aruco_dict,
                                                              parameters=aruco_parameters)
-
+    ret = True #value to return if ids are detected
     #Tell if no ids
     if (not ids):
         print("No ids detected.")
+        ret = False
 
     #Create an image based on the input one
     output_image = img.copy()
@@ -126,6 +127,8 @@ def main(argv):
     out_img_path ="."+''.join(out_img_path)
     cv2.imwrite(out_img_path, output_image)
     print(f"Photo parsed (stored in {out_img_path})")
+
+    return ret, corners, ids
 
 
 if __name__ == "__main__":
