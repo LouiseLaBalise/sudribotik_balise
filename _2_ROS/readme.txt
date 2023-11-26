@@ -96,7 +96,7 @@ install(
 
 ament_package()
 -------------------------------------------------------------
-package.xml:
+package.xml:----------------------------------------------------
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
@@ -117,5 +117,5 @@ package.xml:
     <build_type>ament_cmake</build_type>
   </export>
 </package>
--------------------------------------------------------------
+-----------------------------------------------------------------
 
