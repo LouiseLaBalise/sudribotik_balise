@@ -1,6 +1,6 @@
 import os
 import sys
-
+import argparse
 
 MAX_NB_PHOTOS = 50 #To limit ressources taken
 
@@ -11,7 +11,6 @@ MAX_NB_PHOTOS = 50 #To limit ressources taken
 
 Return the path where the photo has been stored.
 """
-
 def takePhoto(name="photo.jpg", tms=50, quality=50):
     #1 step : create path to store the img
     photo_idx = -1
@@ -38,6 +37,43 @@ def takePhoto(name="photo.jpg", tms=50, quality=50):
         return None
 
     return path_to_current_photo
+
+
+
+"""Initialize CLI options for other function implemanting takePhoto.py module
+    -parser(argparse.ArgumentParser) : parser
+
+Return the parser with new options.
+"""
+def initParser(parser:argparse.ArgumentParser):
+
+    parser.add_argument("-p",                           #short option
+                       "--photo",                       #long option
+                       action="store_true",             #store true if called false if not
+                       help="Take a photo.")            #help text
+    
+    parser.add_argument("-t",                                               #short option
+                        "--timeout",                                        #long option
+                        action="store",                                     #store argument
+                        type=int,                                           #must be integers
+                        metavar="tms",                                      #variables significations
+                        help="Set a timeout for photo (must be -p).")       #help text
+    
+    parser.add_argument("-q",                                               #short option
+                        "--quality",                                        #long option
+                        action="store",                                     #store argument
+                        type=int,                                           #must be integers
+                        metavar="quality",                                  #variables significations
+                        choices=range(0, 101),                              #only integers from 0 to 100
+                        help="Set quality for photo (must be -p).")         #help text
+    
+    return parser
+
+
+
+
+
+
 
 #In case user only want to take a photo from terminal
 if __name__ == "__main__":
