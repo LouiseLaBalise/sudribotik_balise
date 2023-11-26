@@ -2,27 +2,151 @@ import sys
 import cv2
 import numpy as np
 import takePhoto
+import argparse
+from PIL import Image
 
-def colorDetection(argv):
 
-    #Get image
-    src = cv2.imread(takePhoto.takePhoto())
 
-    #Define RGB limits to see
-    lower_limit_bgr = np.array([0, 0, 10], dtype='uint8')
-    upper_limit_bgr = np.array([0, 0, 255], dtype='uint8')
 
-    #Create mask to only show bgr limits selected
-    mask = cv2.inRange(src, lower_limit_bgr, upper_limit_bgr)
+def colorDetection(filename:str, hue:list, saturation:list, value:list, path="media/", contoured=False, rectangled=False, denoise=False, minSurface=0):
 
-    #Add mask uppon the source
-    output = cv2.bitwise_and(src, src, mask=mask)
+    #List of positions for detected colors
+    color_positions = []
 
-    #Display
-    cv2.namedWindow("ouput color detection", cv2.WINDOW_NORMAL)
-    cv2.resizeWindow("ouput color detection", 600, 600)
-    cv2.imshow("ouput color detection", output)
-    cv2.waitKey(0)
+    #Get frame
+    frame = cv2.imread(filename=path+filename)
+
+    suffixe = ""
+    #Denoise or not
+    if denoise:
+        suffixe+='d'
+        frame = cv2.fastNlMeansDenoisingColored(frame, None, 10, 10, 7, 21)
+
+    #Convert image from original colorspace bgr to hsv
+    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    #Define hsv limits to see
+    lower_limit_hsv = np.array([hue[0], saturation[0], value[0]])
+    upper_limit_hsv = np.array([hue[1], saturation[1], value[1]])
+
+    #Create mask to only show hsv limits calculated from bgr
+    mask = cv2.inRange(hsv_frame, lower_limit_hsv, upper_limit_hsv)
+
+    #Draw contours if they are contours deyected on the mask
+    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    for cnt in contours:
+        #Filter on minSurface
+        if cv2.contourArea(cnt)<=minSurface:            
+            continue
+
+        x, y, w, h = cv2.boundingRect(cnt) #get rectangles coordinates
+        color_positions.append((x, y, x+w, y+h))
+
+        if contoured : 
+            cv2.drawContours(frame, [cnt], -1, (0, 255, 0), 3)#draw contours
+
+        if rectangled : 
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)#draw rectangles
+    
+    #Save output
+    out_filename = filename.split('.')
+    out_filename = f"{out_filename[0]}_{hue[0]}-{hue[1]}{suffixe}.{out_filename[1]}"
+    cv2.imwrite(filename=path+out_filename, img=frame)
+
+    return color_positions
+
 
 if __name__=="__main__":
-    colorDetection(sys.argv[1:])
+
+    #Create a parser for CLI options
+    parser = argparse.ArgumentParser(prog="detectColor.py",
+                                     description="Detect specified range of color on an image.") 
+
+    #All arguments available    
+    parser.add_argument("path_to_file",                                     #argument name
+                        action="store",                                     #mendatory
+                        type=str,                                           #must be string
+                        help="Path to file")                                #help text
+    
+    parser.add_argument("hue",                                              #argument name
+                        action="store",                                     #mendatory
+                        nargs='+',                                          #must be 2 arguments
+                        type=int,                                           #must be integers
+                        metavar=("hue_min, hue_max"),                       #variables significations
+                        choices=range(0, 181),                              #only integers from 0 to 180
+                        help="Min and Max hue range")                       #help text
+
+    parser.add_argument("-s",                                               #short option
+                        "--saturation",                                     #long option
+                        action="store",                                     #store arguments
+                        nargs=2,                                            #must be 2 arguments
+                        type=int,                                           #must be integers
+                        metavar=('min', 'max'),                             #variables significations
+                        choices=range(0, 256),                              #only integers from 0 to 255
+                        default=[50, 255],                                  #default values
+                        help="Specify saturation out of 255")               #help text
+    
+    parser.add_argument("-v",                                               #short option
+                        "--value",                                          #long option
+                        action="store",                                     #store arguments
+                        nargs=2,                                            #must be 2 arguments
+                        type=int,                                           #must be integers
+                        metavar=('min', 'max'),                             #variables significations
+                        choices=range(0, 256),                              #only integers from 0 to 255
+                        default=[50, 255],                                  #default values
+                        help="Specify value out of 255")                    #help text
+    
+    parser.add_argument("-r",                           #short option
+                       "--rectangled",                  #long option
+                       action="store_true",             #store true if called false if not
+                       help="Draw a rectangular shape on all detected colors") #help text
+    
+    parser.add_argument("-c",                           #short option
+                       "--contoured",                   #long option
+                       action="store_true",             #store true if called false if not
+                       help="Draw the contours on all detected colors") #help text
+    
+    parser.add_argument("-d",                           #short option
+                       "--denoise",                     #long option
+                       action="store_true",             #store true if called false if not
+                       help="Denoise image before color detection") #help text
+    
+    parser.add_argument("-ms",                          #short option
+                       "--minSurface",                  #long option
+                       action="store",                  #store an argument
+                       type=int,                        #must be an integer
+                       default=0,                       #default values
+                       help="Filter by setting a minimal surface in pixels.") #help text
+    
+    #Implement CLI options for photo
+    parser = takePhoto.initParser(parser)
+
+    #Get all arguments
+    args = parser.parse_args()
+
+    filename = args.path_to_file.split('/')[-1] #get filename
+    if len(args.hue) != 2 :
+        print("Error : must be 2 hue values min and max. Check --help for details." )
+        sys.exit(0)
+    hue_min, hue_max = args.hue[0], args.hue[1] #get hue range
+    sat_min, sat_max = args.saturation[0], args.saturation[1] #get saturation range
+    val_min, val_max = args.value[0], args.value[1] #get value range
+    rectangled = args.rectangled #get rectangled
+    contoured = args.contoured #get contoured
+    denoise = args.denoise #get denoise
+    minSurface = args.minSurface #get minSurface
+
+    if len(args.path_to_file.split('/')) >=2:   #get path if there is one
+        image_path = '/'.join(args.path_to_file.split('/')[:-1])+'/'
+    else :
+        image_path = "media/"
+
+    #Take a photo if mentioned
+    if args.photo:
+        #Only take options which are note None
+        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality}
+        takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
+
+    #Run function
+    colorDetection(filename, [hue_min, hue_max], [sat_min, sat_max], [val_min, val_max], path=image_path, contoured=contoured, rectangled=rectangled, denoise=denoise, minSurface=minSurface)
+
