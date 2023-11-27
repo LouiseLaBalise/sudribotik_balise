@@ -5,7 +5,7 @@ import numpy as np
 import detectAruco
 import argparse
 
-def starightenBoard(filename, path="media/"):
+def straightenBoard(filename, path="media/"):
 
     #Load image
     image = cv2.imread(filename=path+filename)
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     else :
         image_path = ""
 
-    starightenBoard(filename, path=image_path)
+    straightenBoard(filename, path=image_path)

@@ -1,12 +1,20 @@
 import cv2
 import numpy as np
-import getopt
 import takePhoto
 import sys
 import argparse
 
 
+"""
+Detect ArUco markers.
+    filename (str)      ->      name of the inputed image.
+    path (str)          ->      path of the filename from current working dir to filename.
+                                output will be store next to filename. 
+    drawId (bool)       ->      draw a square and id on detected markers.
+    axis (bool)         ->      show axis of detected markers.
 
+Return Aruco corners and ids. And return state for checking.
+"""
 def detectAruco(filename:str,path="media/", drawId=False, axis=False):
 
     #Get photo to parse
