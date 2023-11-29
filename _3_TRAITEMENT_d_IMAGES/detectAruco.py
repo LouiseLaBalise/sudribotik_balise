@@ -24,7 +24,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
     if np.all(img) is None:
         print("Image non détectée.")
         sys.exit(0)
-
+    
     #ArUco dictionary, all markers are sourced here,
     #4x4 are the officials Eurobot2024 cup Fra markers and since we just
     #want to get numbers between 1 and 90, 100 is the best size to optimize time research
@@ -47,7 +47,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
 
     #Create an image based on the inputed one
     output_image = img.copy()
-
+    
     #Draw square on markers based on there positions previously detected
     if (drawId and ids.any()) :
         for k in range(len(ids)):
@@ -59,7 +59,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
             #Get center
             center_x = int((corner_set[0][0][0] + corner_set[0][2][0]) / 2)
             center_y = int((corner_set[0][0][1] + corner_set[0][2][1]) / 2)
-
+            
             #Put Id in center
             cv2.putText(output_image, f"{ids[k]}", (center_x-35, corner_set[0][0][1]+70), 
                         cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 5, cv2.LINE_AA)
@@ -139,4 +139,4 @@ if __name__ == "__main__":
         image_path = "media/"
     
     #Run function
-    detectAruco(filename, path=image_path, drawId=drawId) #no axis fo now
+    detectAruco(filename, path=image_path, drawId=drawId) #no axis for now

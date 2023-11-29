@@ -98,7 +98,7 @@ def generateFrames():
         ret, jpeg = cv2.imencode('.jpg', frame) #convert image in jpg
         frame=jpeg.tobytes() #convert jpg in bytes
 
-        #Use of yield to returns actual value of the image en stop the function, keep its state and get back to it when
+        #Use of yield to returns actual value of the image and stop the function, keep its state and get back to it when
         #function is called again. note that it returns bytes
         yield (b'--frame\r\n' #'frame' is the delimiter of each piece of data
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')#We tell the client that we sent jpeg img
