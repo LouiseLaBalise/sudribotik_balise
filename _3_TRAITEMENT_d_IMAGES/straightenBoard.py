@@ -30,7 +30,7 @@ def straightenBoard(filename, path="media/", method="CORNER"):
     corners, ids, rejected_corners = aruco_detector.detectMarkers(image)
 
     #All 4 Aruco markers are needed to perform image straightening
-    corner_ids = [42, 12, 5, 27]
+    corner_ids = [20, 21, 22, 23]
     corner_ids_no_detected = [] #will store ids
     corners_pos_detected_ids = [] #will store corners positions
     ids = ids.flatten() #flatten ids array to facilitate its navigation    
