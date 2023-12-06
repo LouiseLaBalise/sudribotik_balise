@@ -1,28 +1,33 @@
 import os
 import sys
 import argparse
+import cv2
 
 MAX_NB_PHOTOS = 50 #To limit ressources taken
 
-"""Command to take a photo
-    -name(string) : name of the photo
-    -tms(int) : time in ms required to take the photo
-    -quality(int) : quality output out of 100%
+"""
+Take a photo.
+    name (string)    ->       name of the photo
+    tms (int)        ->       time in ms required to take the photo
+    quality (int)    ->       quality output out of 100%
+    denoise (bool)   ->       denoise the photo taken
 
 Return the path where the photo has been stored.
 """
-def takePhoto(name="photo.jpg", tms=50, quality=50):
+def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
     #1 step : create path to store the img
     photo_idx = -1
     name, ext = name.split('.')
     ext = '.' + ext
     path_to_current_photo = ""
+    suf=""
+    if denoise: suf+="d"
 
     #Each time a photo is taken its name increment
     while(os.path.isfile(path_to_current_photo) or path_to_current_photo==""):
         photo_idx +=1
         #if (photo_idx==0):photo_idx="" #dont put index on first photo
-        path_to_current_photo = f"/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/{name}_{photo_idx}{ext}"
+        path_to_current_photo = f"/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/{name}_{photo_idx}{suf}{ext}"
 
     if (photo_idx > MAX_NB_PHOTOS):
         print("Nombre de photos max atteint, veuillez supprimer des photos pour en reprendre d'autres.")
@@ -35,13 +40,24 @@ def takePhoto(name="photo.jpg", tms=50, quality=50):
     else :
         print(f"Il ya eu une erreur lors de la prise de photo (error from file : {os.path.basename(__file__)})")
         return None
+    
+    #Denoise
+    if denoise:
+        #Get image just taken
+        img = cv2.imread(filename=path_to_current_photo)
+        #Denoise it
+        img = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)
+        #Save it
+        cv2.imwrite(filename=path_to_current_photo, img=img)
 
     return path_to_current_photo
 
 
 
-"""Initialize CLI options for other function implemanting takePhoto.py module
-    -parser(argparse.ArgumentParser) : parser
+"""
+Initialize CLI options for other function implemanting takePhoto.py module
+    
+    parser (argparse.ArgumentParser)    ->     parser
 
 Return the parser with new options.
 """
@@ -67,8 +83,20 @@ def initParser(parser:argparse.ArgumentParser):
                         choices=range(0, 101),                              #only integers from 0 to 100
                         help="Set quality for photo (must be -p).")         #help text
     
+    parser.add_argument("-dn",                          #short option
+                       "--denoise_n",                   #long option
+                       action="store_true",             #store true if called false if not
+                       help="Denoise photo")            #help text
+    
     return parser
 
+    #Conditional statement to implement in functions calling the photo initParser
+    #Take a photo if mentioned
+    if args.photo:
+        #Only take options which are note None
+        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
+        takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
+        image_path = "media/"
 
 
 

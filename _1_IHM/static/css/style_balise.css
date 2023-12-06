@@ -12,12 +12,50 @@
 /*1st TAB*/
 #photoForm{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    width:fit-content;
     margin-top: 70px; /*set margin-top*/
     padding: 0; /*set padding*/
     font-size: 15px; /*set font-size*/
+    align-items: center; /*center children horizontally*/
     
+}
+
+.options {/*all both options selected*/
+    margin-right: 10px; /*set margin-top*/
+}
+#photoForm ul {
+    padding:0px /*reset default padding*/
+}
+
+#photoForm #basic_options{
+    display: flex; /*flex disposition*/
+    flex-direction: column; /*column style*/
+    align-items: center; /*center everything inside*/
+    white-space: nowrap;/*prevent content to jump line*/
+    align-self: flex-start; /*force align with parent top*/
+}
+
+#photoForm #advanced_options{
+    display: flex; /*flex disposition*/
+    flex-direction: column; /*column style*/
+    align-items: center; /*center everything inside*/
+    white-space: nowrap;/*prevent content to jump line*/
+}
+
+#photoForm .button_photo{
+    display: flex; /*flex disposition*/
+    flex-direction: column; /*column style*/
+    align-items: center; /*center everything inside*/
+    justify-content: center;
+    width: 350px;
+}
+
+#photoForm .vertical-bar{
+    height: 200px;/*bar size*/
+    width: 2px;
+    margin: 15px;
+    background-color: var(--balise-secondary-color); /*color of the vertical bar*/
 }
 
 #photoForm ul {
@@ -30,9 +68,16 @@
     border: none; /*removes the default border*/
     background-color: transparent; /*background transparent.*/
     border-bottom: 2px solid var(--balise-secondary-color); /* add a line at the bottom*/
-    text-align: center;
-    color: var(--balise-text-color);
+    text-align: center; /*align inner text in center*/
+    color: var(--balise-text-color);/*text color*/
+    transition: .4s;
 }
+#photoForm input:disabled{
+    background-color: rgb(0 0 0 / 10%);/*light opaque background*/
+    border-bottom: 2px solid var(--balise-disable-color); 
+    transition: .4s;
+}
+
 
 /*Remove spin button*/
 input::-webkit-outer-spin-button, 
@@ -41,35 +86,115 @@ input::-webkit-outer-spin-button,
     margin: 0;
 }/*input[type=number]{-moz-appearance: textfield;}/*on firefox*/
 
-#photoForm .options{
-    width: 50%;/*centered in page*/
-}
 
-
-#photoForm label:not(.extension){
+#photoForm label:not(.extension, .toggle-switch){
     display: inline-block;
     text-align: right;
     margin-right: 10px;
-    width: 300px;
+    width: 330px;
 }
+
 
 #photoForm li {
     margin-top: 15px;
     margin-bottom: 15px;
+    padding: 8px;
 }
 
 #photoForm input[type="number"]{
     width: 50px;
 }
 
+/*style des toggles checkbox*/
+#photoForm .toggle-switch{
+    display: inline-block;
+    position: relative;
+}
+#photoForm .toggle-switch input { /*soft delete the classic checkbox*/
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+#photoForm .slider { /*style for the toggle span off*/
+    position: absolute;
+    cursor: pointer;
+    top: -2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 54px;/*set width*/
+    height: 22px;/*set height*/
+    background-color: var(--balise-toggle-off-background-color);
+    border-radius: 34px;
+}
+#photoForm .slider::before { /*style for the circle inside toggle when off*/
+    position: absolute;
+    content: "";
+    height: 14px;/* <- toggle_height - 2*circle_bottom*/
+    width: 14px;
+    left: 6px;
+    bottom: 4px;
+    background-color: var(--balise-toggle-circle-color);
+    border-radius: 50%;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+#photoForm input:checked + .slider { /*toggle span when checked on*/
+    background-color: var(--balise-toggle-on-background-color);
+}
+#photoForm input:checked + .slider::before { /*circle when checked on*/
+    -webkit-transform: translateX(28px);
+    transform: translateX(28px); /* <- toggle_width - 2*circle_left - circle_width*/
+}
+
+/*Tooltip*/
+#photoForm .tooltip-container{
+    display: inline-block;
+    position: relative;
+    top:5px;
+    left:50px;
+}
+#photoForm .tooltip-icon {
+    cursor: pointer;
+    width: 20px; /*icon size*/
+    height: 20px;
+}
+#photoForm .tooltip-content{
+    display: none; /*start hidding*/
+    position: absolute;
+    z-index: 1; /*on top of everything*/
+    background-color: var(--balise-tooltip-background-color);
+    color: black;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 5px;
+    left:20px;
+    top: 20px;
+}
+#photoForm .tooltip-content:not(.with_image){ /*tooltip w/o image*/
+    width: 155px;
+}
+#photoForm .tooltip-content img{/*in tooltip with image paragraph follow the image size*/
+    width: 360px;
+    height: 170px;
+    margin-bottom: 8px;
+}
+#photoForm .tooltip-container p{
+    margin:0px;
+    text-wrap:wrap; /*text dont iverflow the container*/
+}
+#photoForm .tooltip-container:hover .tooltip-content {
+    display: block; /*show content*/
+}
+
 #photoForm button{
-    width: 110px;
-    height: 55px;
+    cursor: pointer;
+    width: 110px; /*button size*/
+    height: 110px;
     font-size: 15px;
     background-color: var(--balise-button-photo-background-color);
-    border-radius: 50px;
-    margin-top: 25px;
-    cursor: pointer;
+    border-radius: 100px;
+    margin-bottom: 15px;
 }
 
 #photoForm button:hover{

@@ -8,19 +8,21 @@ import argparse
 """
 Detect HSV color range on an image.
     filename (str)      ->      name of the inputed image.
-    hue (list)          ->      range of hue values on the hue compass between 0 and 180.
-    saturation (list)   ->      range of saturation between 0 and 255.
-    values (list)       ->      range of values between 0 and 255.
+    hue (tuple)          ->      range of hue values on the hue compass between 0 and 180.
+    saturation (tuple)   ->      range of saturation between 0 and 255.
+    values (tuple)       ->      range of values between 0 and 255.
     path (str)          ->      path of the filename from current working dir to filename.
                                 output will be store next to filename. 
     contoured (bool)    ->      flag for contouring detected colors on the output.
     rectangled (bool)   ->      flag for drawing a rectangle on detected colors on the output.
     denoise (bool)      ->      flag for denoising inputed image. 
-    minSurface (int)    ->      number of minimumu pixels of a detected area to be take into account.
+    minSurface (int)    ->      number of minimumu pixels for a detected area to be take into account.
+    maxSurface (int)    ->      number of maximum pixels for a detected area to be take into account.
 
-Return a list with positions of all area detected.
+Return a list with positions of all area detected and photo path.
 """
-def colorDetection(filename:str, hue:list, saturation:list, value:list, path="media/", contoured=False, rectangled=False, denoise=False, minSurface=0):
+def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255), path="media/",
+                   contoured=False, rectangled=False, denoise=False, minSurface=0, maxSurface=99999):
 
     #List of positions for detected colors
     color_positions = []
@@ -33,6 +35,12 @@ def colorDetection(filename:str, hue:list, saturation:list, value:list, path="me
     if denoise:
         suffixe+='d'
         frame = cv2.fastNlMeansDenoisingColored(frame, None, 10, 10, 7, 21)
+
+    #Set other suffixe parameters
+    if contoured: suffixe+="c"
+    if rectangled: suffixe+="r"
+    if minSurface!=0: suffixe+=str(minSurface)
+    if maxSurface!=99999: suffixe+=str(maxSurface)
 
     #Convert image from original colorspace bgr to hsv
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -47,8 +55,9 @@ def colorDetection(filename:str, hue:list, saturation:list, value:list, path="me
     #Draw contours if they are contours deyected on the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
-        #Filter on minSurface
-        if cv2.contourArea(cnt)<=minSurface:            
+        #Filter on minSurface or maxSurface
+        cnt_px = cv2.contourArea(cnt)
+        if cnt_px<=minSurface or cnt_px>=maxSurface :            
             continue
 
         x, y, w, h = cv2.boundingRect(cnt) #get rectangles coordinates
@@ -95,7 +104,7 @@ if __name__=="__main__":
                         type=int,                                           #must be integers
                         metavar=('min', 'max'),                             #variables significations
                         choices=range(0, 256),                              #only integers from 0 to 255
-                        default=[50, 255],                                  #default values
+                        default=(50, 255),                                  #default values
                         help="Specify saturation out of 255")               #help text
     
     parser.add_argument("-v",                                               #short option
@@ -105,7 +114,7 @@ if __name__=="__main__":
                         type=int,                                           #must be integers
                         metavar=('min', 'max'),                             #variables significations
                         choices=range(0, 256),                              #only integers from 0 to 255
-                        default=[50, 255],                                  #default values
+                        default=(50, 255),                                  #default values
                         help="Specify value out of 255")                    #help text
     
     parser.add_argument("-r",                           #short option
@@ -123,14 +132,21 @@ if __name__=="__main__":
                        action="store_true",             #store true if called false if not
                        help="Denoise image before color detection") #help text
     
-    parser.add_argument("-ms",                          #short option
+    parser.add_argument("-mi",                          #short option
                        "--minSurface",                  #long option
                        action="store",                  #store an argument
                        type=int,                        #must be an integer
                        default=0,                       #default values
                        help="Filter by setting a minimal surface in pixels") #help text
     
-    #Implement CLI options for photo (-p -t -q)
+    parser.add_argument("-mx",                          #short option
+                       "--maxSurface",                  #long option
+                       action="store",                  #store an argument
+                       type=int,                        #must be an integer
+                       default=99999,                   #default values
+                       help="Filter by setting a maximal surface in pixels") #help text
+    
+    #Implement CLI options for photo (-p -t -q -dn)
     parser = takePhoto.initParser(parser)
 
     #Get all arguments
@@ -146,6 +162,7 @@ if __name__=="__main__":
     contoured = args.contoured #get contoured
     denoise = args.denoise #get denoise
     minSurface = args.minSurface #get minSurface
+    maxSurface = args.maxSurface #get maxSurface
 
     if len(args.path_to_file.split('/')) >=2:   #get path if there is one
         image_path = '/'.join(args.path_to_file.split('/')[:-1])+'/'
@@ -155,10 +172,11 @@ if __name__=="__main__":
     #Take a photo if mentioned
     if args.photo:
         #Only take options which are note None
-        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality}
+        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
         takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
         image_path = "media/"
 
     #Run function
-    colorDetection(filename, [hue_min, hue_max], [sat_min, sat_max], [val_min, val_max], path=image_path, contoured=contoured, rectangled=rectangled, denoise=denoise, minSurface=minSurface)
+    colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max), path=image_path,
+                   contoured=contoured, rectangled=rectangled, denoise=denoise, minSurface=minSurface, maxSurface=maxSurface)
 

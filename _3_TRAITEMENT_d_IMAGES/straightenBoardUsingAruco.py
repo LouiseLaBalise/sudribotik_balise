@@ -1,8 +1,6 @@
-import sys
-import os
 import cv2
 import numpy as np
-import detectAruco
+import takePhoto
 import argparse
 
 
@@ -11,14 +9,20 @@ Straighten a board with 4 Aruco tags.
     filename (str)      ->      name of the inputed image.
     path (str)          ->      path of the filename from current working dir to filename.
                                 output will be store next to filename. 
+    corner_ids (tuple)  ->      ids of the 4 mendatory ArUco tags                    
     method (str)        ->      chose method, CORNER is by default.
 
-Return True if operation is a success.
+Return function success and new filename.
 """
-def straightenBoard(filename, path="media/", method="CORNER"):
+def straightenBoardUsingAruco(filename, path="media/", corner_ids = (20, 21, 22, 23), method="CORNER"):
 
     #Load image
     image = cv2.imread(filename=path+filename)
+
+    #Quit if not 4 tags in params
+    if len(corner_ids)!=4:
+        print("Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
+        return False, None
 
     #Create ArUco dictionary
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
@@ -30,7 +34,6 @@ def straightenBoard(filename, path="media/", method="CORNER"):
     corners, ids, rejected_corners = aruco_detector.detectMarkers(image)
 
     #All 4 Aruco markers are needed to perform image straightening
-    corner_ids = [20, 21, 22, 23]
     corner_ids_no_detected = [] #will store ids
     corners_pos_detected_ids = [] #will store corners positions
     ids = ids.flatten() #flatten ids array to facilitate its navigation    
@@ -46,7 +49,7 @@ def straightenBoard(filename, path="media/", method="CORNER"):
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
         print(f"Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
-        return False
+        return False, None
 
     #Straighten board using center of each Aruco tags
     if method=="CENTER":
@@ -122,7 +125,7 @@ def straightenBoard(filename, path="media/", method="CORNER"):
     out_filename = filename.split('.')
     out_filename = f"{out_filename[0]}_redressed.{out_filename[1]}"
     cv2.imwrite(filename=path+out_filename, img=warped_image)
-    return True
+    return True, out_filename
 
 
 
@@ -130,14 +133,23 @@ def straightenBoard(filename, path="media/", method="CORNER"):
 if __name__ == "__main__":
 
     #Create a parser for CLI options
-    parser = argparse.ArgumentParser(prog="detectColor.py",
-                                     description="Detect specified range of color on an image.") 
+    parser = argparse.ArgumentParser(prog="straightenBoardUsingAruco.py",
+                                     description="It's literrally in the name.") 
 
     #All arguments available    
     parser.add_argument("path_to_file",                                     #argument name
                         action="store",                                     #mendatory
                         type=str,                                           #must be string
                         help="Path to file")                                #help text
+    
+    parser.add_argument("-i",                                               #short option
+                        "--ids",                                            #long option
+                        action="store",                                     #store arguments
+                        nargs=4,                                            #must be 4 arguments
+                        type=int,                                           #must be integers
+                        metavar=('id1', 'id2', 'id3', 'id4'),               #variables significations
+                        default=(20, 21, 22, 23),                           #default values
+                        help="Id number of corners needed to straighten the image")      #help text
     
     parser.add_argument("-m",                                               #short option
                         "--method",                                         #long option
@@ -146,10 +158,15 @@ if __name__ == "__main__":
                         choices=("CORNER", "CENTER"),                       #only available choices  
                         default="CORNER",                                   #default value
                         help="Specify method of straightenning")            #help text
+
     
+    #Implement CLI options for photo (-p -t -q -dn)
+    parser = takePhoto.initParser(parser)
+
     #Get all arguments
     args = parser.parse_args()
     filename = args.path_to_file.split('/')[-1] #get filename
+    corner_ids = args.corner_ids #get corner ids
     method = args.method #get method
 
     if len(args.path_to_file.split('/')) >=2:   #get path if there is one
@@ -157,4 +174,11 @@ if __name__ == "__main__":
     else :
         image_path = ""
 
-    straightenBoard(filename, path=image_path, method=method)
+    #Take a photo if mentioned
+    if args.photo:
+        #Only take options which are note None
+        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
+        takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
+        image_path = "media/"
+
+    straightenBoardUsingAruco(filename, path=image_path, corner_ids=corner_ids, method=method)

@@ -13,7 +13,7 @@ Detect ArUco markers.
     drawId (bool)       ->      draw a square and id on detected markers.
     axis (bool)         ->      show axis of detected markers.
 
-Return Aruco corners and ids. And return state for checking.
+Return Aruco corners positions, their ids, image name and sucess of the function.
 """
 def detectAruco(filename:str,path="media/", drawId=False, axis=False):
 
@@ -92,7 +92,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
             #Then draw their axis
             cv2.aruco.drawAxis(output_image, matrix_coeff, distortion_coeff, rvec, tvec, 0.01)
 
-    return ret, corners, ids
+    return ret, corners, ids, out_filename
 
 
 if __name__ == "__main__":
@@ -117,7 +117,7 @@ if __name__ == "__main__":
                        action="store_true",             #store true if called false if not
                        help="Draw axis on detected aruco") #help text
     
-    #Implement CLI options for photo (-p -t -q)
+    #Implement CLI options for photo (-p -t -q -dn)
     parser = takePhoto.initParser(parser)
 
     #Get all arguments
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     #Take a photo if mentioned
     if args.photo:
         #Only take options which are note None
-        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality}
+        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
         takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
         image_path = "media/"
     

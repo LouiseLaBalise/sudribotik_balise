@@ -20,18 +20,20 @@
     <!-- Tabs Content 1-->
     <div id="tab1_content" class="tab-content">
             <form action="{{ url_for('balise') }}" method="post" id="photoForm">
-                <h3>Options basiques</h3>
                 <div class="options" id="basic_options">
+                    <h3>Options basiques</h3>
                 <ul>
                     <li>
                         <label for="photo_name">Renomer&nbsp;la&nbsp;photo&nbsp;:</label>
-                        <input type="text" id="photo_name" name="photo_name" maxlength="30" />
-                        <label class="extension" for="photo_name">.jpg&nbsp;</label>
+                        <input type="text" id="photo_name" name="photo_name" maxlength="30"/>
+                        <label class="extension" for="photo_name">.jpg</label>
                     </li>
                     <li>
-                        <label for="photo_name_suffixe">Ajouter&nbsp;"_via_ihm"&nbsp;:</label>
-                        <input type="radio" id="photo_name_suffixe" name="photo_name_suffixe" value="yes" checked>Oui</input>
-                        <input type="radio" id="photo_name_suffixe" name="photo_name_suffixe" value="no" >Non</input>
+                        <label for="photo_name_suffixe">Ajouter&nbsp; "_via_ihm"&nbsp;:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="photo_name_suffixe" name="photo_name_suffixe" value="checked" checked>
+                            <span class="slider"></span>
+                        </label>
                     </li>
                     <li>
                         <label for="photo_tms">Timeout&nbsp;(ms)&nbsp;:</label>
@@ -43,45 +45,109 @@
                         <input type="number" id="photo_quality" name="photo_quality"
                         min="1" max="100" value="50"/>
                     </li>
+                    <li>
+                        <label for="photo_denoising">Réduction&nbsp;du&nbsp;bruit&nbsp;:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="photo_denoising" name="photo_denoising" value="checked">
+                            <span class="slider"></span>
+                        </label>
+                    </li>
                 </ul>
                 </div>
 
-                <h3>Options avanceés</h3>
+                <div class="vertical-bar"></div>
+
                 <div class="options" id="advanced_options">
+                    <h3>Options avancées</h3>
                     <ul>
                         <li>
-                            <label for="aruco_yes_no">Marquer&nbsp;les&nbsp;tags&nbsp;ArUco&nbsp;?&nbsp;:</label>
-                            <input type="radio" name="aruco_yes_no" value="yes" >Oui</input>
-                            <input type="radio" name="aruco_yes_no" value="no" checked >Non</input>
-                        </li>                        
+                            <label for="aruco_yes_no">Marquer&nbsp;les&nbsp;tags&nbsp;ArUco&nbsp;:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="aruco_yes_no" name="aruco_yes_no" value="checked">
+                                <span class="slider"></span>
+                            </label>
+                        </li> 
                         <li>
                             <label for="color_yes_no">Détecter&nbsp;une&nbsp;plage&nbsp;de&nbsp;couleurs&nbsp;:</label>
-                            <input type="radio" name="color_yes_no" value="yes" >Oui</input>
-                            <input type="radio" name="color_yes_no" value="no" checked >Non</input>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="color_yes_no" name="color_yes_no" value="checked" onchange="toggleInput(this,'tog-color')">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="tooltip-container">
+                                <img class="tooltip-icon" src="{{ url_for('static', filename='/icons/info_24px.png')}}" alt="Info Icon">
+                                <div class="tooltip-content with_image">
+                                    <img src="{{ url_for('static', filename='/images/hue_opencv_colormap.jpg')}}" alt="Hue opencv colormap">
+                                    <p>Ne définir les limites qu'à l'aide de la première valeur (Hue) de 0 à 180 en vous aidant de ce graphique.<br>
+                                        Il n'y a généralement pas besoin de modifier les valeurs de Saturation et de Value.</p>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <label for="red_min">RGB&nbsp;min&nbsp;:</label>
-                            <input type="number" id="red_min" name="rgb_min" value="0" min="0" max="255"/>
-                            <input type="number" id="green_min" name="rgb_min" value="0" min="0" max="255"/>
-                            <input type="number" id="blue_min" name="rgb_min" value="0" min="0" max="255"/>
+                            <label for="hue_min">HSV&nbsp;min&nbsp;:</label>
+                            <input class="tog-color" type="number" id="hue_min" name="hsv_min" value="0" min="0" max="180" disabled/>
+                            <input class="tog-color" type="number" id="sat_min" name="hsv_min" value="50" min="0" max="255" disabled/>
+                            <input class="tog-color" type="number" id="val_min" name="hsv_min" value="50" min="0" max="255" disabled/>
                         </li>
                         <li>
-                            <label for="red_max">RGB&nbsp;max&nbsp;:</label>
-                            <input type="number" id="red_max" name="rgb_max" value="0" min="0" max="255"/>
-                            <input type="number" id="green_max" name="rgb_max" value="0" min="0" max="255"/>
-                            <input type="number" id="blue_max" name="rgb_max" value="0" min="0" max="255"/>
+                            <label for="hue_max">HSV&nbsp;max&nbsp;:</label>
+                            <input class="tog-color" type="number" id="hue_max" name="hsv_max" value="0" min="0" max="180" disabled/>
+                            <input class="tog-color" type="number" id="sat_max" name="hsv_max" value="255" min="0" max="255" disabled/>
+                            <input class="tog-color" type="number" id="val_max" name="hsv_max" value="255" min="0" max="255" disabled/>
+                        </li>
+                        <li>
+                            <label for="color_surface_yes_no">Ajouter&nbsp;des&nbsp;limites&nbsp;de&nbsp;pixels&nbsp;à&nbsp;détecter&nbsp;:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="color_surface_yes_no" name="color_surface_yes_no" value="checked" onchange="toggleInput(this,'tog-color_surface')">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="tooltip-container">
+                                <img class="tooltip-icon" src="{{ url_for('static', filename='/icons/info_24px.png')}}" alt="Info Icon">
+                                <div class="tooltip-content">
+                                    <p>Fonctionne seulement si la detection de couleur est active.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label for="color_minSurface">Surface&nbsp;minimale&nbsp;à&nbsp;détecter&nbsp;:</label>
+                            <input class="tog-color_surface" type="number" id="color_minSurface" name="color_minSurface" value="50" min="0" max="99999" disabled/>
+                        </li>
+                        <li>
+                            <label for="color_maxSurface">Surface&nbsp;maximale&nbsp;à&nbsp;détecter&nbsp;:</label>
+                            <input class="tog-color_surface" type="number" id="color_maxSurface" name="color_maxSurface" value="300" min="0" max="99999" disabled/>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="redress_yes_no">Redresser&nbsp;une&nbsp;image&nbsp;à&nbsp;l'aide&nbsp;de&nbsp;4&nbsp;tags&nbsp;ArUco&nbsp;:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="redress_yes_no" name="redress_yes_no" value="checked" onchange="toggleInput(this,'tog-redress')">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="tooltip-container">
+                                <img class="tooltip-icon" src="{{ url_for('static', filename='/icons/info_24px.png')}}" alt="Info Icon">
+                                <div class="tooltip-content">
+                                    <p>Privilégier les tags les plus excentrés.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label for="redress_id1">Tags&nbsp;Aruco&nbsp;:</label>
+                            <input class="tog-redress" type="number" id="redress_id1" name="redress_id" value="20" disabled/>
+                            <input class="tog-redress" type="number" id="redress_id2" name="redress_id" value="21" disabled/>
+                            <input class="tog-redress" type="number" id="redress_id3" name="redress_id" value="22" disabled/>
+                            <input class="tog-redress" type="number" id="redress_id4" name="redress_id" value="23" disabled/>
                         </li>
                     </ul>
-                    </div>
+                </div>
 
-
-
+                <div class="vertical-bar"></div>
 
                 <div class="button_photo">
-                    <button type="button" onclick="submitPhotoForm()">Prendre une photo</button>
+                    <button type="button" onclick="submitPhotoForm()" title="Prendre une photo">
+                        <img src="{{ url_for('static', filename='/icons/photo_64px.png')}}">
+                    </button>
+                    <div id="resultMessage"><p id="resultMessageParagraph"></p></div>
                 </div>
             </form>
-        <div id="resultMessage"><p id="resultMessageParagraph"></p></div>
     </div>
 
 

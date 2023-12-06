@@ -31,8 +31,8 @@ function openTab(tabId) {
             document.getElementById("tab"+tab_index).style.zIndex = z_index;
         }
         else{
-            /*Set current z-index at 89*/ 
-            document.getElementById("tab"+tab_index).style.zIndex = 89; 
+            /*Set current z-index at 80 to be on top of the other tabs*/ 
+            document.getElementById("tab"+tab_index).style.zIndex = 80; 
         }
         tab_index++;
         z_index--;
@@ -59,6 +59,30 @@ function openTab(tabId) {
     history.replaceState({ tabId: tabId }, null, "/balise");
 }
 
+
+/*Manage enabling/disabling inputs in advanced options*/
+function toggleInput(checkbox, class_params){
+    //Get checkbox state
+    var is_checked = checkbox.checked;
+
+    //Get all params by their class
+    var params = document.getElementsByClassName(class_params);
+
+    //Enable corresponding params
+    if (is_checked){
+        for (var i = 0; i < params.length; i++) {
+            params[i].disabled = false;
+        }
+    }
+    //Or disable corresponding params
+    else {
+        for (var i = 0; i < params.length; i++) {
+            params[i].disabled = true;
+        }
+    }
+}
+
+
 /*Manage submit button after photo is taken so a response appear in the page w/o reloading
 using Ajax to do so, in other word this function is called before sending data forms to the app server*/
 function submitPhotoForm() {
@@ -71,6 +95,7 @@ var photoFormData = $('#photoForm').serialize();
         url: "/balise",
         data: photoFormData,
         success: function(response){ //'reponse' was created in flask app
+            console.log('Checkbox values: ' + JSON.stringify(response));
 
             var paragraph = document.getElementById("resultMessageParagraph");
             //Display a response message
@@ -84,7 +109,7 @@ var photoFormData = $('#photoForm').serialize();
         },
         error: function(error){ //error from AJAX
             //Display errors in the console
-            console.log('Error from balise.html:', error);
+            console.log('Error from balise-route.js:', error);
             }
         });
 }
