@@ -165,7 +165,7 @@ input::-webkit-outer-spin-button,
     z-index: 1; /*on top of everything*/
     background-color: var(--balise-tooltip-background-color);
     color: black;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 5px;
     left:20px;
@@ -175,8 +175,8 @@ input::-webkit-outer-spin-button,
     width: 155px;
 }
 #photoForm .tooltip-content img{/*in tooltip with image paragraph follow the image size*/
-    width: 360px;
-    height: 170px;
+    width: 300px;
+    height: 280px;
     margin-bottom: 8px;
 }
 #photoForm .tooltip-container p{
