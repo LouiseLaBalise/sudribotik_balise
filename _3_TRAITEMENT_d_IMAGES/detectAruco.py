@@ -47,6 +47,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
 
     #Create an image based on the inputed one
     output_image = img.copy()
+    out_filename = filename
     
     #Draw square on markers based on there positions previously detected
     if (drawId and ids.any()) :
@@ -59,6 +60,7 @@ def detectAruco(filename:str,path="media/", drawId=False, axis=False):
             #Get center
             center_x = int((corner_set[0][0][0] + corner_set[0][2][0]) / 2)
             center_y = int((corner_set[0][0][1] + corner_set[0][2][1]) / 2)
+            
             
             #Put Id in center
             cv2.putText(output_image, f"{ids[k]}", (center_x-35, corner_set[0][0][1]+70), 
