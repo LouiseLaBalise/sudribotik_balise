@@ -8,13 +8,14 @@ MAX_NB_PHOTOS = 50 #To limit ressources taken
 """
 Take a photo.
     name (string)    ->       name of the photo
-    tms (int)        ->       time in ms required to take the photo
+    tms (int)        ->       timeout in ms before the photo is taken
     quality (int)    ->       quality output out of 100%
     denoise (bool)   ->       denoise the photo taken
 
 Return the path where the photo has been stored.
 """
 def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
+    if tms<1 : tms=1 #timeout at 0 cause bugs
     #1 step : create path to store the img
     photo_idx = -1
     name, ext = name.split('.')
@@ -40,7 +41,7 @@ def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
     else :
         print(f"Il ya eu une erreur lors de la prise de photo (error from file : {os.path.basename(__file__)})")
         return None
-    
+
     #Denoise
     if denoise:
         #Get image just taken
@@ -56,7 +57,7 @@ def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
 
 """
 Initialize CLI options for other function implemanting takePhoto.py module
-    
+
     parser (argparse.ArgumentParser)    ->     parser
 
 Return the parser with new options.
@@ -67,14 +68,14 @@ def initParser(parser:argparse.ArgumentParser):
                        "--photo",                       #long option
                        action="store_true",             #store true if called false if not
                        help="Take a photo.")            #help text
-    
+
     parser.add_argument("-t",                                               #short option
                         "--timeout",                                        #long option
                         action="store",                                     #store argument
                         type=int,                                           #must be integers
                         metavar="tms",                                      #variables significations
                         help="Set a timeout for photo (must be -p).")       #help text
-    
+
     parser.add_argument("-q",                                               #short option
                         "--quality",                                        #long option
                         action="store",                                     #store argument
@@ -82,12 +83,12 @@ def initParser(parser:argparse.ArgumentParser):
                         metavar="quality",                                  #variables significations
                         choices=range(0, 101),                              #only integers from 0 to 100
                         help="Set quality for photo (must be -p).")         #help text
-    
+
     parser.add_argument("-dn",                          #short option
                        "--denoise_n",                   #long option
                        action="store_true",             #store true if called false if not
                        help="Denoise photo")            #help text
-    
+
     return parser
 
     #Conditional statement to implement in functions calling the photo initParser

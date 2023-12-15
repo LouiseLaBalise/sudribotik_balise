@@ -1,10 +1,12 @@
 import sys
 import os
 import cv2
+import traceback
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
-#import _3_TRAITEMENT_d_IMAGES as TDI #--------------------------------------------------------------------
+sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
+from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectAruco, detectColor #-------------
+
 
 from scripts.formatdata import formatBytes, formatSeconds
 
@@ -13,7 +15,7 @@ from scripts.formatdata import formatBytes, formatSeconds
 
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/"#"/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
+MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
@@ -44,29 +46,27 @@ def balise():
 
         #Get form advanced options
         redress = request.form.get("redress_yes_no", "no") == "checked"
-        detect_aruco = request.form.get("color_yes_no", "no") == "checked"
-        detect_color = request.form.get("color_surface_yes_no", "no") == "checked"
+        detect_aruco = request.form.get("aruco_yes_no", "no") == "checked"
+        detect_color = request.form.get("color_yes_no", "no") == "checked"
         detect_color_surface = request.form.get("color_surface_yes_no", "no") == "checked"
 
         #Create variables for the photo
         real_photo_name = "{}{}{}".format(photo_name,
         PHOTO_NAME_SUFFIXE if photo_name_suffixe else "",
         PHOTO_EXTENSION)
+        message=""#this will be displayed if the photo is taken
 
         try:
             #Take photo according to parameters
             path_to_photo_taken = ""
-            path_to_photo_taken = TDI.takePhoto(name=real_photo_name,
+            path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
                                                      tms=photo_tms,
                                                      quality=photo_quality,
                                                      denoise=denoise)
 
-            #Update real_photo_name and not take current photo_name because if the user enter the same
-            #name the takePhoto() function will add an index to it
-            real_photo_name = path_to_photo_taken.split('/')[-1]
 
             #If photo is not taken (it will throw a NoneType error)
-            if (not real_photo_name):
+            if (not path_to_photo_taken):
                 print("Problème lors de la prise de photo.")
                 return
 
@@ -74,15 +74,15 @@ def balise():
             #1st redress
             if redress:
                 corner_ids = (int(request.form[f"redress_id{idx}"]) for idx in range(1, 5))
-                ret, real_photo_name = TDI.straightenBoardUsingAruco(filename=real_photo_name,
+                ret, path_to_photo_taken = straightenBoardUsingAruco.straightenBoardUsingAruco(filename=path_to_photo_taken,
                                                                      corner_ids=corner_ids)
-                if not ret: raise Exception("Erreur lors du redressement de l'image.")
-            
+                if not ret: message+="L'image n'a pas pu être redréssée.\n"
+
             #2nd aruco tags
             if detect_aruco:
-                ret, _, _, real_photo_name = TDI.detectAruco(filename=real_photo_name,
+                ret, _, _, path_to_photo_taken = detectAruco.detectAruco(filename=path_to_photo_taken,
                                                              drawId=True)
-                if not ret: raise Exception("Erreur lors de la détection d'ArUco.")
+                if not ret: message+="Aucun ArUco n'a pu être détecté.\n"
 
             #3rd color and surface
             if detect_color:
@@ -93,7 +93,7 @@ def balise():
                 if detect_color_surface:
                     color_minSurface = int(request.form["color_minSurface"])
                     color_maxSurface = int(request.form["color_maxSurface"])
-                    ret, _, _, real_photo_name = TDI.detectAruco(filename=real_photo_name,
+                    ret, _, path_to_photo_taken = detectColor.detectColor(filename=path_to_photo_taken,
                                                                  hue=hue,
                                                                  saturation=saturation,
                                                                  value=value,
@@ -101,22 +101,23 @@ def balise():
                                                                  maxSurface=color_maxSurface,
                                                                  drawId=True)
                 else : #call function without surfaces
-                    ret, _, _, real_photo_name = TDI.detectAruco(filename=real_photo_name,
+                    ret, _, path_to_photo_taken = detectColor.detectColor(filename=path_to_photo_taken,
                                                                     hue=hue,
                                                                     saturation=saturation,
                                                                     value=value,
                                                                     drawId=True)
-                
-                if not ret: raise Exception("Erreur lors de la détection de couleur.")
+
+                if not ret: message+="La détection de couleur n'a pas été réalisée.\n"
 
             #Create the message to display
-            message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {real_photo_name}"
+            message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {path_to_photo_taken.split('/')[-1]}\n{message}"
 
             #Create with response with success key True
             response = {'success': True, 'message': message}
 
 
         except Exception as e:
+            traceback.print_exc()
             #Create with response with success key False
             response = {'success': False, 'error': str(e)}
 

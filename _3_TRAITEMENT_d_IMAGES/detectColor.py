@@ -1,7 +1,6 @@
 import sys
 import cv2
 import numpy as np
-import takePhoto
 import argparse
 
 
@@ -11,17 +10,16 @@ Detect HSV color range on an image.
     hue (tuple)          ->      range of hue values on the hue compass between 0 and 180.
     saturation (tuple)   ->      range of saturation between 0 and 255.
     values (tuple)       ->      range of values between 0 and 255.
-    path (str)          ->      path of the filename from current working dir to filename.
-                                output will be store next to filename. 
+                                output will be store next to filename.
     contoured (bool)    ->      flag for contouring detected colors on the output.
     rectangled (bool)   ->      flag for drawing a rectangle on detected colors on the output.
-    denoise (bool)      ->      flag for denoising inputed image. 
+    denoise (bool)      ->      flag for denoising inputed image.
     minSurface (int)    ->      number of minimumu pixels for a detected area to be take into account.
     maxSurface (int)    ->      number of maximum pixels for a detected area to be take into account.
 
-Return a list with positions of all area detected and photo path.
+Return succes, a list with positions of all area detected and photo path.
 """
-def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255), path="media/",
+def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255),
                    contoured=False, rectangled=False, denoise=False, minSurface=0, maxSurface=99999):
 
     #List of positions for detected colors
@@ -57,38 +55,40 @@ def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255
     for cnt in contours:
         #Filter on minSurface or maxSurface
         cnt_px = cv2.contourArea(cnt)
-        if cnt_px<=minSurface or cnt_px>=maxSurface :            
+        if cnt_px<=minSurface or cnt_px>=maxSurface :
             continue
 
         x, y, w, h = cv2.boundingRect(cnt) #get rectangles coordinates
         color_positions.append((x, y, x+w, y+h))
 
-        if contoured : 
+        if contoured :
             cv2.drawContours(frame, [cnt], -1, (0, 255, 0), 3)#draw contours
 
-        if rectangled : 
+        if rectangled :
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)#draw rectangles
-    
+
     #Save output
     out_filename = filename.split('.')
     out_filename = f"{out_filename[0]}_{hue[0]}-{hue[1]}{suffixe}.{out_filename[1]}"
     cv2.imwrite(filename=path+out_filename, img=frame)
 
-    return color_positions
+    return ret, color_positions
 
 
 if __name__=="__main__":
 
+    import takePhoto#sorry this is the only method to overstep no module error
+
     #Create a parser for CLI options
     parser = argparse.ArgumentParser(prog="detectColor.py",
-                                     description="Detect specified range of color on an image.") 
+                                     description="Detect specified range of color on an image.")
 
-    #All arguments available    
+    #All arguments available
     parser.add_argument("path_to_file",                                     #argument name
                         action="store",                                     #mendatory
                         type=str,                                           #must be string
                         help="Path to file")                                #help text
-    
+
     parser.add_argument("hue",                                              #argument name
                         action="store",                                     #mendatory
                         nargs='+',                                          #must be 2 arguments
@@ -106,7 +106,7 @@ if __name__=="__main__":
                         choices=range(0, 256),                              #only integers from 0 to 255
                         default=(50, 255),                                  #default values
                         help="Specify saturation out of 255")               #help text
-    
+
     parser.add_argument("-v",                                               #short option
                         "--value",                                          #long option
                         action="store",                                     #store arguments
@@ -116,36 +116,36 @@ if __name__=="__main__":
                         choices=range(0, 256),                              #only integers from 0 to 255
                         default=(50, 255),                                  #default values
                         help="Specify value out of 255")                    #help text
-    
+
     parser.add_argument("-r",                           #short option
                        "--rectangled",                  #long option
                        action="store_true",             #store true if called false if not
                        help="Draw a rectangular shape on all detected colors") #help text
-    
+
     parser.add_argument("-c",                           #short option
                        "--contoured",                   #long option
                        action="store_true",             #store true if called false if not
                        help="Draw the contours on all detected colors") #help text
-    
+
     parser.add_argument("-d",                           #short option
                        "--denoise",                     #long option
                        action="store_true",             #store true if called false if not
                        help="Denoise image before color detection") #help text
-    
+
     parser.add_argument("-mi",                          #short option
                        "--minSurface",                  #long option
                        action="store",                  #store an argument
                        type=int,                        #must be an integer
                        default=0,                       #default values
                        help="Filter by setting a minimal surface in pixels") #help text
-    
+
     parser.add_argument("-mx",                          #short option
                        "--maxSurface",                  #long option
                        action="store",                  #store an argument
                        type=int,                        #must be an integer
                        default=99999,                   #default values
                        help="Filter by setting a maximal surface in pixels") #help text
-    
+
     #Implement CLI options for photo (-p -t -q -dn)
     parser = takePhoto.initParser(parser)
 
@@ -173,10 +173,11 @@ if __name__=="__main__":
     if args.photo:
         #Only take options which are note None
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
-        takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
-        image_path = "media/"
+        photo_path = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None}).split('/')
+        filename = photo_path.pop(-1)#get final filename
+        image_path ='/'.join(photo_path)+'/'#get final path
 
     #Run function
-    colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max), path=image_path,
+    colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max),
                    contoured=contoured, rectangled=rectangled, denoise=denoise, minSurface=minSurface, maxSurface=maxSurface)
 
