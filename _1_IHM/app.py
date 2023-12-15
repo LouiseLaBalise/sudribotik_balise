@@ -4,7 +4,7 @@ import cv2
 import traceback
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path -----------------------------------------------
+sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path ------------
 from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectAruco, detectColor #-------------
 
 

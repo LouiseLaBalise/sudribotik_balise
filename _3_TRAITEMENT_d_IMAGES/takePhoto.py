@@ -96,8 +96,8 @@ def initParser(parser:argparse.ArgumentParser):
     if args.photo:
         #Only take options which are note None
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
-        takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
-        image_path = "media/"
+        filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
+
 
 
 

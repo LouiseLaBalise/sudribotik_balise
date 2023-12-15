@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     #Create a parser for CLI options
     parser = argparse.ArgumentParser(prog="detectAruco.py",
-                                     description="Detect specified range of color on an image.")
+                                     description="Detect ArUco tags on an image.")
 
     #All arguments available
     parser.add_argument("path_to_file",                                     #argument name
@@ -132,23 +132,15 @@ if __name__ == "__main__":
 
     #Get all arguments
     args = parser.parse_args()
-    filename = args.path_to_file.split('/')[-1] #get filename
+    filename = args.path_to_file #get filename
     drawId = args.drawId #get drawId
     axis = args.axis #get axis flag
-
-    if len(args.path_to_file.split('/')) >=2:   #get path if there is one
-        image_path = '/'.join(args.path_to_file.split('/')[:-1])+'/'
-    else :
-        image_path = ""
 
     #Take a photo if mentioned
     if args.photo:
         #Only take options which are note None
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
-        photo_path = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
-        photo_path = photo_path.split('/')
-        filename = photo_path.pop(-1)#get final filename
-        image_path ='/'.join(photo_path)+'/'#get final path
+        filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
 
     #Run function
     detectAruco(filename, drawId=drawId) #no axis for now

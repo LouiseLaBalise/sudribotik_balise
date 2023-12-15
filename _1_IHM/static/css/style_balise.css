@@ -202,7 +202,10 @@ input::-webkit-outer-spin-button,
 }
 
 #resultMessage #resultMessageParagraph{
-    text-align: center;
+    padding-left: 34px;
+    padding-right: 34px;
+    word-break: break-all; /*wrap text to not overlab contents*/
+
 }
 
 /*2nd TAB*/

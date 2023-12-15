@@ -17,16 +17,18 @@ Detect HSV color range on an image.
     minSurface (int)    ->      number of minimumu pixels for a detected area to be take into account.
     maxSurface (int)    ->      number of maximum pixels for a detected area to be take into account.
 
-Return succes, a list with positions of all area detected and photo path.
+Return success, a list with positions of all area detected and photo path.
 """
 def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255),
                    contoured=False, rectangled=False, denoise=False, minSurface=0, maxSurface=99999):
+
+    ret = False #return succes
 
     #List of positions for detected colors
     color_positions = []
 
     #Get frame
-    frame = cv2.imread(filename=path+filename)
+    frame = cv2.imread(filename=filename)
 
     suffixe = ""
     #Denoise or not
@@ -69,10 +71,11 @@ def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255
 
     #Save output
     out_filename = filename.split('.')
-    out_filename = f"{out_filename[0]}_{hue[0]}-{hue[1]}{suffixe}.{out_filename[1]}"
-    cv2.imwrite(filename=path+out_filename, img=frame)
+    out_filename = f"{'.'.join(out_filename[:-1])}_{hue[0]}-{hue[1]}{suffixe}.{out_filename[-1]}"
+    cv2.imwrite(filename=out_filename, img=frame)
 
-    return ret, color_positions
+    ret = True
+    return ret, color_positions, out_filename
 
 
 if __name__=="__main__":
@@ -151,7 +154,7 @@ if __name__=="__main__":
 
     #Get all arguments
     args = parser.parse_args()
-    filename = args.path_to_file.split('/')[-1] #get filename
+    filename = args.path_to_file #get filename
     if len(args.hue) != 2 :
         print("Error : must be 2 hue values min and max. Check --help for details." )
         sys.exit(0)
@@ -164,18 +167,12 @@ if __name__=="__main__":
     minSurface = args.minSurface #get minSurface
     maxSurface = args.maxSurface #get maxSurface
 
-    if len(args.path_to_file.split('/')) >=2:   #get path if there is one
-        image_path = '/'.join(args.path_to_file.split('/')[:-1])+'/'
-    else :
-        image_path = ""
-
     #Take a photo if mentioned
     if args.photo:
         #Only take options which are note None
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
-        photo_path = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None}).split('/')
-        filename = photo_path.pop(-1)#get final filename
-        image_path ='/'.join(photo_path)+'/'#get final path
+        filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
+
 
     #Run function
     colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max),
