@@ -18,7 +18,7 @@ function openTab(tabId) {
     //Hide tabs content
     var tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(function (content) {
-        content.style.display = "none";       
+        content.style.display = "none";
     });
 
     //Remove all 'current' and set z-index
@@ -31,8 +31,8 @@ function openTab(tabId) {
             document.getElementById("tab"+tab_index).style.zIndex = z_index;
         }
         else{
-            /*Set current z-index at 80 to be on top of the other tabs*/ 
-            document.getElementById("tab"+tab_index).style.zIndex = 80; 
+            /*Set current z-index at 80 to be on top of the other tabs*/
+            document.getElementById("tab"+tab_index).style.zIndex = 80;
         }
         tab_index++;
         z_index--;
@@ -95,18 +95,22 @@ var photoFormData = $('#photoForm').serialize();
         url: "/balise",
         data: photoFormData,
         success: function(response){ //'reponse' was created in flask app
-            console.log('Checkbox values: ' + JSON.stringify(response));
 
             var paragraph = document.getElementById("resultMessageParagraph");
             //Display a response message
-            if (response.success) {         
-                paragraph.innerHTML = '<pre>' + response.message + '</pre>';                    
+            if (response.success) {
+                paragraph.innerHTML = "<ul>"
+                    +"<li>Photo prise avec succès. Elle est disponnible dans la galerie des photos.</li>"
+                    +"<li>Photo d'origine : " + response.image_name + "</li>"
+                    +"<li>Photo traitée : " +  response.processed_name + "</li>"
+                    +"<li>Info : " + response.processed_info + "</li>"
+                    +"</ul>";
             }
             //Or display an error message
             else {
                 paragraph.textContent = response.error; //error from flask
             }
-        },
+       },
         error: function(error){ //error from AJAX
             //Display errors in the console
             console.log('Error from balise-route.js:', error);
@@ -125,7 +129,7 @@ function showPhotoModal(index){
     img.src = photo_modal_link + list_photos[index]["name"];//set img
     caption.innerHTML = list_photos[index]["name"]//set caption
     modal.style.display = "block"; //show modal
-}
+i}
 
 /*Quit modal if click on 'X'*/
 function closeModal(){

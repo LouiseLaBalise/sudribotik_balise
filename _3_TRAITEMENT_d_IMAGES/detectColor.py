@@ -1,8 +1,13 @@
+import os
 import sys
 import cv2
 import numpy as np
 import argparse
 
+
+
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
 
 """
 Detect HSV color range on an image.
@@ -83,7 +88,7 @@ if __name__=="__main__":
     import takePhoto#sorry this is the only method to overstep no module error
 
     #Create a parser for CLI options
-    parser = argparse.ArgumentParser(prog="detectColor.py",
+    parser = argparse.ArgumentParser(prog=FILE_NAME,
                                      description="Detect specified range of color on an image.")
 
     #All arguments available
@@ -156,7 +161,7 @@ if __name__=="__main__":
     args = parser.parse_args()
     filename = args.path_to_file #get filename
     if len(args.hue) != 2 :
-        print("Error : must be 2 hue values min and max. Check --help for details." )
+        print(f"Log [{FILE_NAME}]: Error : must be 2 hue values min and max. Check --help for details." )
         sys.exit(0)
     hue_min, hue_max = args.hue[0], args.hue[1] #get hue range
     sat_min, sat_max = args.saturation[0], args.saturation[1] #get saturation range

@@ -1,7 +1,16 @@
+import os
 import cv2
 import numpy as np
 import sys
 import argparse
+
+
+
+
+
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
+
 
 """
 Detect ArUco markers.
@@ -19,7 +28,7 @@ def detectAruco(filename:str, drawId=False, axis=False):
 
     #In case there is no image
     if np.all(img) is None:
-        print("Image non détectée.")
+        print(f"Log [{FILE_NAME}]: Image non détectée.")
         sys.exit(0)
 
 
@@ -38,18 +47,9 @@ def detectAruco(filename:str, drawId=False, axis=False):
     corners, ids, rejected_corners = aruco_detector.detectMarkers(img)
 
     #Tell and quit if no ids
-    try:
-        if (not ids.any()):
-            print("\nAucun tag n'a été détecté.")
-            return False, None, None, filename
-
-    #ids.any() retun an AttributeError if ids is None so
-    # we repeat the action in the except block as if it has pass the test
-    #the reason beeing  we cannot test a numpy array without any() or all()
-    #todo : test if None.all() is considered
-    except AttributeError as e:
-            print("\nAucun tag n'a été détecté.")
-            return False, None, None, filename
+    if ids is None:
+        print(f"Log [{FILE_NAME}]: Aucun tag n'a été détecté.")
+        return False, None, None, filename
 
     #Create an image based on the inputed one
     output_image = img.copy()
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     import takePhoto#sorry this is the only method to overstep no module error
 
     #Create a parser for CLI options
-    parser = argparse.ArgumentParser(prog="detectAruco.py",
+    parser = argparse.ArgumentParser(prog=FILE_NAME,
                                      description="Detect ArUco tags on an image.")
 
     #All arguments available

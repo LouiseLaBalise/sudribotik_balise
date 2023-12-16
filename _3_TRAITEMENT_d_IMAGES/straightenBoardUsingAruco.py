@@ -1,7 +1,14 @@
 import cv2
+import os
 import numpy as np
 import argparse
 import time
+
+
+
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
+
 
 """
 Straighten a board with 4 Aruco tags.
@@ -24,7 +31,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
 
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
-        print("\nIl faut 4 ids de tags ArUco. Impossible de redresser l'image.")
+        print(f"Log [{FILE_NAME}]: Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
         return False, filename
 
     #Create ArUco dictionary
@@ -37,8 +44,8 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
     corners, ids, rejected_corners = aruco_detector.detectMarkers(image)
 
     #Quit if there is not even 1 id detected
-    if not ids :
-        print("\nAucun tag détecté. Il en faut au moins 4.")
+    if ids is None :
+        print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
         return False, filename
 
     #All 4 Aruco markers are needed to perform image straightening
@@ -56,7 +63,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
 
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
-        print(f"Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
+        print(f"Log [{FILE_NAME}]: Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
         return False, filename
 
     #Sort corners pos to have [bottom-right, bottom-left, top-left, top-right]
@@ -135,7 +142,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
                                 [max_width - 1, 0],
                                 [0, 0]])
     else:
-        print('board rotated')
+        print(f"Log [{FILE_NAME}]: Board rotated.")
         dst_pts = np.float32([[0, 0],
                           [0, max_height-1],
                           [max_width - 1, max_height - 1],
@@ -155,7 +162,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
     out_filename = filename.split('.')
     out_filename = f"{'.'.join(out_filename[:-1])}_redressed.{out_filename[-1]}"
     cv2.imwrite(filename=out_filename, img=warped_image)
-    
+
     return True, out_filename
 
 
@@ -164,9 +171,9 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
 if __name__ == "__main__":
 
     import takePhoto#sorry this is the only method to overstep no module error
-    
+
     #Create a parser for CLI options
-    parser = argparse.ArgumentParser(prog="straightenBoardUsingAruco.py",
+    parser = argparse.ArgumentParser(prog=FILE_NAME,
                                      description="It's literrally in the name.")
 
     #All arguments available

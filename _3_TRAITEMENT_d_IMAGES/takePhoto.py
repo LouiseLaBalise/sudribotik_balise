@@ -3,6 +3,10 @@ import sys
 import argparse
 import cv2
 
+
+
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
 MAX_NB_PHOTOS = 50 #To limit ressources taken
 
 """
@@ -31,25 +35,27 @@ def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
         path_to_current_photo = f"/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/{name}_{photo_idx}{suf}{ext}"
 
     if (photo_idx > MAX_NB_PHOTOS):
-        print("Nombre de photos max atteint, veuillez supprimer des photos pour en reprendre d'autres.")
+        print(f"Log [{FILE_NAME}]: Nombre de photos max atteint, veuillez supprimer des photos pour en reprendre d'autres.")
         sys.exit()
 
     #2 step : send cmd line to take a photo
     exit_status = os.system(f"raspistill -o {path_to_current_photo} -t {tms} -q {quality}")
     if (not exit_status) :
-        print(f"Photo taken (stored in {path_to_current_photo})")
+        print(f"Log [{FILE_NAME}]: Photo taken (stored in {path_to_current_photo})")
     else :
-        print(f"Il ya eu une erreur lors de la prise de photo (error from file : {os.path.basename(__file__)})")
+        print(f"Log [{FILE_NAME}]: Il ya eu une erreur lors de la prise de photo (error from file : {os.path.basename(__file__)})")
         return None
 
     #Denoise
     if denoise:
+        print(f"Log [{FILE_NAME}]: Denoising...")
         #Get image just taken
         img = cv2.imread(filename=path_to_current_photo)
         #Denoise it
         img = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)
         #Save it
         cv2.imwrite(filename=path_to_current_photo, img=img)
+        print(f"Log [{FILE_NAME}]: Denoise done.")
 
     return path_to_current_photo
 
