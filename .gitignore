@@ -1,5 +1,6 @@
 *.jpg
 *.jpeg
 *.png
-!_1_IHM/static/icons/*.png
+!_1_IHM/static/icons/*
+!_1_IHM/static/images/*
 __pycache__
