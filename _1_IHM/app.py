@@ -111,7 +111,7 @@ def balise():
                                                                  value=value,
                                                                  minSurface=color_minSurface,
                                                                  maxSurface=color_maxSurface,
-                                                                             rectangled=True)
+                                                                 rectangled=True)
                     all_processed_images.append(path_to_photo_processed)
                 else : #call function without surfaces
                     ret, _, path_to_photo_processed = detectColor.colorDetection(filename=path_to_photo_processed,
