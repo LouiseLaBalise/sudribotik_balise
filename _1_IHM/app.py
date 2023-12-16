@@ -11,14 +11,16 @@ from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectA
 from scripts.formatdata import formatBytes, formatSeconds
 
 
-
-
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
 MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
+
+
 
 #Homepage route
 @app.route('/')
@@ -54,7 +56,7 @@ def balise():
         real_photo_name = "{}{}{}".format(photo_name,
         PHOTO_NAME_SUFFIXE if photo_name_suffixe else "",
         PHOTO_EXTENSION)
-        message=""#this will be displayed if the photo is taken
+        processed_info=""#this will be displayed if the photo is taken
 
         try:
             #Take photo according to parameters
@@ -67,22 +69,32 @@ def balise():
 
             #If photo is not taken (it will throw a NoneType error)
             if (not path_to_photo_taken):
-                print("Problème lors de la prise de photo.")
+                print(f"Log [{FILE_NAME}]: Problème lors de la prise de photo.")
                 return
 
-            #Compute image based on advanced options
-            #1st redress
-            if redress:
-                corner_ids = (int(request.form[f"redress_id{idx}"]) for idx in range(1, 5))
-                ret, path_to_photo_taken = straightenBoardUsingAruco.straightenBoardUsingAruco(filename=path_to_photo_taken,
-                                                                     corner_ids=corner_ids)
-                if not ret: message+="L'image n'a pas pu être redréssée.\n"
+            all_processed_images=[]#path to processed image list
+            path_to_photo_processed=path_to_photo_taken
 
-            #2nd aruco tags
+            #Compute image based on advanced options
+            #1st aruco tags
             if detect_aruco:
-                ret, _, _, path_to_photo_taken = detectAruco.detectAruco(filename=path_to_photo_taken,
+                ret, _, _, path_to_photo_processed = detectAruco.detectAruco(filename=path_to_photo_processed,
                                                              drawId=True)
-                if not ret: message+="Aucun ArUco n'a pu être détecté.\n"
+                all_processed_images.append(path_to_photo_processed)
+
+                if not ret: processed_info+="Aucun ArUco n'a pu être détecté.\n"
+
+            #2nd redress
+            if redress:
+                corner_ids = (int(request.form["redress_id1"]),
+                              int(request.form["redress_id2"]),
+                              int(request.form["redress_id3"]),
+                              int(request.form["redress_id4"]))
+                ret, path_to_photo_processed = straightenBoardUsingAruco.straightenBoardUsingAruco(filename=path_to_photo_processed,
+                                                                     corner_ids=corner_ids)
+                all_processed_images.append(path_to_photo_processed)
+
+                if not ret: processed_info+="L'image n'a pas pu être redréssée.\n"
 
             #3rd color and surface
             if detect_color:
@@ -93,34 +105,48 @@ def balise():
                 if detect_color_surface:
                     color_minSurface = int(request.form["color_minSurface"])
                     color_maxSurface = int(request.form["color_maxSurface"])
-                    ret, _, path_to_photo_taken = detectColor.detectColor(filename=path_to_photo_taken,
+                    ret, _, path_to_photo_processed = detectColor.colorDetection(filename=path_to_photo_processed,
                                                                  hue=hue,
                                                                  saturation=saturation,
                                                                  value=value,
                                                                  minSurface=color_minSurface,
                                                                  maxSurface=color_maxSurface,
-                                                                 drawId=True)
+                                                                             rectangled=True)
+                    all_processed_images.append(path_to_photo_processed)
                 else : #call function without surfaces
-                    ret, _, path_to_photo_taken = detectColor.detectColor(filename=path_to_photo_taken,
+                    ret, _, path_to_photo_processed = detectColor.colorDetection(filename=path_to_photo_processed,
                                                                     hue=hue,
                                                                     saturation=saturation,
                                                                     value=value,
-                                                                    drawId=True)
+                                                                    rectangled=True)
+                    all_processed_images.append(path_to_photo_processed)
 
-                if not ret: message+="La détection de couleur n'a pas été réalisée.\n"
+                if not ret: processed_info+="La détection de couleur n'a pas été réalisée.\n"
+
+            #Delete files created except og and finale one
+            if all_processed_images : all_processed_images.pop(-1)
+            for file_path in all_processed_images:
+                if os.path.isfile(file_path):#test if the file exist quand même
+                    os.remove(file_path)
 
             #Create the message to display
-            message = f"Photo prise avec succès.\nElle est disponnible dans le dossier {path_to_photo_taken} ou dans la galerie des photos.\nNom : {path_to_photo_taken.split('/')[-1]}\n{message}"
+            image_name = path_to_photo_taken.split('/')[-1] #get og photo
+            processed_name = path_to_photo_processed.split('/')[-1] #get final process photo
+            if image_name==processed_name: #if there is no process done to the photo
+                processed_name='-'
+            if not processed_info:#if ther is no info from image traitement
+                processed_info="-"
 
-            #Create with response with success key True
-            response = {'success': True, 'message': message}
+            #Create response with success key True
+            response = {'success': True, "image_name":image_name,
+                                         "processed_name":processed_name,
+                                         "processed_info":processed_info}
 
 
         except Exception as e:
             traceback.print_exc()
             #Create with response with success key False
             response = {'success': False, 'error': str(e)}
-
 
         #Get method after submit form for photo
         return jsonify(response)
@@ -197,7 +223,15 @@ def getPhotoModal(filename):
 
 
 
-
-
 if __name__=="__main__":
-    app.run(debug=True, host='0.0.0.0') #Web app accessible by any device on the network
+    app.run(debug=True, host="0.0.0.0",port=5024)
+    #host=0.0.0.0 -> Web app accessible by any device on the same network
+    #port=5024 -> Port to access web app
+    #http:/10.42.0.1:5024
+
+
+
+
+
+
+

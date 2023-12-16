@@ -25,6 +25,7 @@
     margin-right: 10px; /*set margin-top*/
 }
 #photoForm ul {
+    list-style: none; /*no disc*/
     padding:0px /*reset default padding*/
 }
 
@@ -56,10 +57,6 @@
     width: 2px;
     margin: 15px;
     background-color: var(--balise-secondary-color); /*color of the vertical bar*/
-}
-
-#photoForm ul {
-    list-style: none; /*no disc*/
 }
 
 #photoForm input,
@@ -95,7 +92,7 @@ input::-webkit-outer-spin-button,
 }
 
 
-#photoForm li {
+#photoForm li {/*list item style*/
     margin-top: 15px;
     margin-bottom: 15px;
     padding: 8px;
@@ -181,7 +178,7 @@ input::-webkit-outer-spin-button,
 }
 #photoForm .tooltip-container p{
     margin:0px;
-    text-wrap:wrap; /*text dont iverflow the container*/
+    text-wrap:wrap; /*text dont overflow the container*/
 }
 #photoForm .tooltip-container:hover .tooltip-content {
     display: block; /*show content*/
@@ -201,11 +198,10 @@ input::-webkit-outer-spin-button,
     background-color: var(--balise-button-hover-photo-background-color);
 }
 
-#resultMessage #resultMessageParagraph{
-    padding-left: 34px;
-    padding-right: 34px;
-    word-break: break-all; /*wrap text to not overlab contents*/
-
+#resultMessage #resultMessageParagraph li{
+    margin-left: 28px;
+    margin-top: -10px;
+    margin-bottom: 0px;
 }
 
 /*2nd TAB*/
