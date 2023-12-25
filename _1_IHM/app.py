@@ -4,8 +4,8 @@ import cv2
 import traceback
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path ------------
-from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectAruco, detectColor #-------------
+#sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path ------------
+#from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectAruco, detectColor #-------------
 
 
 from scripts.formatdata import formatBytes, formatSeconds
@@ -15,7 +15,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
+MEDIA_FOLDER_PATH = "/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/"#"/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)

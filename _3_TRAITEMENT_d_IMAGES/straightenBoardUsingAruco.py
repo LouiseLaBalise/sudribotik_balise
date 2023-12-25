@@ -205,7 +205,7 @@ if __name__ == "__main__":
 
     #Get all arguments
     args = parser.parse_args()
-    filename = args.path_to_file.split('/')[-1] #get filename
+    filename = args.path_to_file #get filename
     corner_ids = args.ids #get corner ids
     method = args.method #get method
 
