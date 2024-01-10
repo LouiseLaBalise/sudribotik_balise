@@ -1,0 +1,43 @@
+# Utilisation d'une image ROS noetic de base
+FROM ros_dev:latest
+
+# Avoid interactive prompt during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Change the default shell to Bash
+SHELL [ "/bin/bash" , "-c" ]
+
+
+#----------------- Ajout des dépendances ---------------
+
+# Installation des dépendances nécessaires pour la raspberry Pi Louise, à compléter si nécessaire
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    gedit \
+    git \
+    vim \
+    && rm -rf /var/lib/apt/lists/* 
+
+
+# Set dir to requirements_image
+WORKDIR /requirements_image
+# Copy only the requirements.txt file into the container at /init_image
+COPY init/requirements.txt /requirements_image/
+# Installation des bibliothèques python nécessaires
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
+
+
+#----------------- Garantir les droits admin de l'hôte ---------------
+
+#TODO : Assez casse tête/insecure si mal fait, pour l'instant les droits devront être modifié directement dans le conteneur avec un chmod
+
+# Se déplacer dans le repertoire principal
+WORKDIR /Louise_eurobot_2024
+
+#
+#-------------------- Fin ---------------------
+
+
+
+
+

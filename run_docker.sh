@@ -8,7 +8,7 @@
 # 
 # Usage Example:
 # ./run_docker.sh [docker_image] 
-# ./run_docker.sh ros_dev:1.0 
+# ./run_docker.sh ros_mini:latest
 
 
 # Define Docker volumes and environment variables

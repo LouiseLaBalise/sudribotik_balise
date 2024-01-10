@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg"
+messages_str = "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg"
 services_str = ""
 pkg_name = "balise_msgs"
 dependencies_str = "std_msgs"

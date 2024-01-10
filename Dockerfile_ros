@@ -1,28 +1,10 @@
 # Utilisation d'une image ROS noetic de base
 FROM osrf/ros:noetic-desktop-full
 
-# Change the default shell to Bash
-SHELL [ "/bin/bash" , "-c" ]
-
-
-#----------------- Garantir les droits admin de l'hôte ---------------
-
-#TODO : Assez casse tête/insecure si mal fait, pour l'instant les droits devront être modifié directement dans le conteneur avec un chmod
-
-#----------------- Copie des travaux déjà effectués ---------------
-
-# Copie du contenu du répertoire local dans le conteneur
-COPY . /Louise_eurobot_2024
-
-# Se déplacer dans le repertoire principal
-WORKDIR /Louise_eurobot_2024
-
 #----------------- Ajout des dépendances ---------------
 
 # Installation des dépendances nécessaires pour ROS, à compléter si nécessaire
 RUN apt-get update && apt-get install -y \
-    vim \
-    git \
     python3-rosdep \
     python3-rosinstall \
     python3-rosinstall-generator \

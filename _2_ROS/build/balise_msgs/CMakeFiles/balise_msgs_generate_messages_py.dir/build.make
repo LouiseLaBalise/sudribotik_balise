@@ -54,9 +54,9 @@ CMAKE_BINARY_DIR = /Louise_eurobot_2024/_2_ROS/build
 include balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/progress.make
 
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPx.py
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionAruco.py
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionGameElements.py
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionRobot.py
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPxWithType.py
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_Score.py
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py
 
@@ -66,20 +66,23 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG balise_msgs/PositionPx"
 	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionAruco.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionAruco.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG balise_msgs/PositionAruco"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPxWithType.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPxWithType.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python from MSG balise_msgs/PositionPxWithType"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionGameElements.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionGameElements.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG balise_msgs/PositionGameElements"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python from MSG balise_msgs/ArrayPositionPx"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionRobot.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionRobot.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG balise_msgs/PositionRobot"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python from MSG balise_msgs/ArrayPositionPxWithType"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg
 
 /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_Score.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_Score.py: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg
@@ -88,18 +91,18 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2
 
 /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPx.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionAruco.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionGameElements.py
-/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionRobot.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPxWithType.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py
+/Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py
 /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_Score.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python msg __init__.py for balise_msgs"
 	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg --initpy
 
 balise_msgs_generate_messages_py: balise_msgs/CMakeFiles/balise_msgs_generate_messages_py
 balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPx.py
-balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionAruco.py
-balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionGameElements.py
-balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionRobot.py
+balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_PositionPxWithType.py
+balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPx.py
+balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_ArrayPositionPxWithType.py
 balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/_Score.py
 balise_msgs_generate_messages_py: /Louise_eurobot_2024/_2_ROS/devel/lib/python3/dist-packages/balise_msgs/msg/__init__.py
 balise_msgs_generate_messages_py: balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/build.make

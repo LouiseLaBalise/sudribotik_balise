@@ -40,9 +40,9 @@ endif()
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/balise_msgs/msg" TYPE FILE FILES
     "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
-    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
-    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
-    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
+    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
+    "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
     "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg"
     )
 endif()

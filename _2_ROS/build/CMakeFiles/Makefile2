@@ -100,19 +100,19 @@ balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
-balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/clean
+balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
-balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
-balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_geneus.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/std_msgs_generate_messages_py.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_gencpp.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/balise_msgs_generate_messages.dir/clean
-balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
-balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/clean
+balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/clean
 balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/clean
+balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
+balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/clean
+balise_msgs/clean: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/clean
 
 .PHONY : balise_msgs/clean
 
@@ -466,12 +466,12 @@ balise_msgs/CMakeFiles/balise_msgs_genpy.dir/clean:
 # Target rules for target balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_nodejs.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=17,18,19,20,21 "Built target balise_msgs_generate_messages_nodejs"
@@ -552,12 +552,12 @@ balise_msgs/CMakeFiles/balise_msgs_genlisp.dir/clean:
 # Target rules for target balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=12,13,14,15,16 "Built target balise_msgs_generate_messages_lisp"
@@ -584,12 +584,12 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_lisp.dir/clean:
 # Target rules for target balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/std_msgs_generate_messages_py.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=22,23,24,25,26,27 "Built target balise_msgs_generate_messages_py"
@@ -616,12 +616,12 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_py.dir/clean:
 # Target rules for target balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=6,7,8,9,10,11 "Built target balise_msgs_generate_messages_eus"
@@ -672,31 +672,31 @@ balise_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
 .PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 
 #=============================================================================
-# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir
+# Target rules for target balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/depend
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionRobot"
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
+balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all:
+	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/depend
+	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_eus"
+.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule: cmake_check_build_system
+balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule
+.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionRobot: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule
+std_msgs_generate_messages_eus: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionRobot
+.PHONY : std_msgs_generate_messages_eus
 
 # clean rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/clean:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/clean
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/clean
+balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
+	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
+.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
 
 #=============================================================================
 # Target rules for target balise_msgs/CMakeFiles/std_msgs_generate_messages_lisp.dir
@@ -751,60 +751,6 @@ std_msgs_generate_messages_nodejs: balise_msgs/CMakeFiles/std_msgs_generate_mess
 balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean:
 	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
 .PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
-
-#=============================================================================
-# Target rules for target balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir
-
-# All Build rule for target.
-balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all:
-	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/depend
-	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target std_msgs_generate_messages_eus"
-.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-
-# Build rule for subdir invocation for target.
-balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# clean rule for target.
-balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean:
-	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
-.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
-
-#=============================================================================
-# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir
-
-# All Build rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/depend
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionAruco"
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-
-# Build rule for subdir invocation for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule
-
-# Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionAruco: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule
-
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionAruco
-
-# clean rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/clean:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/clean
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/clean
 
 #=============================================================================
 # Target rules for target balise_msgs/CMakeFiles/balise_msgs_geneus.dir
@@ -865,11 +811,11 @@ balise_msgs/CMakeFiles/std_msgs_generate_messages_py.dir/clean:
 
 # All Build rule for target.
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/all: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/build.make balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target balise_msgs_generate_messages_cpp"
@@ -951,58 +897,31 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages.dir/clean:
 .PHONY : balise_msgs/CMakeFiles/balise_msgs_generate_messages.dir/clean
 
 #=============================================================================
-# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir
+# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir
 
 # All Build rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/depend
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionPx"
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/depend
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionPxWithType"
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 
 # Build rule for subdir invocation for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule: cmake_check_build_system
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule
 
 # Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+_balise_msgs_generate_messages_check_deps_PositionPxWithType: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule
 
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
-
-# clean rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
-
-#=============================================================================
-# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir
-
-# All Build rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/depend
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionGameElements"
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
-
-# Build rule for subdir invocation for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule
-
-# Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionGameElements: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule
-
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionGameElements
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPxWithType
 
 # clean rule for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/clean:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/clean
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/clean
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/clean:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/clean
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/clean
 
 #=============================================================================
 # Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir
@@ -1030,6 +949,87 @@ _balise_msgs_generate_messages_check_deps_Score: balise_msgs/CMakeFiles/_balise_
 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/clean:
 	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/clean
 .PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/clean
+
+#=============================================================================
+# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir
+
+# All Build rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/depend
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_PositionPx"
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+
+# Build rule for subdir invocation for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_PositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
+
+# clean rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/clean
+
+#=============================================================================
+# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir
+
+# All Build rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/depend
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_ArrayPositionPx"
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+
+# Build rule for subdir invocation for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPx
+
+# clean rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/clean:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/clean
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/clean
+
+#=============================================================================
+# Target rules for target balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir
+
+# All Build rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/depend
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num= "Built target _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType"
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
+
+# Build rule for subdir invocation for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Louise_eurobot_2024/_2_ROS/build/CMakeFiles 0
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType
+
+# clean rule for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/clean:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/clean
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/clean
 
 #=============================================================================
 # Target rules for target board_detection/CMakeFiles/_catkin_empty_exported_target.dir

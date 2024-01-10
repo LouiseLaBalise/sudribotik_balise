@@ -22,19 +22,19 @@ add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" ""
 )
 
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" ""
 )
 
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" "balise_msgs/PositionPx:std_msgs/Header"
 )
 
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" "balise_msgs/PositionPxWithType"
 )
 
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
@@ -55,21 +55,21 @@ _generate_msg_cpp(balise_msgs
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_cpp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_cpp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_cpp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_cpp(balise_msgs
@@ -95,11 +95,11 @@ add_dependencies(balise_msgs_generate_messages balise_msgs_generate_messages_cpp
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_cpp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_cpp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_cpp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_cpp _balise_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_cpp _balise_msgs_generate_messages_check_deps_${_filename})
@@ -120,21 +120,21 @@ _generate_msg_eus(balise_msgs
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_eus(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_eus(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_eus(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_eus(balise_msgs
@@ -160,11 +160,11 @@ add_dependencies(balise_msgs_generate_messages balise_msgs_generate_messages_eus
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_eus _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_eus _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_eus _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_eus _balise_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_eus _balise_msgs_generate_messages_check_deps_${_filename})
@@ -185,21 +185,21 @@ _generate_msg_lisp(balise_msgs
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_lisp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_lisp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_lisp(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_lisp(balise_msgs
@@ -225,11 +225,11 @@ add_dependencies(balise_msgs_generate_messages balise_msgs_generate_messages_lis
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_lisp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_lisp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_lisp _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_lisp _balise_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_lisp _balise_msgs_generate_messages_check_deps_${_filename})
@@ -250,21 +250,21 @@ _generate_msg_nodejs(balise_msgs
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_nodejs(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_nodejs(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_nodejs(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_nodejs(balise_msgs
@@ -290,11 +290,11 @@ add_dependencies(balise_msgs_generate_messages balise_msgs_generate_messages_nod
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_nodejs _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_nodejs _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_nodejs _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_nodejs _balise_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_nodejs _balise_msgs_generate_messages_check_deps_${_filename})
@@ -315,21 +315,21 @@ _generate_msg_py(balise_msgs
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_py(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_py(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_py(balise_msgs
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg"
   "${MSG_I_FLAGS}"
-  ""
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_py(balise_msgs
@@ -355,11 +355,11 @@ add_dependencies(balise_msgs_generate_messages balise_msgs_generate_messages_py)
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_py _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_py _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_py _balise_msgs_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg" NAME_WE)
+get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_py _balise_msgs_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg" NAME_WE)
 add_dependencies(balise_msgs_generate_messages_py _balise_msgs_generate_messages_check_deps_${_filename})

@@ -50,9 +50,9 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   PositionPx.msg
-  PositionAruco.msg
-  PositionGameElements.msg
-  PositionRobot.msg
+  PositionPxWithType.msg
+  ArrayPositionPx.msg
+  ArrayPositionPxWithType.msg
   Score.msg
 )
 
@@ -73,7 +73,7 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  
+  std_msgs
 )
 
 ################################################

@@ -19,7 +19,7 @@ Detect ArUco markers.
     drawId (bool)       ->      draw a square and id on detected markers.
     axis (bool)         ->      show axis of detected markers.
 
-Return Aruco succes, corners positions, their ids, image path.
+Return function success, corners positions, their ids, image path.
 """
 def detectAruco(filename:str, drawId=True, axis=False):
 

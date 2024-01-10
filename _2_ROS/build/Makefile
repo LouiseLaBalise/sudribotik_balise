@@ -389,17 +389,17 @@ std_msgs_generate_messages_cpp/fast:
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionRobot
+# Target rules for targets named std_msgs_generate_messages_eus
 
 # Build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionRobot: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionRobot
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionRobot
+std_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
+.PHONY : std_msgs_generate_messages_eus
 
 # fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionRobot/fast:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionRobot/fast
+std_msgs_generate_messages_eus/fast:
+	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
 
 #=============================================================================
 # Target rules for targets named std_msgs_generate_messages_lisp
@@ -426,32 +426,6 @@ std_msgs_generate_messages_nodejs: cmake_check_build_system
 std_msgs_generate_messages_nodejs/fast:
 	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
 .PHONY : std_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named std_msgs_generate_messages_eus
-
-# Build rule for target.
-std_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	$(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-#=============================================================================
-# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionAruco
-
-# Build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionAruco: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionAruco
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionAruco
-
-# fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionAruco/fast:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionAruco/fast
 
 #=============================================================================
 # Target rules for targets named balise_msgs_geneus
@@ -519,30 +493,17 @@ balise_msgs_generate_messages/fast:
 .PHONY : balise_msgs_generate_messages/fast
 
 #=============================================================================
-# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionPx
+# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionPxWithType
 
 # Build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionPx: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionPx
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
+_balise_msgs_generate_messages_check_deps_PositionPxWithType: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionPxWithType
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPxWithType
 
 # fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionPx/fast:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx/fast
-
-#=============================================================================
-# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionGameElements
-
-# Build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionGameElements: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionGameElements
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionGameElements
-
-# fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionGameElements/fast:
-	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionGameElements/fast
+_balise_msgs_generate_messages_check_deps_PositionPxWithType/fast:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPxWithType/fast
 
 #=============================================================================
 # Target rules for targets named _balise_msgs_generate_messages_check_deps_Score
@@ -556,6 +517,45 @@ _balise_msgs_generate_messages_check_deps_Score: cmake_check_build_system
 _balise_msgs_generate_messages_check_deps_Score/fast:
 	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/build
 .PHONY : _balise_msgs_generate_messages_check_deps_Score/fast
+
+#=============================================================================
+# Target rules for targets named _balise_msgs_generate_messages_check_deps_PositionPx
+
+# Build rule for target.
+_balise_msgs_generate_messages_check_deps_PositionPx: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_PositionPx
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_PositionPx/fast:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx/fast
+
+#=============================================================================
+# Target rules for targets named _balise_msgs_generate_messages_check_deps_ArrayPositionPx
+
+# Build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPx: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_ArrayPositionPx
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPx
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPx/fast:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPx/fast
+
+#=============================================================================
+# Target rules for targets named _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType
+
+# Build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType/fast:
+	$(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType/fast
 
 #=============================================================================
 # Target rules for targets named _catkin_empty_exported_target
@@ -600,19 +600,19 @@ help:
 	@echo "... balise_msgs_generate_messages_py"
 	@echo "... balise_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionRobot"
+	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_nodejs"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionAruco"
 	@echo "... balise_msgs_geneus"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... balise_msgs_generate_messages_cpp"
 	@echo "... balise_msgs_gencpp"
 	@echo "... balise_msgs_generate_messages"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionPx"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionGameElements"
+	@echo "... _balise_msgs_generate_messages_check_deps_PositionPxWithType"
 	@echo "... _balise_msgs_generate_messages_check_deps_Score"
+	@echo "... _balise_msgs_generate_messages_check_deps_PositionPx"
+	@echo "... _balise_msgs_generate_messages_check_deps_ArrayPositionPx"
+	@echo "... _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType"
 	@echo "... _catkin_empty_exported_target"
 .PHONY : help
 

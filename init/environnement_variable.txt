@@ -1,0 +1,25 @@
+#Ce fichier sert à faire la passerelle entre la raspberry pi4 et tout autre PC.
+#Veuillez remplir chaque lignes pour assurer le bon fonctionnement des programmes quelque soit votre
+# environnemnt de programmation.
+
+# /!\ Par soucis de sécurité ce fichier sera inscrit dans le .gitignore, si vous ajoutez des variables
+# merci de mettre à jour ce fichier sur le github en l'enlevant du .gitignore et en supprimant vos propres
+# variables.
+
+#------------------------- Général ------------------------
+# -> Nom de votre OS
+OS=
+
+#------------------------- _1_IHM -------------------------
+
+#------------------------- _2_ROS -------------------------
+
+#----------------- _3_TRAITEMENT_d_IMAGES -----------------
+# -> Chemin absolu (commençant généralement par /home) jusqu'au répertoire media/
+MEDIA_FOLDER_PATH=
+
+#-------------------------- init --------------------------
+# -> Actuellement en mode debug ou non.
+DEBUG=
+
+#------------------------- test_24 ------------------------

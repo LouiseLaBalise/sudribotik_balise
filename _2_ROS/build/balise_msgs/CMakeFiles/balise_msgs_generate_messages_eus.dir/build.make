@@ -54,9 +54,9 @@ CMAKE_BINARY_DIR = /Louise_eurobot_2024/_2_ROS/build
 include balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/progress.make
 
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPx.l
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionAruco.l
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionGameElements.l
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionRobot.l
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPxWithType.l
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPxWithType.l
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/Score.l
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/manifest.l
 
@@ -66,20 +66,23 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from balise_msgs/PositionPx.msg"
 	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionAruco.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionAruco.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from balise_msgs/PositionAruco.msg"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPxWithType.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPxWithType.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from balise_msgs/PositionPxWithType.msg"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionGameElements.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionGameElements.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from balise_msgs/PositionGameElements.msg"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from balise_msgs/ArrayPositionPx.msg"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
 
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionRobot.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionRobot.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from balise_msgs/PositionRobot.msg"
-	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPxWithType.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPxWithType.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg
+/Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPxWithType.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from balise_msgs/ArrayPositionPxWithType.msg"
+	cd /Louise_eurobot_2024/_2_ROS/build/balise_msgs && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg
 
 /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/Score.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/Score.l: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg
@@ -92,9 +95,9 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_
 
 balise_msgs_generate_messages_eus: balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus
 balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPx.l
-balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionAruco.l
-balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionGameElements.l
-balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionRobot.l
+balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/PositionPxWithType.l
+balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPx.l
+balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/ArrayPositionPxWithType.l
 balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/msg/Score.l
 balise_msgs_generate_messages_eus: /Louise_eurobot_2024/_2_ROS/devel/share/roseus/ros/balise_msgs/manifest.l
 balise_msgs_generate_messages_eus: balise_msgs/CMakeFiles/balise_msgs_generate_messages_eus.dir/build.make

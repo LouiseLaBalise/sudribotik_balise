@@ -54,9 +54,9 @@ CMAKE_BINARY_DIR = /Louise_eurobot_2024/_2_ROS/build
 include balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/progress.make
 
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPx.h
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionAruco.h
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionGameElements.h
-balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionRobot.h
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPxWithType.h
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h
+balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h
 balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/Score.h
 
 
@@ -66,23 +66,26 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from balise_msgs/PositionPx.msg"
 	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionAruco.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionAruco.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionAruco.h: /opt/ros/noetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from balise_msgs/PositionAruco.msg"
-	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionAruco.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPxWithType.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPxWithType.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPxWithType.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating C++ code from balise_msgs/PositionPxWithType.msg"
+	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionGameElements.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionGameElements.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionGameElements.h: /opt/ros/noetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from balise_msgs/PositionGameElements.msg"
-	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionGameElements.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating C++ code from balise_msgs/ArrayPositionPx.msg"
+	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionRobot.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionRobot.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg
-/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionRobot.h: /opt/ros/noetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from balise_msgs/PositionRobot.msg"
-	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionRobot.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg
+/Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Louise_eurobot_2024/_2_ROS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from balise_msgs/ArrayPositionPxWithType.msg"
+	cd /Louise_eurobot_2024/_2_ROS/src/balise_msgs && /Louise_eurobot_2024/_2_ROS/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg -Ibalise_msgs:/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p balise_msgs -o /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs -e /opt/ros/noetic/share/gencpp/cmake/..
 
 /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/Score.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/Score.h: /Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg
@@ -92,9 +95,9 @@ balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_
 
 balise_msgs_generate_messages_cpp: balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp
 balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPx.h
-balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionAruco.h
-balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionGameElements.h
-balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionRobot.h
+balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/PositionPxWithType.h
+balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPx.h
+balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/ArrayPositionPxWithType.h
 balise_msgs_generate_messages_cpp: /Louise_eurobot_2024/_2_ROS/devel/include/balise_msgs/Score.h
 balise_msgs_generate_messages_cpp: balise_msgs/CMakeFiles/balise_msgs_generate_messages_cpp.dir/build.make
 

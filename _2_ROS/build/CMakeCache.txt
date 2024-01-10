@@ -361,6 +361,9 @@ PYTHON_VERSION:STRING=3
 //Location of Python module em
 PY_EM:STRING=/usr/lib/python3/dist-packages/em.py
 
+//The directory containing a CMake configuration file for PositionPx.
+PositionPx_DIR:PATH=PositionPx_DIR-NOTFOUND
+
 //Value Computed by CMake
 Project_BINARY_DIR:STATIC=/Louise_eurobot_2024/_2_ROS/build
 

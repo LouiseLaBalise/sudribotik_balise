@@ -56,18 +56,6 @@ CMAKE_BINARY_DIR = /Louise_eurobot_2024/_2_ROS/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -113,16 +101,6 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -134,6 +112,28 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -288,19 +288,19 @@ std_msgs_generate_messages_cpp/fast:
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule
+balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionRobot: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/rule
+std_msgs_generate_messages_eus: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
 
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionRobot
+.PHONY : std_msgs_generate_messages_eus
 
 # fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionRobot/fast:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionRobot.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionRobot/fast
+std_msgs_generate_messages_eus/fast:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
 balise_msgs/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
@@ -331,36 +331,6 @@ std_msgs_generate_messages_nodejs: balise_msgs/CMakeFiles/std_msgs_generate_mess
 std_msgs_generate_messages_nodejs/fast:
 	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
 .PHONY : std_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_eus: balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make balise_msgs/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule
-
-# Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionAruco: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/rule
-
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionAruco
-
-# fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionAruco/fast:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionAruco.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionAruco/fast
 
 # Convenience name for target.
 balise_msgs/CMakeFiles/balise_msgs_geneus.dir/rule:
@@ -438,34 +408,19 @@ balise_msgs_generate_messages/fast:
 .PHONY : balise_msgs_generate_messages/fast
 
 # Convenience name for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule
 
 # Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+_balise_msgs_generate_messages_check_deps_PositionPxWithType: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/rule
 
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPxWithType
 
 # fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionPx/fast:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx/fast
-
-# Convenience name for target.
-balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule
-.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule
-
-# Convenience name for target.
-_balise_msgs_generate_messages_check_deps_PositionGameElements: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/rule
-
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionGameElements
-
-# fast build rule for target.
-_balise_msgs_generate_messages_check_deps_PositionGameElements/fast:
-	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionGameElements.dir/build
-.PHONY : _balise_msgs_generate_messages_check_deps_PositionGameElements/fast
+_balise_msgs_generate_messages_check_deps_PositionPxWithType/fast:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPxWithType.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPxWithType/fast
 
 # Convenience name for target.
 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/rule:
@@ -482,13 +437,57 @@ _balise_msgs_generate_messages_check_deps_Score/fast:
 	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_Score.dir/build
 .PHONY : _balise_msgs_generate_messages_check_deps_Score/fast
 
+# Convenience name for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_PositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_PositionPx/fast:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_PositionPx.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_PositionPx/fast
+
+# Convenience name for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPx: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPx
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPx/fast:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPx.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPx/fast
+
+# Convenience name for target.
+balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f CMakeFiles/Makefile2 balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule
+.PHONY : balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule
+
+# Convenience name for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType: balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/rule
+
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType
+
+# fast build rule for target.
+_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType/fast:
+	cd /Louise_eurobot_2024/_2_ROS/build && $(MAKE) -f balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build.make balise_msgs/CMakeFiles/_balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType.dir/build
+.PHONY : _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/local"
 	@echo "... balise_msgs_genpy"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
@@ -501,21 +500,22 @@ help:
 	@echo "... balise_msgs_generate_messages_eus"
 	@echo "... install/strip"
 	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionRobot"
+	@echo "... install"
+	@echo "... std_msgs_generate_messages_eus"
 	@echo "... list_install_components"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_nodejs"
-	@echo "... install"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionAruco"
 	@echo "... balise_msgs_geneus"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... balise_msgs_generate_messages_cpp"
 	@echo "... balise_msgs_gencpp"
 	@echo "... balise_msgs_generate_messages"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionPx"
-	@echo "... _balise_msgs_generate_messages_check_deps_PositionGameElements"
+	@echo "... install/local"
+	@echo "... _balise_msgs_generate_messages_check_deps_PositionPxWithType"
 	@echo "... _balise_msgs_generate_messages_check_deps_Score"
+	@echo "... _balise_msgs_generate_messages_check_deps_PositionPx"
+	@echo "... _balise_msgs_generate_messages_check_deps_ArrayPositionPx"
+	@echo "... _balise_msgs_generate_messages_check_deps_ArrayPositionPxWithType"
 .PHONY : help
 
 
