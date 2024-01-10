@@ -1,0 +1,64 @@
+[2.785s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'list', '-p', '--base-paths', '/home/student/Desktop/Test']
+[2.785s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='list', build_base='build', ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['/home/student/Desktop/Test'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], topological_order=False, names_only=False, paths_only=True, topological_graph=False, topological_graph_dot=False, topological_graph_density=False, topological_graph_legend=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f2b615d94e0>, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0x7f2b6158f280>, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0x7f2b6158f280>>)
+[2.871s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[2.872s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[2.872s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[2.872s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[2.872s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[2.872s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/student/Desktop/Test'
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['ignore', 'ignore_ament_install']
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'ignore'
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'ignore_ament_install'
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['colcon_pkg']
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'colcon_pkg'
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['colcon_meta']
+[2.872s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'colcon_meta'
+[2.873s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['ros']
+[2.873s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'ros'
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['cmake', 'python']
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'cmake'
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'python'
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extensions ['python_setup_py']
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test) by extension 'python_setup_py'
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extensions ['ignore', 'ignore_ament_install']
+[2.891s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extension 'ignore'
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extension 'ignore_ament_install'
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extensions ['colcon_pkg']
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extension 'colcon_pkg'
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extensions ['colcon_meta']
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extension 'colcon_meta'
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extensions ['ros']
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) by extension 'ros'
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/build) ignored
+[2.892s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/devel) by extensions ['ignore', 'ignore_ament_install']
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/devel) by extension 'ignore'
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/devel) by extension 'ignore_ament_install'
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/devel) ignored
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/log) by extensions ['ignore', 'ignore_ament_install']
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/log) by extension 'ignore'
+[2.893s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/log) ignored
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['ignore', 'ignore_ament_install']
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'ignore'
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'ignore_ament_install'
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['colcon_pkg']
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'colcon_pkg'
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['colcon_meta']
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'colcon_meta'
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['ros']
+[2.894s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'ros'
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['cmake', 'python']
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'cmake'
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'python'
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extensions ['python_setup_py']
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src) by extension 'python_setup_py'
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extensions ['ignore', 'ignore_ament_install']
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extension 'ignore'
+[2.895s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extension 'ignore_ament_install'
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extensions ['colcon_pkg']
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extension 'colcon_pkg'
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extensions ['colcon_meta']
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extension 'colcon_meta'
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extensions ['ros']
+[2.896s] Level 1:colcon.colcon_core.package_identification:_identify(/home/student/Desktop/Test/src/balise) by extension 'ros'
+[2.902s] DEBUG:colcon.colcon_core.package_identification:Package '/home/student/Desktop/Test/src/balise' with type 'ros.catkin' and name 'balise'
+[2.902s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults

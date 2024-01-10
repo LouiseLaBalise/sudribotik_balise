@@ -1,0 +1,2 @@
+balise
+-DCATKIN_DEVEL_PREFIX=/home/student/Desktop/Test/devel -DCMAKE_INSTALL_PREFIX=/home/student/Desktop/Test/install -G Unix Makefiles
