@@ -11,7 +11,7 @@ FILE_NAME = os.path.basename(FILE_PATH)
 
 
 """
-Straighten a board with 4 Aruco tags.
+Redress a board with 4 Aruco tags.
     filename (str)      ->      name of the inputed image.
                                 output will be store next to filename.
     corner_ids (tuple)  ->      ids of the 4 mendatory ArUco tags
@@ -19,7 +19,7 @@ Straighten a board with 4 Aruco tags.
 
 Return function success and filename.
 """
-def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORNER"):
+def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORNER"):
 
     #FOR EDITION 2024
     HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
@@ -48,7 +48,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
         print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
         return False, filename
 
-    #All 4 Aruco markers are needed to perform image straightening
+    #All 4 Aruco markers are needed to perform image to reddress
     corner_ids_no_detected = [] #will store ids
     corners_pos_detected_ids = [] #will store corners positions
     ids = ids.flatten() #flatten ids array to facilitate its navigation
@@ -106,7 +106,7 @@ def straightenBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="C
 
 
 
-    #Straighten board using center of each Aruco tags NOT WORKING RIGHT NOW
+    #Reddress board using center of each Aruco tags NOT WORKING RIGHT NOW
     elif method=="CENTER":
         #Get source points (where points are on the distorded board)
         src_pts = np.float32([])
@@ -189,7 +189,7 @@ if __name__ == "__main__":
                         type=int,                                           #must be integers
                         metavar=('id1', 'id2', 'id3', 'id4'),               #variables significations
                         default=(20, 21, 22, 23),                           #default values
-                        help="Id number of corners needed to straighten the image")      #help text
+                        help="Id number of corners needed to redress the image")      #help text
 
     parser.add_argument("-m",                                               #short option
                         "--method",                                         #long option
@@ -197,7 +197,7 @@ if __name__ == "__main__":
                         type=str,                                           #must be string
                         choices=("CORNER", "CENTER"),                       #only available choices
                         default="CORNER",                                   #default value
-                        help="Specify method of straightenning")            #help text
+                        help="Specify method for redress")            #help text
 
 
     #Implement CLI options for photo (-p -t -q -dn)
@@ -215,4 +215,4 @@ if __name__ == "__main__":
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
         filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
 
-    straightenBoardUsingAruco(filename, corner_ids=corner_ids, method=method)
+    redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)

@@ -15,7 +15,6 @@
 #include <ros/builtin_message_traits.h>
 #include <ros/message_operations.h>
 
-#include <std_msgs/Header.h>
 #include <balise_msgs/PositionPx.h>
 
 namespace balise_msgs
@@ -26,19 +25,14 @@ struct ArrayPositionPx_
   typedef ArrayPositionPx_<ContainerAllocator> Type;
 
   ArrayPositionPx_()
-    : header()
-    , array_of_positionspx()  {
+    : array_of_positionspx()  {
     }
   ArrayPositionPx_(const ContainerAllocator& _alloc)
-    : header(_alloc)
-    , array_of_positionspx(_alloc)  {
+    : array_of_positionspx(_alloc)  {
   (void)_alloc;
     }
 
 
-
-   typedef  ::std_msgs::Header_<ContainerAllocator>  _header_type;
-  _header_type header;
 
    typedef std::vector< ::balise_msgs::PositionPx_<ContainerAllocator> , typename std::allocator_traits<ContainerAllocator>::template rebind_alloc< ::balise_msgs::PositionPx_<ContainerAllocator> >> _array_of_positionspx_type;
   _array_of_positionspx_type array_of_positionspx;
@@ -72,8 +66,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::balise_msgs::ArrayPositionPx_<ContainerAllocator1> & lhs, const ::balise_msgs::ArrayPositionPx_<ContainerAllocator2> & rhs)
 {
-  return lhs.header == rhs.header &&
-    lhs.array_of_positionspx == rhs.array_of_positionspx;
+  return lhs.array_of_positionspx == rhs.array_of_positionspx;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -116,12 +109,12 @@ struct IsFixedSize< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> const>
 
 template <class ContainerAllocator>
 struct HasHeader< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct HasHeader< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 
@@ -130,12 +123,12 @@ struct MD5Sum< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "74175f7ab9c85114e7078a9141456233";
+    return "4d42662441de878808f5bfe3b2bdeae4";
   }
 
   static const char* value(const ::balise_msgs::ArrayPositionPx_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x74175f7ab9c85114ULL;
-  static const uint64_t static_value2 = 0xe7078a9141456233ULL;
+  static const uint64_t static_value1 = 0x4d42662441de8788ULL;
+  static const uint64_t static_value2 = 0x08f5bfe3b2bdeae4ULL;
 };
 
 template<class ContainerAllocator>
@@ -154,24 +147,7 @@ struct Definition< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "Header header\n"
-"PositionPx[] array_of_positionspx\n"
-"================================================================================\n"
-"MSG: std_msgs/Header\n"
-"# Standard metadata for higher-level stamped data types.\n"
-"# This is generally used to communicate timestamped data \n"
-"# in a particular coordinate frame.\n"
-"# \n"
-"# sequence ID: consecutively increasing ID \n"
-"uint32 seq\n"
-"#Two-integer timestamp that is expressed as:\n"
-"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
-"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
-"# time-handling sugar is provided by the client library\n"
-"time stamp\n"
-"#Frame this data is associated with\n"
-"string frame_id\n"
-"\n"
+    return "PositionPx[] array_of_positionspx\n"
 "================================================================================\n"
 "MSG: balise_msgs/PositionPx\n"
 "int32 x\n"
@@ -195,7 +171,6 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.header);
       stream.next(m.array_of_positionspx);
     }
 
@@ -215,9 +190,6 @@ struct Printer< ::balise_msgs::ArrayPositionPx_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::balise_msgs::ArrayPositionPx_<ContainerAllocator>& v)
   {
-    s << indent << "header: ";
-    s << std::endl;
-    Printer< ::std_msgs::Header_<ContainerAllocator> >::stream(s, indent + "  ", v.header);
     s << indent << "array_of_positionspx[]" << std::endl;
     for (size_t i = 0; i < v.array_of_positionspx.size(); ++i)
     {

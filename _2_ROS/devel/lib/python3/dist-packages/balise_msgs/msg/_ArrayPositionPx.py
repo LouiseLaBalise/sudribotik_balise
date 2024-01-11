@@ -7,38 +7,20 @@ import genpy
 import struct
 
 import balise_msgs.msg
-import std_msgs.msg
 
 class ArrayPositionPx(genpy.Message):
-  _md5sum = "74175f7ab9c85114e7078a9141456233"
+  _md5sum = "4d42662441de878808f5bfe3b2bdeae4"
   _type = "balise_msgs/ArrayPositionPx"
-  _has_header = True  # flag to mark the presence of a Header object
-  _full_text = """Header header
-PositionPx[] array_of_positionspx
-================================================================================
-MSG: std_msgs/Header
-# Standard metadata for higher-level stamped data types.
-# This is generally used to communicate timestamped data 
-# in a particular coordinate frame.
-# 
-# sequence ID: consecutively increasing ID 
-uint32 seq
-#Two-integer timestamp that is expressed as:
-# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')
-# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')
-# time-handling sugar is provided by the client library
-time stamp
-#Frame this data is associated with
-string frame_id
-
+  _has_header = False  # flag to mark the presence of a Header object
+  _full_text = """PositionPx[] array_of_positionspx
 ================================================================================
 MSG: balise_msgs/PositionPx
 int32 x
 int32 y 
 int32 theta
 """
-  __slots__ = ['header','array_of_positionspx']
-  _slot_types = ['std_msgs/Header','balise_msgs/PositionPx[]']
+  __slots__ = ['array_of_positionspx']
+  _slot_types = ['balise_msgs/PositionPx[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -48,7 +30,7 @@ int32 theta
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       header,array_of_positionspx
+       array_of_positionspx
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -57,12 +39,9 @@ int32 theta
     if args or kwds:
       super(ArrayPositionPx, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.header is None:
-        self.header = std_msgs.msg.Header()
       if self.array_of_positionspx is None:
         self.array_of_positionspx = []
     else:
-      self.header = std_msgs.msg.Header()
       self.array_of_positionspx = []
 
   def _get_types(self):
@@ -77,14 +56,6 @@ int32 theta
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self
-      buff.write(_get_struct_3I().pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
-      _x = self.header.frame_id
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       length = len(self.array_of_positionspx)
       buff.write(_struct_I.pack(length))
       for val1 in self.array_of_positionspx:
@@ -101,24 +72,9 @@ int32 theta
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.header is None:
-        self.header = std_msgs.msg.Header()
       if self.array_of_positionspx is None:
         self.array_of_positionspx = None
       end = 0
-      _x = self
-      start = end
-      end += 12
-      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -142,14 +98,6 @@ int32 theta
     :param numpy: numpy python module
     """
     try:
-      _x = self
-      buff.write(_get_struct_3I().pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
-      _x = self.header.frame_id
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       length = len(self.array_of_positionspx)
       buff.write(_struct_I.pack(length))
       for val1 in self.array_of_positionspx:
@@ -167,24 +115,9 @@ int32 theta
     if python3:
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.header is None:
-        self.header = std_msgs.msg.Header()
       if self.array_of_positionspx is None:
         self.array_of_positionspx = None
       end = 0
-      _x = self
-      start = end
-      end += 12
-      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
-      start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -204,12 +137,6 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_3I = None
-def _get_struct_3I():
-    global _struct_3I
-    if _struct_3I is None:
-        _struct_3I = struct.Struct("<3I")
-    return _struct_3I
 _struct_3i = None
 def _get_struct_3i():
     global _struct_3i

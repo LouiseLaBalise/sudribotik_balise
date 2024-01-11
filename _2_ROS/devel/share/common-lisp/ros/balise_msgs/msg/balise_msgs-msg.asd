@@ -2,8 +2,7 @@
 (cl:in-package :asdf)
 
 (defsystem "balise_msgs-msg"
-  :depends-on (:roslisp-msg-protocol :roslisp-utils :std_msgs-msg
-)
+  :depends-on (:roslisp-msg-protocol :roslisp-utils )
   :components ((:file "_package")
     (:file "ArrayPositionPx" :depends-on ("_package_ArrayPositionPx"))
     (:file "_package_ArrayPositionPx" :depends-on ("_package"))

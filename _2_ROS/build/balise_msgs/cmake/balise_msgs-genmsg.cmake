@@ -29,7 +29,7 @@ add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" NAME_WE)
 add_custom_target(_balise_msgs_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" "balise_msgs/PositionPx:std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "balise_msgs" "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg" "balise_msgs/PositionPx"
 )
 
 get_filename_component(_filename "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg" NAME_WE)
@@ -63,7 +63,7 @@ _generate_msg_cpp(balise_msgs
 _generate_msg_cpp(balise_msgs
   "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_cpp(balise_msgs
@@ -128,7 +128,7 @@ _generate_msg_eus(balise_msgs
 _generate_msg_eus(balise_msgs
   "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_eus(balise_msgs
@@ -193,7 +193,7 @@ _generate_msg_lisp(balise_msgs
 _generate_msg_lisp(balise_msgs
   "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_lisp(balise_msgs
@@ -258,7 +258,7 @@ _generate_msg_nodejs(balise_msgs
 _generate_msg_nodejs(balise_msgs
   "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_nodejs(balise_msgs
@@ -323,7 +323,7 @@ _generate_msg_py(balise_msgs
 _generate_msg_py(balise_msgs
   "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg"
   "${MSG_I_FLAGS}"
-  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/balise_msgs
 )
 _generate_msg_py(balise_msgs

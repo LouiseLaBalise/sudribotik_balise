@@ -52,3 +52,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/board_detection" TYPE FILE FILES "/Louise_eurobot_2024/_2_ROS/src/board_detection/package.xml")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/board_detection" TYPE PROGRAM FILES "/Louise_eurobot_2024/_2_ROS/build/board_detection/catkin_generated/installspace/b_cam_position_pub.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/board_detection" TYPE PROGRAM FILES "/Louise_eurobot_2024/_2_ROS/build/board_detection/catkin_generated/installspace/listener.py")
+endif()
+

@@ -8,7 +8,9 @@
 
 #------------------------- Général ------------------------
 # -> Nom de votre OS
-OS=
+# -> Faites la commande : cat /etc/os-release
+# -> Selectionez PRETTY_NAME
+OS=Ubuntu 22.04.3 LTS
 
 #------------------------- _1_IHM -------------------------
 
@@ -16,10 +18,12 @@ OS=
 
 #----------------- _3_TRAITEMENT_d_IMAGES -----------------
 # -> Chemin absolu (commençant généralement par /home) jusqu'au répertoire media/
-MEDIA_FOLDER_PATH=
+MEDIA_FOLDER_PATH=/home/rayane/Royone/Inge3M/projet/raspberry_pi_4/_3_TRAITEMENT_d_IMAGES/media/
 
 #-------------------------- init --------------------------
-# -> Actuellement en mode debug ou non.
-DEBUG=
+# -> Actuellement en mode debug 
+# -> oui : 1
+# -> non : 0
+DEBUG=1
 
 #------------------------- test_24 ------------------------

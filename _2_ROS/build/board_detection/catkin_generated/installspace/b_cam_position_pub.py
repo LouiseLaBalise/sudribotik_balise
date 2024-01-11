@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
 import time
@@ -40,7 +40,7 @@ def publisher():
     rospy.init_node("b_cam_position", anonymous=True)
 
     #Set publish rate
-    rate = rospy.Rate(1) #en hz
+    rate = rospy.Rate(10) #10hz
 
 
     #Open camera for video capturing
@@ -98,20 +98,20 @@ def getPositionRobotMsg(corners, ids, ally_rids, enem_rids):
 
     #Ally robot has been detected
     if ally_rids in ids:
-        #Get center of the tag        
-        ally_msg.x = int((corners[list(ids).index(ally_rids)][0][0][0] + corners[list(ids).index(ally_rids)][0][2][0]) / 2)
-        ally_msg.y = int((corners[list(ids).index(ally_rids)][0][0][1] + corners[list(ids).index(ally_rids)][0][2][1]) / 2)
+        #Get center of the tag
+        ally_msg.x = int((corners[list(ids).index(ally_rids)][0][0][0] + corners[ids.index(ally_rids)][0][2][0]) / 2)
+        ally_msg.y = int((corners[list(ids).index(ally_rids)][0][0][1] + corners[ids.index(ally_rids)][0][2][1]) / 2)
         ally_msg.theta = 0 #No angle for now        
         ally_msg.type = "ally" #Robot is an ally
         #Append the ally pos into msg
         msg.append(ally_msg)
-        
+        print(5)
     
     #Enemy robot has been detected
     if enem_rids in ids:
         #Get center of the tag
-        enemy_msg.x = int((corners[list(ids).index(enem_rids)][0][0][0] + corners[list(ids).index(enem_rids)][0][2][0]) / 2)
-        enemy_msg.y = int((corners[list(ids).index(enem_rids)][0][0][1] + corners[list(ids).index(enem_rids)][0][2][1]) / 2)
+        enemy_msg.x = int((corners[list(ids).index(enem_rids)][0][0][0] + corners[ids.index(enem_rids)][0][2][0]) / 2)
+        enemy_msg.y = int((corners[list(ids).index(enem_rids)][0][0][1] + corners[ids.index(enem_rids)][0][2][1]) / 2)
         enemy_msg.theta = 0 #No angle for now        
         enemy_msg.type = "enemy" #Robot is an enemy
         #Append the enemy pos into msg

@@ -15,10 +15,12 @@
 #volume 1 -> used to share X server (graphic) between host and container
 #volume 2 -> used to authorize container to use host X server
 #volume 3 -> mount host Ros working directory on container Ros workspace
+#volume 4 -> mount access to host webcam
 DOCKER_VOLUMES="
 --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 --volume="${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority" \
---volume="${PWD}":"/Louise_eurobot_2024":rw
+--volume="${PWD}":"/Louise_eurobot_2024":rw \
+--volume="/dev/video0:/dev/video0"
 "
 
 #env 1 -> specify X server to container (used by gui apps in the container)
@@ -42,7 +44,7 @@ wait
 image_name="$1"
 
 # Get number of same image running
-nb_of_running_containers_same_image=$(docker ps -a --filter ancestor='ros_mini:1.0' --filter status='running' | wc -l)
+nb_of_running_containers_same_image=$(docker ps -a --filter ancestor="$image_name" --filter status='running' | wc -l)
 # Subtract 1 because the title line is counted in 'wc -l'
 nb_of_running_containers_same_image=$((nb_of_running_containers_same_image - 1))
 
