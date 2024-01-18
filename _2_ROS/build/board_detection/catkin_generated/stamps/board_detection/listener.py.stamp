@@ -6,7 +6,8 @@ from balise_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, Arr
 
 
 def callback(data):
-    rospy.loginfo(f"{data.array_of_positionspx_with_type}")
+    for robot in data.array_of_positionspx_with_type:
+        rospy.loginfo(f"{robot.type} on ({robot.x}, {robot.y})")
     
 def listener():
 
