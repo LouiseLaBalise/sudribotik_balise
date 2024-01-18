@@ -201,6 +201,8 @@ def makePhotoList(path:str):
     #Sort list by time: most recent is first
     photos = sorted(os.scandir(MEDIA_FOLDER_PATH), key=lambda photo: photo.stat().st_mtime, reverse=True)
     for item in photos:
+        #eject hidden files
+        if item.name[0] == "." : continue
         name = item.name
         size, unit = formatBytes(item.stat().st_size)
         date, hour = formatSeconds(item.stat().st_mtime)
