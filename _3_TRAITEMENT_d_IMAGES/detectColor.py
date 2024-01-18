@@ -36,16 +36,17 @@ def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255
     frame = cv2.imread(filename=filename)
 
     suffixe = ""
+    #Set suffixe parameters
+    if saturation!=(50,255): suffixe+="_sat"+str(saturation[0])+'-'+str(saturation[1])
+    if value!=(50,255): suffixe+="_val"+str(value[0])+'-'+str(value[1])
+    if minSurface!=0: suffixe+="_mi"+str(minSurface)
+    if maxSurface!=99999: suffixe+="_mx"+str(maxSurface)
     #Denoise or not
     if denoise:
-        suffixe+='d'
+        suffixe+='_denois'
         frame = cv2.fastNlMeansDenoisingColored(frame, None, 10, 10, 7, 21)
-
-    #Set other suffixe parameters
-    if contoured: suffixe+="c"
-    if rectangled: suffixe+="r"
-    if minSurface!=0: suffixe+=str(minSurface)
-    if maxSurface!=99999: suffixe+=str(maxSurface)
+    if contoured: suffixe+="_contr"
+    if rectangled: suffixe+="_rect"
 
     #Convert image from original colorspace bgr to hsv
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -56,6 +57,19 @@ def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255
 
     #Create mask to only show hsv limits calculated from bgr
     mask = cv2.inRange(hsv_frame, lower_limit_hsv, upper_limit_hsv)
+
+    #In case of red hue (or if hue value range go from before 0 to after 0 )
+    if (hue[0]>hue[1]):
+        #Mask before 0
+        lower_limit_hsv1 = np.array([hue[0], saturation[0], value[0]])
+        upper_limit_hsv1 = np.array([179, saturation[1], value[1]])
+        sub_mask1 = cv2.inRange(hsv_frame, lower_limit_hsv1, upper_limit_hsv1)
+        #Mas after 0
+        lower_limit_hsv2 = np.array([0, saturation[0], value[0]])
+        upper_limit_hsv2 = np.array([hue[1], saturation[1], value[1]])
+        sub_mask2 = cv2.inRange(hsv_frame, lower_limit_hsv2, upper_limit_hsv2)
+        #Summ masks
+        mask = sub_mask1+sub_mask2
 
     #Draw contours if they are contours deyected on the mask
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -76,7 +90,7 @@ def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255
 
     #Save output
     out_filename = filename.split('.')
-    out_filename = f"{'.'.join(out_filename[:-1])}_{hue[0]}-{hue[1]}{suffixe}.{out_filename[-1]}"
+    out_filename = f"{'.'.join(out_filename[:-1])}_hue{hue[0]}-{hue[1]}{suffixe}.{out_filename[-1]}"
     cv2.imwrite(filename=out_filename, img=frame)
 
     ret = True

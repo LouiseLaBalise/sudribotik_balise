@@ -19,9 +19,9 @@ Detect ArUco markers.
     drawId (bool)       ->      draw a square and id on detected markers.
     axis (bool)         ->      show axis of detected markers.
 
-Return Aruco succes, corners positions, their ids, image path.
+Return function success, corners positions, their ids, image path.
 """
-def detectAruco(filename:str, drawId=False, axis=False):
+def detectAruco(filename:str, drawId=True, axis=False):
 
     #Get photo to parse
     img = cv2.imread(filename=filename)
@@ -30,7 +30,6 @@ def detectAruco(filename:str, drawId=False, axis=False):
     if np.all(img) is None:
         print(f"Log [{FILE_NAME}]: Image non détectée.")
         sys.exit(0)
-
 
     #ArUco dictionary, all markers are sourced here,
     #4x4 are the officials Eurobot2024 cup Fra markers and since we just
@@ -54,9 +53,11 @@ def detectAruco(filename:str, drawId=False, axis=False):
     #Create an image based on the inputed one
     output_image = img.copy()
     out_filename = filename
+    suffixe = ""
 
     #Draw square on markers based on there positions previously detected
     if (drawId and ids.any()) :
+        suffixe+="_aruco" #add suffixe to filename
         for k in range(len(ids)):
             corner_set = corners[k].astype(int) #cast to int
 
@@ -74,7 +75,7 @@ def detectAruco(filename:str, drawId=False, axis=False):
 
         #Save output image
         out_filename = filename.split('.')
-        out_filename = f"{'.'.join(out_filename[:-1])}_aruco.{out_filename[-1]}"
+        out_filename = f"{'.'.join(out_filename[:-1])}{suffixe}.{out_filename[-1]}"
         cv2.imwrite(filename=out_filename, img=output_image)
 
     #Draw axis on markers

@@ -1,0 +1,27 @@
+# Utilisation d'une image ROS noetic de base
+FROM osrf/ros:noetic-desktop-full
+
+#----------------- Ajout des dépendances ---------------
+
+# Installation des dépendances nécessaires pour ROS, à compléter si nécessaire
+RUN apt-get update && apt-get install -y \
+    python3-rosdep \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-wstool \
+    python3-catkin-tools \
+    && rm -rf /var/lib/apt/lists/* #Réduction de la taille de l'image en supprimant les listes de paquets téléchargés
+
+
+#-------------------- Source setup.bash ---------------------
+
+#Source ROS setup.bash
+RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+
+#
+#-------------------- Fin ---------------------
+
+
+
+
+

@@ -4,18 +4,17 @@ import cv2
 import traceback
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-sys.path.insert(1, "/home/ubuntu/Eurobot_2024") #add parent folder to python path ------------
-from _3_TRAITEMENT_d_IMAGES import takePhoto, straightenBoardUsingAruco, detectAruco, detectColor #-------------
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
 
-
+sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
+from _3_TRAITEMENT_d_IMAGES import takePhoto, redressBoardUsingAruco, detectAruco, detectColor
 from scripts.formatdata import formatBytes, formatSeconds
 
 
-FILE_PATH = os.path.abspath(__file__)
-FILE_NAME = os.path.basename(FILE_PATH)
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = "/home/ubuntu/Eurobot_2024/_3_TRAITEMENT_d_IMAGES/media/"
+MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
@@ -90,7 +89,7 @@ def balise():
                               int(request.form["redress_id2"]),
                               int(request.form["redress_id3"]),
                               int(request.form["redress_id4"]))
-                ret, path_to_photo_processed = straightenBoardUsingAruco.straightenBoardUsingAruco(filename=path_to_photo_processed,
+                ret, path_to_photo_processed = redressBoardUsingAruco.redressBoardUsingAruco(filename=path_to_photo_processed,
                                                                      corner_ids=corner_ids)
                 all_processed_images.append(path_to_photo_processed)
 
@@ -202,6 +201,8 @@ def makePhotoList(path:str):
     #Sort list by time: most recent is first
     photos = sorted(os.scandir(MEDIA_FOLDER_PATH), key=lambda photo: photo.stat().st_mtime, reverse=True)
     for item in photos:
+        #eject hidden files
+        if item.name[0] == "." : continue
         name = item.name
         size, unit = formatBytes(item.stat().st_size)
         date, hour = formatSeconds(item.stat().st_mtime)
