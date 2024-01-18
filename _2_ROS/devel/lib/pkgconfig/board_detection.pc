@@ -1,8 +1,0 @@
-prefix=/Louise_eurobot_2024/_2_ROS/devel
-
-Name: board_detection
-Description: Description of board_detection
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

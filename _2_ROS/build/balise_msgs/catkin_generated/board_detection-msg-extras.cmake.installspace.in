@@ -1,2 +1,0 @@
-set(board_detection_MESSAGE_FILES "msg/PositionPx.msg;msg/PositionAruco.msg;msg/PositionGameElements.msg;msg/PositionRobot.msg;msg/Score.msg")
-set(board_detection_SERVICE_FILES "")

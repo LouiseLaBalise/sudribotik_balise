@@ -1,2 +1,0 @@
-balise_msgs:board_detection
--DCATKIN_DEVEL_PREFIX=/Louise_eurobot_2024/_2_ROS/devel -DCMAKE_INSTALL_PREFIX=/Louise_eurobot_2024/_2_ROS/install -G Unix Makefiles
