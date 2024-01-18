@@ -1,0 +1,15 @@
+(cl:defpackage balise_msgs-msg
+  (:use )
+  (:export
+   "<ARRAYPOSITIONPX>"
+   "ARRAYPOSITIONPX"
+   "<ARRAYPOSITIONPXWITHTYPE>"
+   "ARRAYPOSITIONPXWITHTYPE"
+   "<POSITIONPX>"
+   "POSITIONPX"
+   "<POSITIONPXWITHTYPE>"
+   "POSITIONPXWITHTYPE"
+   "<SCORE>"
+   "SCORE"
+  ))
+

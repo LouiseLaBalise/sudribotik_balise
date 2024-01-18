@@ -1,0 +1,8 @@
+prefix=/Louise_eurobot_2024/_2_ROS/install
+
+Name: balise_msgs
+Description: Description of balise_msgs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: rospy message_runtime std_msgs
