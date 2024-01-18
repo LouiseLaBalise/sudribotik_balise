@@ -1,2 +1,0 @@
-set(balise_msgs_MESSAGE_FILES "/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPx.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/PositionPxWithType.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPx.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/ArrayPositionPxWithType.msg;/Louise_eurobot_2024/_2_ROS/src/balise_msgs/msg/Score.msg")
-set(balise_msgs_SERVICE_FILES "")
