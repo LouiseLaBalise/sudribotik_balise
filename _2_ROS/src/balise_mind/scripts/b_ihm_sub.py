@@ -24,7 +24,7 @@ Callback for plants position
 """
 def plantPosCallback(data):
     for plant in data.array_of_positionspx:
-        rospy.loginfo(f"{plant.type} on ({plant.x}, {plant.y})")
+        rospy.loginfo(f"Plant on ({plant.x}, {plant.y})")
     
 
 """

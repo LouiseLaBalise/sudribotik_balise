@@ -8,13 +8,14 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
+from init import get_hotspot_ip_address
 from _3_TRAITEMENT_d_IMAGES import takePhoto, redressBoardUsingAruco, detectAruco, detectColor
 from scripts.formatdata import formatBytes, formatSeconds
 
 
 app = Flask(__name__)
 TEMPLATES_AUTO_RELOAD = True #reload when template change
-MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/aruco_identification.json"
+MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
@@ -223,10 +224,12 @@ def getPhotoModal(filename):
 
 
 if __name__=="__main__":
-    app.run(debug=True, host="0.0.0.0",port=5024)
+    #Check for wlan0 in case of a hotspot is on
+    host_ip = get_hotspot_ip_address.get_ip()
+
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app
-    #http:/10.42.0.1:5024
+    app.run(debug=True, host=f"{host_ip}",port=5024)
 
 
 

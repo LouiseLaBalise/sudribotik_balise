@@ -6,9 +6,8 @@
 #
 # Note that to properly work this file need to be put AND execute at the root of the Pi4 project folder (i.e. raspberry_pi_4/) on your host machine.
 # 
-# Usage Example:
-# ./run_docker.sh [docker_image] 
-# ./run_docker.sh ros_mini:latest
+# Usage:
+# ./run_louise_docker.sh
 
 
 # Define Docker volumes and environment variables

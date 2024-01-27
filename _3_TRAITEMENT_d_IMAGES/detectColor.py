@@ -194,6 +194,6 @@ if __name__=="__main__":
 
 
     #Run function
-    colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max),
+    result=colorDetection(filename, (hue_min, hue_max), (sat_min, sat_max), (val_min, val_max),
                    contoured=contoured, rectangled=rectangled, denoise=denoise, minSurface=minSurface, maxSurface=maxSurface)
-
+    print(result)
