@@ -29,7 +29,7 @@ def detectAruco(frame):
 
     #Tell if no ids
     if ids is None:
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
+        #print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
         return False, None, None
     
     #Flatten ids

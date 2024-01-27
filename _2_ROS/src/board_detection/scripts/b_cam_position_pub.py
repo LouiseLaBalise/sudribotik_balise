@@ -74,7 +74,7 @@ def publisher():
         ret, corners, ids = ros_detectAruco.detectAruco(frame)#frame_redressed
         #Go to next loop if Aruco cannot be detected
         if not ret:
-            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun Aruco détecté.")
+            #print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun Aruco détecté.")
             continue
 
         robotsPos_pub.publish(getPositionRobotMsg(corners, ids,
@@ -255,11 +255,12 @@ def getAngle(corner):
 
 """
 Get message for realtime position of all solar panels.
-Also redistibute panels into 3 groups : blue, yellow or mid
+Also redistibute panels into 3 groups : blue, yellow or mid.
+Panels are sorted by x inside their group.
     frame (numpy.ndArray)         ->      data array of the image.
     solar_id (int)      ->      solar panel id.
 
-Return an ArrayPositionPxWithType msg.
+Return an ArrayPositionPxWithType msg. 
 """
 def getPositionSolarPanelMsg(frame, solar_id):
     msg = [] #create msg
@@ -280,7 +281,7 @@ def getPositionSolarPanelMsg(frame, solar_id):
     #Collect all panel corners
     solarpanel_corners = [ corners[k] for k,id in enumerate(ids) if id==solar_id ]
 
-    #Loop over evry detected panel  
+    #Loop over every detected panel  
     for solar_panel_corner in solarpanel_corners:
         #Get its position
         panel_msg.x = (solar_panel_corner[0][0] + solar_panel_corner[2][0]) //2
@@ -315,6 +316,21 @@ def getPositionSolarPanelMsg(frame, solar_id):
 
         msg.append(panel_msg)
     
+    #Sort message by x pos
+    msg = sorted(msg, key=lambda panel_msg: panel_msg.x)
+
+    #Give them an order
+    temp_color = None
+    num = 0
+    for panel in msg:
+        #Basically this loop assign a number to panel,
+        # the number increment each loop and reset to zero when panel color change
+        if temp_color != panel.type:
+            temp_color = panel.type
+            num = 0
+        panel.type+=f"_{num}"
+        num+=1
+
     return msg
 
 
