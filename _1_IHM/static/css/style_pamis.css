@@ -4,9 +4,7 @@
     display: flex;
     flex-direction: column; /*items in columns*/
     height: 100vh; /*100% viewport height*/
-    overflow-x: hidden;/* scroll bar only if necessary*/
-    /*align-items: center; /* align items in the center horizontally */
-    color: var(--balise-text-color);
+    color: black;
 }
 
 
@@ -22,4 +20,27 @@
 }
 .tab-content {
     background-color: lightcyan;
+}
+
+/*Grid case management*/
+.pami_1{grid-area: 1 / 1 ;}
+.pami_2{grid-area: 1 / 2 ;}
+.pami_3{grid-area: 1 / 3 ;}
+.pami_4{grid-area: 2 / 1 ;}
+.pami_5{grid-area: 2 / 2 ;}
+.pami_6{grid-area: 2 / 3 ;}
+.side-panel{grid-area: 1 / 4 /span 2;}
+
+/*Grid*/
+.grid-container {
+    display: grid; /*Use a grid to display pamis infos*/
+    grid-template-columns: 25%; /*Distribute size equally between cases*/
+    height: 100%;
+    border: 2px solid red;
+}
+
+.grid-container div{
+    text-align: center;
+    padding: 20px;
+    border: 2px solid black;
 }
