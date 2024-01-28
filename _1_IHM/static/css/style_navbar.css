@@ -71,7 +71,6 @@ body{
 
 /*Sidebar links*/
 .sidebar a{
-    padding: 12px; /*set padding*/
     text-decoration: none; /*remove default link underline*/
     color: #fff; /*set links color*/
 }
@@ -79,6 +78,7 @@ body{
 /*Sidebar 'case' menu (icon + span)*/
 .sidebar .is-menu{
     display: flex;
+    padding:12px;
     flex-direction: column; /*items inside are in column*/
     align-items: center; /*center icon*/
 }

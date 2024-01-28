@@ -3,7 +3,7 @@ import os
 import sys
 import rospy
 import sqlite3
-from balise_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
+from balise_msgs.msg import ArrayPositionPx, ArrayPositionPxWithType
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -83,7 +83,9 @@ def pamiPosCallback(data):
 
     #Fill the dict with pami data 
     for pami in data.array_of_positionspx_with_type:
-        data_dict["type"] = pami.type
+        typ,num = pami.type.split('_')
+        data_dict["type"] = typ
+        data_dict["num"] = int(num)
         data_dict["position_x"] = pami.x
         data_dict["position_y"] = pami.y
         data_dict["position_theta"] = pami.theta
@@ -118,7 +120,7 @@ def solarpanelPosCallback(data):
     for solarpanel in data.array_of_positionspx_with_type:
         typ,num = solarpanel.type.split('_')
         data_dict["type"] = typ
-        data_dict["num"] = num
+        data_dict["num"] = int(num)
         data_dict["position_x"] = solarpanel.x
         data_dict["position_y"] = solarpanel.y
         data_dict["position_theta"] = solarpanel.theta
@@ -129,7 +131,7 @@ def solarpanelPosCallback(data):
 """
 Fetch and parse data from ros on ihm sub topics
 """
-def listener():
+def subscriber():
 
     
     # Tell node name to rospy
@@ -150,4 +152,4 @@ def listener():
 
 
 if __name__ == '__main__':
-    listener()
+    subscriber()

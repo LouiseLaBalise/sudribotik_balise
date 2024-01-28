@@ -27,6 +27,14 @@ streaming_mode=False #true when client open tab2 of balise to see the view (2nd 
 def index():
     return render_template('index.html') #look for the index.html template in ./templates/
 
+
+#pamis route
+@app.route('/pamis', methods=['GET', 'POST'])
+def pamis():
+    #Main get method
+    return render_template("pamis.html")
+
+
 #balise route
 @app.route('/balise', methods=['GET', 'POST'])
 def balise():

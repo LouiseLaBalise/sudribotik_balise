@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include 'navbar.html' %}<!--import navbar-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_pamis.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_tabs.css')}}">
+    <link rel="shortcut icon" href="#" /> <!--No favicon-->
+</head>
+
+<body><div class="page-content">
+   <!-- All TABS must set <ul class='tabs'> and <li class='tabs'> to match css-->
+    <ul class="tabs">
+        <li class="tab" id="tab1" onclick="openTab('tab1')">Contrôle Pamis</li>
+    </ul>
+
+
+
+
+
+    <script type=text/JavaScript src="/static/js/pamis-route.js"></script> <!--Load script for this route -->
+
+</div></body>    
+
+
+
+</html>

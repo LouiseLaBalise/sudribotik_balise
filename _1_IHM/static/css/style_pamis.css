@@ -1,0 +1,25 @@
+/*Style de la page pamis*/
+
+.page-content{
+    display: flex;
+    flex-direction: column; /*items in columns*/
+    height: 100vh; /*100% viewport height*/
+    overflow-x: hidden;/* scroll bar only if necessary*/
+    /*align-items: center; /* align items in the center horizontally */
+    color: var(--balise-text-color);
+}
+
+
+/*Tab colors management*/
+.tab{
+    background-color: grey;
+}
+.tab:hover {
+    background-color: lightblue;
+}
+.tab.current{
+    background-color: lightgray;
+}
+.tab-content {
+    background-color: lightcyan;
+}

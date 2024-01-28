@@ -42,6 +42,7 @@ with sqlite3.connect(FILE_PATH_FOR_DATABASE) as connection:
                     (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     type TEXT,
+                    num INTEGER,
                     position_x INTEGER,
                     position_y INTEGER,
                     position_theta INTEGER

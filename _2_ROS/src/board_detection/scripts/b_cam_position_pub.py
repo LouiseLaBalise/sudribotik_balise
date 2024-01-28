@@ -172,8 +172,8 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     for blue_pami_id in all_blue_pami_ids :
         #Get center of tag        
         blue_msg.x, blue_msg.y = getCenterArucoTag(corners, ids.index(blue_pami_id))
-        blue_msg.theta = 0 #No angle for now
-        blue_msg.type = "blue" #Robot is an blue
+        blue_msg.theta = 0 #no angle for now
+        blue_msg.type = f"blue_{blue_pami_id}" #pami is an blue
         #Append the blue pos into msg
         msg.append(blue_msg)
         
@@ -182,8 +182,8 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     for yellow_pami_id in all_yellow_pami_ids :
         #Get center of tag
         yellow_msg.x, yellow_msg.y = getCenterArucoTag(corners, ids.index(yellow_pami_id))
-        yellow_msg.theta = 0 #No angle for now        
-        yellow_msg.type = "yellow" #Robot is an yellow
+        yellow_msg.theta = 0 #no angle for now        
+        yellow_msg.type = f"yellow_{yellow_pami_id}" #pami is an yellow
         #Append the yellow pos into msg
         msg.append(yellow_msg)
 
