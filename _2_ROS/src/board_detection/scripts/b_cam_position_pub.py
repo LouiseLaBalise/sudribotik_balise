@@ -9,9 +9,10 @@ import math
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
+GAME_ELEMENT_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/gameElements_identification.json"
 
 sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
-from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor
+from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc
 from balise_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
 
 
@@ -20,10 +21,9 @@ Publish position of Robots, Elements and Arucos on the board
 """
 def publisher():
  
-    #Get Aruco constants
-    aruco_id_filepath = FILE_PATH.split("_2_ROS")[0]+"init/gameElements_identification.json"
-    with open (aruco_id_filepath, "r") as f:
-        aruco_tags_const = json.load(f)
+    #Get Aruco constants    
+    with open (GAME_ELEMENT_FILEPATH, "r") as f:
+        game_element_identification = json.load(f)
 
     # This node will publish blue and yellow robot position
     robotsPos_pub = rospy.Publisher("balise/position/robots", ArrayPositionPxWithType, queue_size=10)
@@ -60,7 +60,7 @@ def publisher():
         # before image is redressed.
         solarPos_pub = rospy.Publisher("balise/position/solarpanel", ArrayPositionPxWithType, queue_size=10)
         solarPos_pub.publish(getPositionSolarPanelMsg(frame,
-                                                      aruco_tags_const["SOLAR_PANEL_ID"][0]))
+                                                      game_element_identification["SOLAR_PANEL_ID"][0]))
 
         #Redress board
         ret=True#, frame_redressed = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame)        
@@ -78,14 +78,14 @@ def publisher():
             continue
 
         robotsPos_pub.publish(getPositionRobotMsg(corners, ids,
-                                                  aruco_tags_const["BLUE_ROBOT_MAIN_ID"][0],
-                                                  aruco_tags_const["YELLOW_ROBOT_MAIN_ID"][0]))
+                                                  game_element_identification["BLUE_ROBOT_MAIN_ID"][0],
+                                                  game_element_identification["YELLOW_ROBOT_MAIN_ID"][0]))
         pamisPos_pub.publish(getPositionPamiMsg(corners, ids,
-                                                  aruco_tags_const["BLUE_PAMI_IDS"],
-                                                  aruco_tags_const["YELLOW_PAMI_IDS"]))
+                                                  game_element_identification["BLUE_PAMI_IDS"],
+                                                  game_element_identification["YELLOW_PAMI_IDS"]))
         plantsPos_pub.publish(getPositionPlantMsg(frame,
-                                                  aruco_tags_const["PLANT_HSV_RANGE"],
-                                                  aruco_tags_const["PLANT_HSV_SURFACE"]))
+                                                  game_element_identification["PLANT_HSV_RANGE"],
+                                                  game_element_identification["PLANT_HSV_SURFACE"]))
         #potPos_pub.publish(getPositionPotMsg())
 
         rate.sleep() #wait according to publish rate
@@ -93,25 +93,6 @@ def publisher():
     cap.release() #free camera
 
 
-
-
-"""
-Calculate center of an Aruco tag.
-    corners (list)    ->      all detected aruco corners.
-    index (int)       ->     index of the tag.
-
-Return a tuple (int, int).
-"""
-def getCenterArucoTag(corners, index):
-    #Get x pos (these could be inversed but not important here)
-    low_x = corners[index][0][0]
-    high_x = corners[index][2][0]
-
-    #Get y pos
-    low_y = corners[index][0][1]
-    high_y = corners[index][2][1]
-
-    return ((low_x+high_x)//2 , (low_y+high_y)//2)
 
 
 """
@@ -131,7 +112,7 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     #Blue robot has been detected
     if blue_rid in ids:
         #Get center of tag
-        blue_msg.x, blue_msg.y = getCenterArucoTag(corners, ids.index(blue_rid))
+        blue_msg.x, blue_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(blue_rid)])
         blue_msg.theta = 0 #No angle for now        
         blue_msg.type = "blue" #Robot is blue
         #Append the blue pos into msg
@@ -141,7 +122,7 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     #Yellow robot has been detected
     if yellow_rid in ids:
         #Get center of the tag
-        yellow_msg.x, yellow_msg.y = getCenterArucoTag(corners, ids.index(yellow_rid))
+        yellow_msg.x, yellow_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(yellow_rid)])
         yellow_msg.theta = 0 #No angle for now        
         yellow_msg.type = "yellow" #Robot is yellow
         #Append the yellow pos into msg
@@ -171,7 +152,7 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     #Add all blue pamis position in msg
     for blue_pami_id in all_blue_pami_ids :
         #Get center of tag        
-        blue_msg.x, blue_msg.y = getCenterArucoTag(corners, ids.index(blue_pami_id))
+        blue_msg.x, blue_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(blue_pami_id)])
         blue_msg.theta = 0 #no angle for now
         blue_msg.type = f"blue_{blue_pami_id}" #pami is an blue
         #Append the blue pos into msg
@@ -181,7 +162,7 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     #Add all yellow pamis position in msg
     for yellow_pami_id in all_yellow_pami_ids :
         #Get center of tag
-        yellow_msg.x, yellow_msg.y = getCenterArucoTag(corners, ids.index(yellow_pami_id))
+        yellow_msg.x, yellow_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(yellow_pami_id)])
         yellow_msg.theta = 0 #no angle for now        
         yellow_msg.type = f"yellow_{yellow_pami_id}" #pami is an yellow
         #Append the yellow pos into msg
@@ -224,34 +205,6 @@ def getPositionPlantMsg(frame, plant_hsv_range, plant_hsv_surface):
     return msg
 
 
-"""
-Get angle rotation of an aruco tag given its corners.
-    corner(numpy.ndArray)    ->    corner of a aruco tag.
-
-Return an angle in degrees. From 0° to 360°.
-"""
-def getAngle(corner):
-    #Get points
-    top_left, top_right, bot_right, bot_left = corner
-
-    #Get parameters for atan func
-    adjacent = top_right[0] - top_left[0]
-    opposite = top_left[1] - top_right[1]
-
-    #Get angle
-    angle = math.atan2(adjacent, opposite)
-
-    #Cast from radians to degrees 
-    angle = angle * 180/math.pi
-    
-    #And add pi/2 (i fucking dont know why)
-    angle+=90
-
-    #Force range from 0° to 360°
-    if angle < 0 :
-        angle+=360
-
-    return int(angle)
 
 """
 Get message for realtime position of all solar panels.
@@ -288,7 +241,7 @@ def getPositionSolarPanelMsg(frame, solar_id):
         panel_msg.y = (solar_panel_corner[0][1] + solar_panel_corner[2][1]) //2
 
         #Get its angle
-        panel_msg.theta = getAngle(solar_panel_corner)
+        panel_msg.theta = ros_arucoCalc.getAngle(solar_panel_corner)
 
         #Place panel in a group based on its position on raw frame
         frame_length_divided_by_three = frame.shape[1] // 3

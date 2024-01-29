@@ -35,12 +35,16 @@
 .grid-container {
     display: grid; /*Use a grid to display pamis infos*/
     grid-template-columns: 25%; /*Distribute size equally between cases*/
-    height: 100%;
+    height: 100%; /*full page height*/
     border: 2px solid red;
 }
 
 .grid-container div{
-    text-align: center;
-    padding: 20px;
+    text-align: center;/*Center text but actually only title will be centered*/
+    padding: 20px;/*set some padding*/
     border: 2px solid black;
+}
+
+.grid-container div p{
+    text-align: left;
 }

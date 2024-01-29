@@ -2,6 +2,7 @@ import sys
 import os
 import cv2
 import traceback
+import time, json
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
 FILE_PATH = os.path.abspath(__file__)
@@ -9,33 +10,111 @@ FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
 from init import get_hotspot_ip_address
-from _3_TRAITEMENT_d_IMAGES import takePhoto, redressBoardUsingAruco, detectAruco, detectColor
+from _3_TRAITEMENT_d_IMAGES import takePhoto, redressBoardUsingAruco, detectAruco, detectColor, ros_detectAruco, ros_arucoCalc
 from scripts.formatdata import formatBytes, formatSeconds
 
 
 app = Flask(__name__)
+
 TEMPLATES_AUTO_RELOAD = True #reload when template change
 MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
-streaming_mode=False #true when client open tab2 of balise to see the view (2nd tab of balise)
+STREAMING_MODE=False #true when client open tab2 of balise to see the camera view (2nd tab of balise)
 
+#Load all pamis tag at the start of the app, meaning if these have to change,
+# you'll need to restart the app to updtae
+GAME_ELEMENT_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/gameElements_identification.json"
+with open (GAME_ELEMENT_FILEPATH, "r") as f:
+    ALL_PAMIS_IDS = json.load(f)["IHM_PAMI_IDS"]
+    
 
-
-#Homepage route
+"""Homepage route"""
 @app.route('/')
 def index():
     return render_template('index.html') #look for the index.html template in ./templates/
 
 
-#pamis route
-@app.route('/pamis', methods=['GET', 'POST'])
+"""Returns whether a Pami is connected or not, based on their tag"""
+def getPamiConnection(tag):
+    return False
+
+
+"""Take a photo and return position of all pamis tags inside,
+This function use ros functions to process faster.
+ return a list of tuples (x, y, theta)"""
+def getAllPamisPosition():
+
+    #Read an image from camera
+    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+    ret,frame = cap.read()
+
+    nb_pamis = len(ALL_PAMIS_IDS) #get number of pamis
+
+    #Case no image
+    if not ret : return [(False, None, None, None) for k in range(nb_pamis)]
+
+    #Detect Aruco with ros_detectaruco because it is the one used in match
+    ret, all_aruco_corners, all_aruco_ids = ros_detectAruco(frame)
+
+    #Case no Aruco
+    if not ret : return [(False, None, None, None) for k in range(nb_pamis)]
+
+    #Select only detected pami tags
+    pami_ids_detected = list(set(all_aruco_ids) & set(ALL_PAMIS_IDS))
+
+    #Calculate their position
+    pamis_position = []
+    for id in ALL_PAMIS_IDS :
+
+        #If id has not been detected we add it to the list with no values
+        if id not in pami_ids_detected:
+            pamis_position.append((None, None, None))
+
+        #Else just calciltae its pos and angle then add it
+        else:
+            corner = all_aruco_corners[all_aruco_ids.index(id)]
+            pamis_position.append(*ros_arucoCalc.getCenterArucoTag(corner),
+                                  ros_arucoCalc.getAngle(corner))
+    
+    return pamis_position
+
+
+
+"""Generate json object with pamis informations inside"""
+def generate_pamis_infos():
+    while True: #generate pamis info continuously
+        
+        #Fetch all pami position on a single image
+        all_pamis_pos = getAllPamisPosition()
+        
+        #Store them all
+        pamis_informations = [{"tag":tag,
+                               "connection":getPamiConnection(tag),
+                               "pos_x":all_pamis_pos[k][0],
+                               "pos_y":all_pamis_pos[k][1],
+                               "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(ALL_PAMIS_IDS)]
+
+        #We need a generator to use SSE, data is jsoned in the process
+        yield f"data: {json.dump(pamis_informations)}\n\n"
+        
+        time.sleep(1)#set a rate of 1 second
+
+
+"""Server-Sent Event route needed to sent pamis information to client frequently"""
+@app.route('/sse_pamis')
+def sse_pamis():
+    #return a Flask response using SSE data format
+    return Response(generate_pamis_infos(), content_type='text/event-stream')
+
+
+"""pamis route"""
+@app.route('/pamis')
 def pamis():
-    #Main get method
+    #Go to pamis page        
     return render_template("pamis.html")
 
-
-#balise route
+"""balise route"""
 @app.route('/balise', methods=['GET', 'POST'])
 def balise():
 
@@ -164,7 +243,7 @@ def balise():
 
 
 
-#Video for balise tab2
+"""Video for balise tab2"""
 @app.route('/video_stream')
 def videoStream():
     #When this function is called it returns a 'multipart/x-mixed-replace' in a HTTP response.
@@ -173,11 +252,12 @@ def videoStream():
 
     return Response(generateFrames(), mimetype='multipart/x-mixed-replace; boundary=frame') #boundary=frame to delimitate each piece of data sent (see generate_frame())
 
-#Generator of frames from video
+
+"""Generator of frames from video"""
 def generateFrames():
     video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
 
-    while streaming_mode:
+    while STREAMING_MODE:
         ret,frame=video_capture.read() #read an image from camera
         if not ret:continue
         ret, jpeg = cv2.imencode('.jpg', frame) #convert image in jpg
@@ -189,16 +269,18 @@ def generateFrames():
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')#We tell the client that we sent jpeg img
     video_capture.release() #free video capturing if not in streamin mode anymore
 
-#These routes are used to start and stop video stream from the client side when user enter or quit a tab
+
+"""These routes are used to start and stop video stream 
+from the client side when user enter or quit a tab"""
 @app.route('/start_video')
 def startVideoStream():
-    global streaming_mode
-    streaming_mode=True
+    global STREAMING_MODE
+    STREAMING_MODE=True
     return 'OK'
 @app.route('/stop_video')
 def stopVideoStream():
-    global streaming_mode
-    streaming_mode=False
+    global STREAMING_MODE
+    STREAMING_MODE=False
     return 'OK'
 
 """Make a list of all photo present in PHOTO_PATH
