@@ -5,20 +5,38 @@
     --navbar-selected-color: #606271;
 
     --webpage-background-color: #E5EAF5;/*#3D3D3D;/**/
+    --disable-color: rgb(190, 190, 190);
+    --tooltip-background-color: rgba(255, 255, 255, 80%);
 
+    /*PAMIS THEME*/
+    --pamis-background-color: #0d214f;
+    --pamis-text-color: #ebd9b4;
+    --pamis-secondary-color: #f3f372;
+    --pamis-tab-background-color: var(--pamis-secondary-color);
+    --pamis-tab-current-background-color: var(--pamis-background-color);
+    --pamis-tab-hover-background-color: var(--pamis-background-color);
+    --pamis-disable-color: var(--disable-color);
+    --pamis-toggle-off-background-color: var(--pamis-disable-color);
+    --pamis-toggle-on-background-color: var(--pamis-secondary-color);
+    --pamis-toggle-circle-color: ivory;
+    --pamis-tooltip-background-color: var(--tooltip-background-color);
+    --pamis-button-goto-background-color: #ff6c22;
+    --pamis-button-goto-hover-background-color: rgb(48, 148, 5);
+
+    /*BALISE THEME*/
     --balise-background-color: #494D5F;
     --balise-text-color: ivory;
     --balise-secondary-color: #845BB3;
     --balise-tab-background-color: var(--balise-secondary-color);
     --balise-tab-current-background-color: var(--balise-background-color);
     --balise-tab-hover-background-color: var(--balise-background-color);
-    --balise-disable-color: rgb(190, 190, 190);/*bébé lol*/
+    --balise-disable-color: var(--disable-color);
     --balise-toggle-off-background-color: var(--balise-disable-color);
     --balise-toggle-on-background-color: var(--balise-secondary-color);
     --balise-toggle-circle-color: ivory;
-    --balise-tooltip-background-color: rgba(255, 255, 255, 80%);
+    --balise-tooltip-background-color: var(--tooltip-background-color);
     --balise-button-photo-background-color: palevioletred;
-    --balise-button-hover-photo-background-color: rgb(182, 72, 114);
+    --pamis-button-photo-hover-background-color: rgb(182, 72, 114);
     --balise-table-hover-background-color: #a982f3;
 }
 
@@ -42,10 +60,11 @@ body{
 /*whole sidebar*/
 .sidebar{
     width: var(--sidebar-width);
-    height: 100vh; /*100% viewport height*/
+    height: 100%; /*100% height*/
     background-color: var(--navbar-background-color);
     position: fixed; /*fixed if page is scrolled down*/
     overflow-y: auto; /*add vertical scroll if content exceeds height*/
+    z-index: 80;/*must match current tab*/
 }
 
 /*Sidebar list container*/

@@ -48,17 +48,18 @@ def getAllPamisPosition():
     #Read an image from camera
     cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
     ret,frame = cap.read()
+    cap.release()
 
     nb_pamis = len(ALL_PAMIS_IDS) #get number of pamis
 
     #Case no image
-    if not ret : return [(False, None, None, None) for k in range(nb_pamis)]
+    if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
 
     #Detect Aruco with ros_detectaruco because it is the one used in match
-    ret, all_aruco_corners, all_aruco_ids = ros_detectAruco(frame)
+    ret, all_aruco_corners, all_aruco_ids = ros_detectAruco.detectAruco(frame)
 
     #Case no Aruco
-    if not ret : return [(False, None, None, None) for k in range(nb_pamis)]
+    if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
 
     #Select only detected pami tags
     pami_ids_detected = list(set(all_aruco_ids) & set(ALL_PAMIS_IDS))
@@ -69,13 +70,14 @@ def getAllPamisPosition():
 
         #If id has not been detected we add it to the list with no values
         if id not in pami_ids_detected:
-            pamis_position.append((None, None, None))
+            pamis_position.append(("N/A", "N/A", "N/A"))
 
-        #Else just calciltae its pos and angle then add it
+        #Else just calculate its pos and angle then add it
         else:
             corner = all_aruco_corners[all_aruco_ids.index(id)]
-            pamis_position.append(*ros_arucoCalc.getCenterArucoTag(corner),
-                                  ros_arucoCalc.getAngle(corner))
+            px, py = ros_arucoCalc.getCenterArucoTag(corner)
+            angle = ros_arucoCalc.getAngle(corner)
+            pamis_position.append((str(px), str(py), str(angle)))
     
     return pamis_position
 
@@ -96,9 +98,9 @@ def generate_pamis_infos():
                                "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(ALL_PAMIS_IDS)]
 
         #We need a generator to use SSE, data is jsoned in the process
-        yield f"data: {json.dump(pamis_informations)}\n\n"
+        yield f"data: {json.dumps(pamis_informations)}\n\n"
         
-        time.sleep(1)#set a rate of 1 second
+        time.sleep(0.10)#set a rate of 10 per second
 
 
 """Server-Sent Event route needed to sent pamis information to client frequently"""

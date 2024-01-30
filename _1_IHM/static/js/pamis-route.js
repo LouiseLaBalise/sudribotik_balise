@@ -47,14 +47,46 @@ function openTab(tabId) {
     document.getElementById(tabId).classList.add("current");//put tab on class 'current'
 }
 
-
-
 //Create an event on /sse_pamis route
 const eventSource = new EventSource("/sse_pamis");
 
 //When this event receive a message update the html page with the message received
 eventSource.onmessage = function(event){
-    console.log("J'ai recu : ", event.data);
+    //Get the data sent
+    const pami_infos = JSON.parse(event.data);
+
+    //Get number of pamis
+    let nb_pamis = Object.keys(pami_infos).length;
+    if (nb_pamis>6){nb_pamis=6;} //Not more than 6 pamis
+
+    //Modify the client page
+    for (let i = 0; i < nb_pamis; i++){
+        //Select pami id from html and set right data from python app.py
+
+        //Set its tags number
+        const num_aruco = document.getElementById("num_aruco_"+(i+1));
+        num_aruco.innerText = pami_infos[i].tag;
+
+        //Set its connection status
+        const connection_status = document.getElementById("connection-status-icon_"+(i+1));
+        /*if (pami_infos.connection){
+            connection_status.src = "{{ url_for('static', filename='/icons/connected_64px.png')}}"
+        }
+        else{
+            connection_status.src = "{{ url_for('static', filename='/icons/not_connected_64px.png')}}";
+        }*/
+
+        //Set its coordinate
+        const pos_x = document.getElementById("pos_x_"+(i+1));
+        pos_x.innerText = pami_infos[i].pos_x;
+
+        const pos_y = document.getElementById("pos_y_"+(i+1));
+        pos_y.innerText = pami_infos[i].pos_y;
+
+        const pos_theta = document.getElementById("pos_theta_"+(i+1));
+        pos_theta.innerText = pami_infos[i].pos_theta;
+    }
+
 };
 
 //When page is closed the event and then no info is generated

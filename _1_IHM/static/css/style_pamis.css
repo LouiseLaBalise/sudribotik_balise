@@ -3,23 +3,23 @@
 .page-content{
     display: flex;
     flex-direction: column; /*items in columns*/
-    height: 100vh; /*100% viewport height*/
-    color: black;
+    height: 100vh; /*100% viewport height*/    
+    color: var(--pamis-text-color);
 }
 
 
 /*Tab colors management*/
 .tab{
-    background-color: grey;
+    background-color: var(--pamis-tab-background-color);
 }
 .tab:hover {
-    background-color: lightblue;
+    background-color: var(--pamis-tab-hover-background-color);
 }
 .tab.current{
-    background-color: lightgray;
+    background-color: var(--pamis-tab-current-background-color);
 }
 .tab-content {
-    background-color: lightcyan;
+    background-color: var(--pamis-background-color);
 }
 
 /*Grid case management*/
@@ -34,17 +34,76 @@
 /*Grid*/
 .grid-container {
     display: grid; /*Use a grid to display pamis infos*/
-    grid-template-columns: 25%; /*Distribute size equally between cases*/
+    
     height: 100%; /*full page height*/
-    border: 2px solid red;
 }
 
 .grid-container div{
+    display: flex;
     text-align: center;/*Center text but actually only title will be centered*/
-    padding: 20px;/*set some padding*/
-    border: 2px solid black;
+    flex-direction: column;
+    border: 1px solid var(--pamis-secondary-color);
+    border-radius: 10px;
 }
 
-.grid-container div p{
-    text-align: left;
+
+.grid-container table{
+    align-self: center;
+    margin-right: 70px;
+}
+.grid-container .title-label{
+    padding-top: 20px;/*set padding*/
+}
+.grid-container .label{
+    text-align: right;/*Align right*/
+    padding-right: 20px;
+}
+.grid-container .status-icon {
+    width: 20px; /*icon size*/
+    height: 20px;
+}
+
+/*Input form*/
+.grid-container input,
+.grid-container input:focus{
+    outline: none; /*remove outline*/
+    border: none; /*removes the default border*/
+    background-color: transparent; /*background transparent.*/
+    border-bottom: 2px solid var(--pamis-secondary-color); /* add a line at the bottom*/
+    padding: 4px;
+    text-align: center; /*align inner text in center*/
+    color: var(--balise-text-color);/*text color*/
+    transition: .4s;
+}
+.grid-container input:disabled{
+    background-color: rgb(0 0 0 / 10%);/*light opaque background*/
+    border-bottom: 2px solid var(--pamis-disable-color); 
+    transition: .4s;
+}
+.grid-container table input{
+    width: 50px;
+}
+
+/*Remove spin button*/
+input::-webkit-outer-spin-button, 
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*Button*/
+.grid-container button{
+    cursor: pointer;
+    width: 70px; /*button size*/
+    height: 70px;
+    background-color: var(--pamis-button-goto-background-color);
+    border-radius: 80px; /*set border radius*/
+    margin-top: 15px;
+}
+.grid-container button:hover{
+    background-color: var(--pamis-button-goto-hover-background-color);
+}
+.grid-container button img {
+    width: 43px; /*icon size*/
+    height: 43px;
 }
