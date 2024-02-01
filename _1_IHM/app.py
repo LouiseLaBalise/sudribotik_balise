@@ -123,7 +123,7 @@ def generate_pamis_infos():
         #We need a generator to use SSE, data is jsoned in the process
         yield f"data: {json.dumps(pamis_informations)}\n\n"
         
-        time.sleep(0.10)#set a rate of 10 per second
+        #time.sleep(0.1)#set a rate of 10 per second
 
 
 """Server-Sent Event route needed to sent pamis information to client frequently"""
@@ -408,6 +408,8 @@ def makePhotoList(path:str):
     #Sort list by time: most recent is first
     photos = sorted(os.scandir(MEDIA_FOLDER_PATH), key=lambda photo: photo.stat().st_mtime, reverse=True)
     for item in photos:
+        #eject hidden files
+        if item.name[0] == "." : continue
         name = item.name
         size, unit = formatBytes(item.stat().st_size)
         date, hour = formatSeconds(item.stat().st_mtime)
