@@ -6,6 +6,7 @@ import numpy as np
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
+
 """
 Detect ArUco markers.
     frame (numpy.ndArray)  ->  data array of the image.
@@ -28,8 +29,13 @@ def detectAruco(frame):
 
     #Tell if no ids
     if ids is None:
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
+        #print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
         return False, None, None
     
-    
+    #Flatten ids
+    ids = list(ids.flatten())
+
+    #Reshape corners to facilitate their navigation, perform a cast to int too
+    corners = list(map(lambda x : x.astype(int).reshape((4,2)), corners))
+
     return True, corners, ids

@@ -19,20 +19,17 @@ Redress a board with 4 Aruco tags.
 
 Return function success and filename.
 """
-def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORNER"):
+def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"):
 
     #FOR EDITION 2024
     HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
     HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 450
     WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 692.3
 
-    #Load image
-    image = cv2.imread(filename=filename)
-
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
-        print(f"Log [{FILE_NAME}]: Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
-        return False, filename
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
+        return False, frame
 
     #Create ArUco dictionary
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
@@ -41,12 +38,12 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     #Create Aruco detector
     aruco_detector = cv2.aruco.ArucoDetector(aruco_dict, aruco_parameters)
     #Detect ArUco markers
-    corners, ids, rejected_corners = aruco_detector.detectMarkers(image)
+    corners, ids, rejected_corners = aruco_detector.detectMarkers(frame)
 
     #Quit if there is not even 1 id detected
     if ids is None :
-        print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
-        return False, filename
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
+        return False, frame
 
     #All 4 Aruco markers are needed to perform image to reddress
     corner_ids_no_detected = [] #will store ids
@@ -63,8 +60,8 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
-        print(f"Log [{FILE_NAME}]: Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
-        return False, filename
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
+        return False, frame
 
     #Sort corners pos to have [bottom-right, bottom-left, top-left, top-right]
     sorted_tags = corners_pos_detected_ids
@@ -96,14 +93,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
         #Reshape src points to separate each tag
         src_pts = src_pts.reshape(-1, 2)
-
-
-        # Draw point on the image
-        #cv2.circle(image, np.int32(sorted_tags[0][0][3]), 15, (255, 0, 0), -1)  # -1 fills the circle with color
-        #cv2.circle(image, np.int32(sorted_tags[3][0][0]), 15, (0, 255, 0), -1)  # -1 fills the circle with color
-        #cv2.circle(image, np.int32(src_pts[2]), 15, (0, 0, 255), -1)  # -1 fills the circle with color
-        #cv2.circle(image, np.int32(src_pts[3]), 15, (0, 0, 0), -1)  # -1 fills the circle with color
-
 
 
     #Reddress board using center of each Aruco tags NOT WORKING RIGHT NOW
@@ -142,7 +131,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
                                 [max_width - 1, 0],
                                 [0, 0]])
     else:
-        print(f"Log [{FILE_NAME}]: Board rotated.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Board rotated.")
         dst_pts = np.float32([[0, 0],
                           [0, max_height-1],
                           [max_width - 1, max_height - 1],
@@ -155,64 +144,9 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     transform_matrix = cv2.getPerspectiveTransform(src_pts, dst_pts)
 
     #Apply transformation matrix to the image
-    warped_image = cv2.warpPerspective(image, transform_matrix, (max_width, max_height),flags=cv2.INTER_LINEAR)
+    warped_image = cv2.warpPerspective(frame, transform_matrix, (max_width, max_height),flags=cv2.INTER_LINEAR)
 
 
-    #Save image
-    out_filename = filename.split('.')
-    out_filename = f"{'.'.join(out_filename[:-1])}_redressed.{out_filename[-1]}"
-    cv2.imwrite(filename=out_filename, img=warped_image)
-
-    return True, out_filename
+    return True, warped_image
 
 
-
-
-if __name__ == "__main__":
-
-    import takePhoto#sorry this is the only method to overstep no module error
-
-    #Create a parser for CLI options
-    parser = argparse.ArgumentParser(prog=FILE_NAME,
-                                     description="It's literrally in the name.")
-
-    #All arguments available
-    parser.add_argument("path_to_file",                                     #argument name
-                        action="store",                                     #mendatory
-                        type=str,                                           #must be string
-                        help="Path to file")                                #help text
-
-    parser.add_argument("-i",                                               #short option
-                        "--ids",                                            #long option
-                        action="store",                                     #store arguments
-                        nargs=4,                                            #must be 4 arguments
-                        type=int,                                           #must be integers
-                        metavar=('id1', 'id2', 'id3', 'id4'),               #variables significations
-                        default=(20, 21, 22, 23),                           #default values
-                        help="Id number of corners needed to redress the image")      #help text
-
-    parser.add_argument("-m",                                               #short option
-                        "--method",                                         #long option
-                        action="store",                                     #store arguments
-                        type=str,                                           #must be string
-                        choices=("CORNER", "CENTER"),                       #only available choices
-                        default="CORNER",                                   #default value
-                        help="Specify method for redress")            #help text
-
-
-    #Implement CLI options for photo (-p -t -q -dn)
-    parser = takePhoto.initParser(parser)
-
-    #Get all arguments
-    args = parser.parse_args()
-    filename = args.path_to_file #get filename
-    corner_ids = args.ids #get corner ids
-    method = args.method #get method
-
-    #Take a photo if mentioned
-    if args.photo:
-        #Only take options which are note None
-        dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
-        filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
-
-    redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)

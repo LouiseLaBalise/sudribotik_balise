@@ -1,38 +1,26 @@
 /*Style des onglets*/
+
 .tabs {
     display: flex; /*Use Flexbox for tabs so they are on a row*/
     list-style: none; /*Remove flees*/
     align-self: flex-start; /*align at the start of the container*/
     padding: 0; /*reset padding*/
-    margin: 2px 0 0 0; /*reset margin*/
-    width: 100%; /*set tab width full viewport*/
-    
+    margin: 2px 0 0 0; /*reset margin*/    
 }
 
 .tab {
     position: relative;
     padding: 8px 42px; /*set padding*/
     border-radius: 12px 50px 0 0; /* set top-left in round corner*/
-    margin: 0 -.4em 0 0; /*marge between tbs*/
-    background-color: var(--balise-tab-background-color);
+    margin: 0 -0.4em 0 0; /*marge between tbs*/
     cursor: pointer; /*hand cursor*/
 }
 
-.tab:hover {
-    background-color: var(--balise-tab-hover-background-color);
-}
-
-.tab.current{
-    background-color: var(--balise-tab-current-background-color);
-}
-
-
 .tab-content {
-    background-color: var(--balise-background-color);
     display: none; /*Hide by default*/
     padding: 15px; /*set padding*/
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, .5);
+    /*width: 100%;*/
+    height: 10000px; /*Not clean !!!*/
+    box-shadow: 0 -10px 10px 0px rgba(0, 0, 0, .5);
     z-index: 79; /*z-index should be less than current tab(80) and more than other tab (50)*/
 }

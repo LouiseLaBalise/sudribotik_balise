@@ -45,7 +45,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
     #Quit if there is not even 1 id detected
     if ids is None :
-        print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
         return False, filename
 
     #All 4 Aruco markers are needed to perform image to reddress
@@ -63,7 +63,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
-        print(f"Log [{FILE_NAME}]: Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
         return False, filename
 
     #Sort corners pos to have [bottom-right, bottom-left, top-left, top-right]
@@ -142,7 +142,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
                                 [max_width - 1, 0],
                                 [0, 0]])
     else:
-        print(f"Log [{FILE_NAME}]: Board rotated.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Board rotated.")
         dst_pts = np.float32([[0, 0],
                           [0, max_height-1],
                           [max_width - 1, max_height - 1],
@@ -215,4 +215,5 @@ if __name__ == "__main__":
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
         filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
 
-    redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)
+    result=redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)
+    print(result)

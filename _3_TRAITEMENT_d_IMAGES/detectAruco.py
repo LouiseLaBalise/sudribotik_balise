@@ -47,7 +47,7 @@ def detectAruco(filename:str, drawId=True, axis=False):
 
     #Tell and quit if no ids
     if ids is None:
-        print(f"Log [{FILE_NAME}]: Aucun tag n'a été détecté.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
         return False, None, None, filename
 
     #Create an image based on the inputed one
@@ -101,6 +101,13 @@ def detectAruco(filename:str, drawId=True, axis=False):
             #Then draw their axis
             cv2.aruco.drawAxis(output_image, matrix_coeff, distortion_coeff, rvec, tvec, 0.01)
 
+
+    
+    #Flatten ids
+    ids = list(ids.flatten())
+    #Reshape corners to facilitate their navigation
+    corners = list(map(lambda x : x.reshape((4,2)), corners))
+
     return True, corners, ids, out_filename
 
 
@@ -144,4 +151,5 @@ if __name__ == "__main__":
         filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
 
     #Run function
-    detectAruco(filename, drawId=drawId) #no axis for now
+    result=detectAruco(filename, drawId=drawId) #no axis for now
+    print(result)
