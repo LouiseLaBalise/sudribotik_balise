@@ -123,7 +123,7 @@ def generate_pamis_infos():
         #We need a generator to use SSE, data is jsoned in the process
         yield f"data: {json.dumps(pamis_informations)}\n\n"
         
-        time.sleep(0.10)#set a rate of 10 per second
+        #time.sleep(0.1)#set a rate of 10 per second
 
 
 """Server-Sent Event route needed to sent pamis information to client frequently"""
