@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     python3-rosinstall-generator \
     python3-wstool \
     python3-catkin-tools \
+    ros-noetic-rosserial-arduino \
+    ros-noetic-rosserial \
     && rm -rf /var/lib/apt/lists/* #Réduction de la taille de l'image en supprimant les listes de paquets téléchargés
 
 

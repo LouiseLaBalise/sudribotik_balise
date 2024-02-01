@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include 'navbar.html' %}<!--import navbar-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_pamis.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_tabs.css')}}">
+    <link rel="shortcut icon" href="#" /> <!--No favicon-->
+    <script src="/static/js/jquery-3.6.4.min.js"></script> <!--Load JQuery library (needed for Ajax requests) -->
+    <script type=text/JavaScript src="/static/js/pamis-route.js"></script> <!--Load script for this route -->
+</head>
+
+<body><div class="page-content">
+   <!-- All TABS must set <ul class='tabs'> and <li class='tabs'> to match css-->
+    <ul class="tabs">
+        <li class="tab" id="tab1" onclick="openTab('tab1')">Contrôle Pamis</li>
+    </ul>
+
+
+    <!-- Tabs Content 1-->
+    <div id="tab1_content" class="tab-content">
+        <div class="grid-container">
+
+            <!-- Generate boxes -->
+            {% for i in range(1, 7) %}
+            <div class="pami_{{ i }}-box" id="pami_board">
+                    <h2>Pami {{ i }}</h2>
+                <table>
+                    <tr>
+                        <td class="label">Tag Aruco : </td>
+                        <td class="value" id="num_aruco_{{ i }}"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Connecté : </td>
+                        <td class="value"><img class="status-icon" id="connection-status-icon_{{ i }}" src="{{ url_for('static', filename='/icons/not_connected_64px.png')}}" alt="Connection status"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="title-label" style="padding-bottom: 6px">Position actuelle</td>
+                    </tr>
+                    <tr>
+                        <td class="label">x : </td>
+                        <td class="value" id="pos_x_{{ i }}"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">y : </td>
+                        <td class="value" id="pos_y_{{ i }}"></td>
+                    </tr>
+                    <tr>
+                        <td class="label">theta : </td>
+                        <td class="value" id="pos_theta_{{ i }}"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="title-label">Aller à</td>
+                    </tr>
+                    <tr>
+                        <form action="{{ url_for('pamis') }}" method="post" id="gotoForm{{ i }}" onsubmit="goPamiFormSubmit(event,'{{ i }}')">
+                        <td class="label"><label for="goto_x_{{ i }}">x : </label></td>
+                        <td class="value"><input class="pami-goto" type="number" id="goto_x_{{ i }}" name="goto_x_{{ i }}" min="0" max="3000"/></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><label for="goto_y_{{ i }}">y : </label></td>
+                        <td class="value"><input class="pami-goto" type="number" id="goto_y_{{ i }}" name="goto_y_{{ i }}" min="0" max="9999"/></td>
+                    </tr>
+                    <tr>
+                        <td></td><!--empty for style :) -->
+                        <td>
+                            <button type="submit" title="Vroooom" class="go_button">
+                                <img src="{{ url_for('static', filename='/icons/gosign_64px.png')}}">
+                            </button>
+                        </td>
+                    </form>
+                        <td>
+                            <button type="button" title="Arrêt du Pami {{ i }}" onclick='stopPami("{{ i }}")' class="stop_button" id="stop_button_{{ i }}">
+                                <img src="{{ url_for('static', filename='/icons/stopsign_64px.png')}}">
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+            
+            <div class="side-panel" id="control_board">
+
+                <h2>Contrôles</h2>
+
+                <div style="padding-bottom: 10px;font-size: large;">Redresser l'image</div>                    
+                <div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="toggle_redress" value="checked" onchange="toggleRedressChanged(this)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                    
+                <div>
+                    <button type="button" class="control_button go_button" id="general_go" onclick="generalGoPamis()">Départ général</button> 
+                </div>
+                
+                <div>
+                    <button type="button" class="control_button stop_button" id="general_stop" onclick="generalStopPamis()">Arrêt général</button>
+                </div>
+
+            </div>
+        </div>
+    
+    </div>
+
+</div></body>    
+
+
+
+</html>
