@@ -47,7 +47,7 @@ def detectAruco(filename:str, drawId=True, axis=False):
 
     #Tell and quit if no ids
     if ids is None:
-        print(f"Log [{FILE_NAME}]: Aucun tag n'a été détecté.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag n'a été détecté.")
         return False, None, None, filename
 
     #Create an image based on the inputed one

@@ -23,7 +23,8 @@ PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
 streaming_mode=False #true when client open tab2 of balise to see the camera view (2nd tab of balise)
 sse_pamis=True # [NOT IN USE] false when client quit pami page
-pami_redress_image_before_detecting_aruco=False#trus when toggle is switched
+pami_redress_image_before_detecting_aruco=False#true when toggle is switched
+fail_redress = False #true if an attemp to redress went wrong
 #Load all pamis tag at the start of the app, meaning if these have to change,
 # you'll need to restart the app to updtae
 GAME_ELEMENT_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/gameElements_identification.json"
@@ -70,13 +71,18 @@ def getAllPamisPosition():
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
 
     #Redress image
-    global pami_redress_image_before_detecting_aruco
+    global fail_redress
     if pami_redress_image_before_detecting_aruco:
-        ret, frame = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame, corner_ids=[20,21,22,23])
+        redress_success, frame = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame, corner_ids=[20,21,22,23])
         #Case no redress
-        if not ret : 
-            print("Impossible de redresser l'image.")
-            pami_redress_image_before_detecting_aruco = False
+        if not redress_success : 
+            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : L'image n'a pas pu être redréssée.")
+            fail_redress = True
+        #If redress finally worked after some failures inform user just one time in log 
+        if redress_success and fail_redress :
+            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Redressement de l'image réussi.")
+            fail_redress = False
+                
 
     #Detect Aruco with ros_detectaruco because it is the one used in match
     ret, all_aruco_corners, all_aruco_ids = ros_detectAruco.detectAruco(frame)
@@ -122,8 +128,6 @@ def generate_pamis_infos():
 
         #We need a generator to use SSE, data is jsoned in the process
         yield f"data: {json.dumps(pamis_informations)}\n\n"
-        
-        #time.sleep(0.1)#set a rate of 10 per second
 
 
 """Server-Sent Event route needed to sent pamis information to client frequently"""

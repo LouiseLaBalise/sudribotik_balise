@@ -28,7 +28,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"
 
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
-        print(f"Log [{FILE_NAME}]: Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
         return False, frame
 
     #Create ArUco dictionary
@@ -42,7 +42,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"
 
     #Quit if there is not even 1 id detected
     if ids is None :
-        print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
         return False, frame
 
     #All 4 Aruco markers are needed to perform image to reddress
@@ -60,7 +60,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"
 
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
-        print(f"Log [{FILE_NAME}]: Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
         return False, frame
 
     #Sort corners pos to have [bottom-right, bottom-left, top-left, top-right]
@@ -131,7 +131,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"
                                 [max_width - 1, 0],
                                 [0, 0]])
     else:
-        print(f"Log [{FILE_NAME}]: Board rotated.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Board rotated.")
         dst_pts = np.float32([[0, 0],
                           [0, max_height-1],
                           [max_width - 1, max_height - 1],
