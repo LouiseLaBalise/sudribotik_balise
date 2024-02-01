@@ -129,7 +129,7 @@ function showPhotoModal(index){
     img.src = photo_modal_link + list_photos[index]["name"];//set img
     caption.innerHTML = list_photos[index]["name"]//set caption
     modal.style.display = "block"; //show modal
-i}
+}
 
 /*Quit modal if click on 'X'*/
 function closeModal(){

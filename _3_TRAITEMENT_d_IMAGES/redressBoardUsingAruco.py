@@ -215,4 +215,5 @@ if __name__ == "__main__":
         dict_param_takePhoto = {"name":filename,"tms":args.timeout,"quality":args.quality, "denoise":args.denoise_n}
         filename = takePhoto.takePhoto(**{k:v for k,v in dict_param_takePhoto.items() if v is not None})
 
-    redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)
+    result=redressBoardUsingAruco(filename, corner_ids=corner_ids, method=method)
+    print(result)

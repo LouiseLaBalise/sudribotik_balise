@@ -4,10 +4,23 @@
     display: flex;
     flex-direction: column; /*items in columns*/
     height: 100vh; /*100% viewport height*/
-    overflow: auto;/* scroll bar only if necessary*/
-    align-items: center; /* align items in the center horizontally */
     color: var(--balise-text-color);
 }
+
+/*Tab colors management*/
+.tab{
+    background-color: var(--balise-tab-background-color);
+}
+.tab:hover {
+    background-color: var(--balise-tab-hover-background-color);
+}
+.tab.current{
+    background-color: var(--balise-tab-current-background-color);
+}
+.tab-content {
+    background-color: var(--balise-background-color);
+}
+
 
 /*1st TAB*/
 #photoForm{
@@ -59,6 +72,7 @@
     background-color: var(--balise-secondary-color); /*color of the vertical bar*/
 }
 
+/*Input form*/
 #photoForm input,
 #photoForm input:focus{
     outline: none; /*remove outline*/
@@ -74,7 +88,9 @@
     border-bottom: 2px solid var(--balise-disable-color); 
     transition: .4s;
 }
-
+#photoForm input[type="number"]{
+    width: 50px;
+}
 
 /*Remove spin button*/
 input::-webkit-outer-spin-button, 
@@ -98,9 +114,6 @@ input::-webkit-outer-spin-button,
     padding: 8px;
 }
 
-#photoForm input[type="number"]{
-    width: 50px;
-}
 
 /*style des toggles checkbox*/
 #photoForm .toggle-switch{
@@ -195,7 +208,7 @@ input::-webkit-outer-spin-button,
 }
 
 #photoForm button:hover{
-    background-color: var(--balise-button-hover-photo-background-color);
+    background-color: var(--balise-button-photo-hover-background-color);
 }
 
 #resultMessage #resultMessageParagraph li{
@@ -207,7 +220,7 @@ input::-webkit-outer-spin-button,
 /*2nd TAB*/
 .video_stream_container{
     width:fit-content;
-    border: 3px solid var(--balise-secondary-color);;
+    border: 3px solid var(--balise-secondary-color);
     border-radius: 6px;
     overflow: hidden;
     margin-top: 40px;
@@ -288,27 +301,6 @@ input::-webkit-outer-spin-button,
 .close_modal:hover{
     color:#ccc;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
