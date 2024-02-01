@@ -5,7 +5,7 @@
     --navbar-selected-color: #606271;
 
     --webpage-background-color: #E5EAF5;/*#3D3D3D;/**/
-    --disable-color: rgb(190, 190, 190);
+    --disable-color: rgb(146, 146, 146);
     --tooltip-background-color: rgba(255, 255, 255, 80%);
 
     /*PAMIS THEME*/
@@ -17,11 +17,13 @@
     --pamis-tab-hover-background-color: var(--pamis-background-color);
     --pamis-disable-color: var(--disable-color);
     --pamis-toggle-off-background-color: var(--pamis-disable-color);
-    --pamis-toggle-on-background-color: var(--pamis-secondary-color);
-    --pamis-toggle-circle-color: ivory;
+    --pamis-toggle-on-background-color: #eded51;/*var(--pamis-secondary-color);*/
+    --pamis-toggle-circle-color: #ff6c22;
     --pamis-tooltip-background-color: var(--tooltip-background-color);
     --pamis-button-goto-background-color: #ff6c22;
     --pamis-button-goto-hover-background-color: rgb(48, 148, 5);
+    --pamis-button-stop-background-color: #da64ca;
+    --pamis-button-stop-hover-background-color: #CC1C1C;
 
     /*BALISE THEME*/
     --balise-background-color: #494D5F;
@@ -35,8 +37,8 @@
     --balise-toggle-on-background-color: var(--balise-secondary-color);
     --balise-toggle-circle-color: ivory;
     --balise-tooltip-background-color: var(--tooltip-background-color);
-    --balise-button-photo-background-color: palevioletred;
-    --pamis-button-photo-hover-background-color: rgb(182, 72, 114);
+    --balise-button-photo-background-color: rgb(225, 105, 145);
+    --balise-button-photo-hover-background-color: rgb(64, 119, 94);
     --balise-table-hover-background-color: #a982f3;
 }
 

@@ -34,11 +34,10 @@
 /*Grid*/
 .grid-container {
     display: grid; /*Use a grid to display pamis infos*/
-    
     height: 100%; /*full page height*/
 }
 
-.grid-container div{
+.grid-container #pami_board, #control_board{
     display: flex;
     text-align: center;/*Center text but actually only title will be centered*/
     flex-direction: column;
@@ -49,7 +48,7 @@
 
 .grid-container table{
     align-self: center;
-    margin-right: 70px;
+    margin-right: 33px;
 }
 .grid-container .title-label{
     padding-top: 20px;/*set padding*/
@@ -61,6 +60,9 @@
 .grid-container .status-icon {
     width: 20px; /*icon size*/
     height: 20px;
+}
+.grid-container .value {
+    width: 200px; /*icon size*/
 }
 
 /*Input form*/
@@ -86,24 +88,94 @@
 
 /*Remove spin button*/
 input::-webkit-outer-spin-button, 
-    input::-webkit-inner-spin-button {
+    input::-webkit-inner-spin-button{
     -webkit-appearance: none;
     margin: 0;
 }
 
-/*Button*/
-.grid-container button{
+/*Button pami_board*/
+.grid-container #pami_board button{
     cursor: pointer;
     width: 70px; /*button size*/
     height: 70px;
-    background-color: var(--pamis-button-goto-background-color);
     border-radius: 80px; /*set border radius*/
     margin-top: 15px;
 }
-.grid-container button:hover{
-    background-color: var(--pamis-button-goto-hover-background-color);
-}
-.grid-container button img {
+.grid-container #pami_board button img{
     width: 43px; /*icon size*/
     height: 43px;
 }
+
+/*General button color*/
+/*Go*/
+.grid-container .go_button{
+    background-color: var(--pamis-button-goto-background-color);
+}
+.grid-container .go_button:hover{
+    background-color: var(--pamis-button-goto-hover-background-color);
+}
+/*Stop*/
+.grid-container .stop_button{
+    background-color: var(--pamis-button-stop-background-color);
+}
+.grid-container .stop_button:hover{
+    background-color: var(--pamis-button-stop-hover-background-color);
+}
+
+/*Side panel*/
+.grid-container .side-panel h2{
+    margin-bottom: 80px; /*title padding*/
+}
+
+/*style side-panel buttons*/
+.grid-container .side-panel .control_button{
+    cursor: pointer;
+    font-size: 18px; /*text size*/
+    width: 145px; /*button size*/
+    height: 60px;
+    border-radius: 40%; /*set border radius*/
+    margin-top: 35px; /*buttons margin*/
+}
+
+/*style toggles checkbox*/
+.grid-container .toggle-switch{
+    /*display: inline-block; Apparently not useful */
+    position: relative;
+    right: 12%;
+}
+.grid-container .toggle-switch input { /*soft delete the classic checkbox*/
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.grid-container .slider { /*style for the toggle span off*/
+    position: absolute;
+    cursor: pointer;
+    top: -2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 54px;/*set width*/
+    height: 22px;/*set height*/
+    background-color: var(--pamis-toggle-off-background-color);
+    border-radius: 34px;
+}
+.grid-container .slider::before { /*style for the circle inside toggle when off*/
+    position: absolute;
+    content: "";
+    height: 14px;/* <- toggle_height - 2*circle_bottom*/
+    width: 14px;
+    left: 6px;
+    bottom: 4px;
+    background-color: var(--pamis-toggle-circle-color);
+    border-radius: 50%;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+.grid-container input:checked + .slider { /*toggle span when checked on*/
+    background-color: var(--pamis-toggle-on-background-color);
+}
+.grid-container input:checked + .slider::before { /*circle when checked on*/
+    -webkit-transform: translateX(28px);
+    transform: translateX(28px); /* <- toggle_width - 2*circle_left - circle_width*/
+}                

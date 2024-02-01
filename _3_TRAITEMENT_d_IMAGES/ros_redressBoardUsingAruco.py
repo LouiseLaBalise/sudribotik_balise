@@ -19,7 +19,7 @@ Redress a board with 4 Aruco tags.
 
 Return function success and filename.
 """
-def redressBoardUsingAruco(frame, corner_ids = (20, 21, 23, 22), method="CORNER"):
+def redressBoardUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"):
 
     #FOR EDITION 2024
     HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
@@ -29,7 +29,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 23, 22), method="CORNER"
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
         print(f"Log [{FILE_NAME}]: Il faut 4 ids de tags ArUco. Impossible de redresser l'image.")
-        return False
+        return False, frame
 
     #Create ArUco dictionary
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
@@ -43,7 +43,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 23, 22), method="CORNER"
     #Quit if there is not even 1 id detected
     if ids is None :
         print(f"Log [{FILE_NAME}]: Aucun tag détecté. Il en faut au moins 4.")
-        return False
+        return False, frame
 
     #All 4 Aruco markers are needed to perform image to reddress
     corner_ids_no_detected = [] #will store ids
@@ -61,7 +61,7 @@ def redressBoardUsingAruco(frame, corner_ids = (20, 21, 23, 22), method="CORNER"
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
         print(f"Log [{FILE_NAME}]: Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de redresser l'image.")
-        return False
+        return False, frame
 
     #Sort corners pos to have [bottom-right, bottom-left, top-left, top-right]
     sorted_tags = corners_pos_detected_ids

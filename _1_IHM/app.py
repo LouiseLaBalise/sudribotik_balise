@@ -10,7 +10,8 @@ FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
 from init import get_hotspot_ip_address
-from _3_TRAITEMENT_d_IMAGES import takePhoto, redressBoardUsingAruco, detectAruco, detectColor, ros_detectAruco, ros_arucoCalc
+from _3_TRAITEMENT_d_IMAGES import (takePhoto, redressBoardUsingAruco, detectAruco, detectColor,
+                                    ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc)
 from scripts.formatdata import formatBytes, formatSeconds
 
 
@@ -20,8 +21,9 @@ TEMPLATES_AUTO_RELOAD = True #reload when template change
 MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
-STREAMING_MODE=False #true when client open tab2 of balise to see the camera view (2nd tab of balise)
-
+streaming_mode=False #true when client open tab2 of balise to see the camera view (2nd tab of balise)
+sse_pamis=True # [NOT IN USE] false when client quit pami page
+pami_redress_image_before_detecting_aruco=False#trus when toggle is switched
 #Load all pamis tag at the start of the app, meaning if these have to change,
 # you'll need to restart the app to updtae
 GAME_ELEMENT_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/gameElements_identification.json"
@@ -33,6 +35,18 @@ with open (GAME_ELEMENT_FILEPATH, "r") as f:
 @app.route('/')
 def index():
     return render_template('index.html') #look for the index.html template in ./templates/
+
+
+
+
+
+
+#####################################################################################################
+#                                                                                                   #
+#                                           PAMIS                                                   #
+#                                                                                                   #
+#####################################################################################################
+
 
 
 """Returns whether a Pami is connected or not, based on their tag"""
@@ -54,6 +68,15 @@ def getAllPamisPosition():
 
     #Case no image
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
+
+    #Redress image
+    global pami_redress_image_before_detecting_aruco
+    if pami_redress_image_before_detecting_aruco:
+        ret, frame = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame, corner_ids=[20,21,22,23])
+        #Case no redress
+        if not ret : 
+            print("Impossible de redresser l'image.")
+            pami_redress_image_before_detecting_aruco = False
 
     #Detect Aruco with ros_detectaruco because it is the one used in match
     ret, all_aruco_corners, all_aruco_ids = ros_detectAruco.detectAruco(frame)
@@ -86,7 +109,7 @@ def getAllPamisPosition():
 """Generate json object with pamis informations inside"""
 def generate_pamis_infos():
     while True: #generate pamis info continuously
-        
+
         #Fetch all pami position on a single image
         all_pamis_pos = getAllPamisPosition()
         
@@ -110,11 +133,98 @@ def sse_pamis():
     return Response(generate_pamis_infos(), content_type='text/event-stream')
 
 
+"""route used to stop a pami"""
+@app.route('/stop_pami', methods=['POST'])
+def stop_pami():
+    
+    #Get which pami to stop
+    pami_num_to_stop = request.json["pami_number"]
+        
+    #Send a command to the pami
+    try :
+        #stop() du script d'Alexandre
+        response={"success":True}
+
+
+    except Exception as e:
+        traceback.print_exc()
+        #Create with response with success key False
+        response = {'success': False, 'error': str(e)}
+
+    #back to the client
+    return jsonify(response)
+
+"""route used to change redress image state"""
+@app.route('/pami_redress_image', methods=['POST'])
+def pami_redress_image():
+    global pami_redress_image_before_detecting_aruco
+    
+    #Get checkbox state
+    checkbox_state = request.json["redress"]
+    
+    #Send a command to the pami
+    try :
+        pami_redress_image_before_detecting_aruco = checkbox_state
+        response={"success":True,
+                  "redress":checkbox_state}
+
+
+    except Exception as e:
+        traceback.print_exc()
+        #Create with response with success key False
+        response = {'success': False, 'error': str(e)}
+
+    #back to the client
+    return jsonify(response)
+
+
 """pamis route"""
-@app.route('/pamis')
+@app.route('/pamis', methods=['GET', 'POST'])
 def pamis():
+
+    #Post method
+    if request.method == 'POST':
+
+        #Get pami's number
+        pami_number = request.json["number"]
+
+        #Get desired x and y position from the form
+        desired_x = request.json["goto_x"]
+        desired_y = request.json["goto_y"]
+        
+        #Send a command to the pami
+        try :
+            #goto() du script d'Alexandre
+            response={"success":True}
+
+
+        except Exception as e:
+            traceback.print_exc()
+            #Create with response with success key False
+            response = {'success': False, 'error': str(e)}
+
+        #back to the client
+        return jsonify(response)
+
+        
+
     #Go to pamis page        
     return render_template("pamis.html")
+
+
+
+
+
+
+
+#####################################################################################################
+#                                                                                                   #
+#                                           BALISE                                                  #
+#                                                                                                   #
+#####################################################################################################
+
+
+
 
 """balise route"""
 @app.route('/balise', methods=['GET', 'POST'])
@@ -245,6 +355,10 @@ def balise():
 
 
 
+
+
+
+
 """Video for balise tab2"""
 @app.route('/video_stream')
 def videoStream():
@@ -259,7 +373,7 @@ def videoStream():
 def generateFrames():
     video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
 
-    while STREAMING_MODE:
+    while streaming_mode:
         ret,frame=video_capture.read() #read an image from camera
         if not ret:continue
         ret, jpeg = cv2.imencode('.jpg', frame) #convert image in jpg
@@ -276,13 +390,13 @@ def generateFrames():
 from the client side when user enter or quit a tab"""
 @app.route('/start_video')
 def startVideoStream():
-    global STREAMING_MODE
-    STREAMING_MODE=True
+    global streaming_mode
+    streaming_mode=True
     return 'OK'
 @app.route('/stop_video')
 def stopVideoStream():
-    global STREAMING_MODE
-    STREAMING_MODE=False
+    global streaming_mode
+    streaming_mode=False
     return 'OK'
 
 """Make a list of all photo present in PHOTO_PATH
