@@ -1,15 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import sys
-import time
 import json
 import rospy
 import cv2
-import math
+
+
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-GAME_ELEMENT_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/gameElements_identification.json"
+configuration_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
 
 sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
 from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc
@@ -22,8 +22,8 @@ Publish position of Robots, Elements and Arucos on the board
 def publisher():
  
     #Get Aruco constants    
-    with open (GAME_ELEMENT_FILEPATH, "r") as f:
-        game_element_identification = json.load(f)
+    with open (configuration_FILEPATH, "r") as f:
+        config = json.load(f)
 
     # This node will publish blue and yellow robot position
     robotsPos_pub = rospy.Publisher("balise/position/robots", ArrayPositionPxWithType, queue_size=10)
@@ -60,10 +60,11 @@ def publisher():
         # before image is redressed.
         solarPos_pub = rospy.Publisher("balise/position/solarpanel", ArrayPositionPxWithType, queue_size=10)
         solarPos_pub.publish(getPositionSolarPanelMsg(frame,
-                                                      game_element_identification["SOLAR_PANEL_ID"][0]))
+                                                      config["SOLAR_PANEL_ID"][0]))
 
         #Redress board
-        ret=True#, frame_redressed = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame)        
+        ret=True#, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"],
+                                                                                    #config["REDRESS_SIZE"])        
         #Go to next loop if board can't be redressed
         if not ret:
             print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de redresser le plateau de jeu.")
@@ -78,14 +79,14 @@ def publisher():
             continue
 
         robotsPos_pub.publish(getPositionRobotMsg(corners, ids,
-                                                  game_element_identification["BLUE_ROBOT_MAIN_ID"][0],
-                                                  game_element_identification["YELLOW_ROBOT_MAIN_ID"][0]))
+                                                  config["BLUE_ROBOT_MAIN_ID"][0],
+                                                  config["YELLOW_ROBOT_MAIN_ID"][0]))
         pamisPos_pub.publish(getPositionPamiMsg(corners, ids,
-                                                  game_element_identification["BLUE_PAMI_IDS"],
-                                                  game_element_identification["YELLOW_PAMI_IDS"]))
+                                                  config["BLUE_PAMI_IDS"],
+                                                  config["YELLOW_PAMI_IDS"]))
         plantsPos_pub.publish(getPositionPlantMsg(frame,
-                                                  game_element_identification["PLANT_HSV_RANGE"],
-                                                  game_element_identification["PLANT_HSV_SURFACE"]))
+                                                  config["PLANT_HSV_RANGE"],
+                                                  config["PLANT_HSV_SURFACE"]))
         #potPos_pub.publish(getPositionPotMsg())
 
         rate.sleep() #wait according to publish rate
@@ -219,11 +220,6 @@ def getPositionSolarPanelMsg(frame, solar_id):
     msg = [] #create msg
     panel_msg = PositionPxWithType()
 
-    """#pour tester sur docker
-    frame = cv2.imread(filename="/Louise_eurobot_2024/board.jpg")
-    ret, frame = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame)
-    t=1#numero de tag à tester"""
-
     #Search for Aruco tags
     ret, corners, ids = ros_detectAruco.detectAruco(frame)
 
@@ -276,7 +272,7 @@ def getPositionSolarPanelMsg(frame, solar_id):
     temp_color = None
     num = 0
     for panel in msg:
-        #Basically this loop assign a number to panel,
+        #Basically this loop assign a number to a panel,
         # the number increment each loop and reset to zero when panel color change
         if temp_color != panel.type:
             temp_color = panel.type

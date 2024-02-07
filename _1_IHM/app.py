@@ -27,9 +27,9 @@ pami_redress_image_before_detecting_aruco=False#true when toggle is switched
 fail_redress = False #true if an attemp to redress went wrong
 #Load all pamis tag at the start of the app, meaning if these have to change,
 # you'll need to restart the app to updtae
-GAME_ELEMENT_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/gameElements_identification.json"
-with open (GAME_ELEMENT_FILEPATH, "r") as f:
-    ALL_PAMIS_IDS = json.load(f)["IHM_PAMI_IDS"]
+configuration_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/configuration.json"
+with open (configuration_FILEPATH, "r") as f:
+    config = json.load(f)["IHM_PAMI_IDS"]
     
 
 """Homepage route"""
@@ -42,11 +42,11 @@ def index():
 
 
 
-#####################################################################################################
-#                                                                                                   #
-#                                           PAMIS                                                   #
-#                                                                                                   #
-#####################################################################################################
+#######################################################################################
+#                                                                                     #
+#                                       PAMIS                                         #
+#                                                                                     #
+#######################################################################################
 
 
 
@@ -65,7 +65,7 @@ def getAllPamisPosition():
     ret,frame = cap.read()
     cap.release()
 
-    nb_pamis = len(ALL_PAMIS_IDS) #get number of pamis
+    nb_pamis = len(config) #get number of pamis
 
     #Case no image
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
@@ -73,7 +73,7 @@ def getAllPamisPosition():
     #Redress image
     global fail_redress
     if pami_redress_image_before_detecting_aruco:
-        redress_success, frame = ros_redressBoardUsingAruco.redressBoardUsingAruco(frame, corner_ids=[20,21,22,23])
+        redress_success, frame = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"])
         #Case no redress
         if not redress_success : 
             print(f"Log [{os.times().elapsed}] - {FILE_NAME} : L'image n'a pas pu être redréssée.")
@@ -91,11 +91,11 @@ def getAllPamisPosition():
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
 
     #Select only detected pami tags
-    pami_ids_detected = list(set(all_aruco_ids) & set(ALL_PAMIS_IDS))
+    pami_ids_detected = list(set(all_aruco_ids) & set(config))
 
     #Calculate their position
     pamis_position = []
-    for id in ALL_PAMIS_IDS :
+    for id in config :
 
         #If id has not been detected we add it to the list with no values
         if id not in pami_ids_detected:
@@ -124,7 +124,7 @@ def generate_pamis_infos():
                                "connection":getPamiConnection(tag),
                                "pos_x":all_pamis_pos[k][0],
                                "pos_y":all_pamis_pos[k][1],
-                               "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(ALL_PAMIS_IDS)]
+                               "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(config)]
 
         #We need a generator to use SSE, data is jsoned in the process
         yield f"data: {json.dumps(pamis_informations)}\n\n"
@@ -221,11 +221,11 @@ def pamis():
 
 
 
-#####################################################################################################
-#                                                                                                   #
-#                                           BALISE                                                  #
-#                                                                                                   #
-#####################################################################################################
+#######################################################################################
+#                                                                                     #
+#                                      BALISE                                         #
+#                                                                                     #
+#######################################################################################
 
 
 
