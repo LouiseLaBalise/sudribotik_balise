@@ -1,14 +1,17 @@
 import cv2
 import os
+import sys
 import numpy as np
 import argparse
 import json
+import takePhoto
 
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-
+sys.path.insert(1, FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]) #add parent folder to python path
+from init import prettify_json
 
 """
 Calibrate the camera to get the matrix transformation between the camera view and the board.
@@ -140,39 +143,16 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
         json.dump(config, json_file)
     print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Calibration terminée.")
 
-    #Prettify json file to be human readable
-    with open(configuration_FILEPATH, 'r') as file:
-            content = file.read()
+    #Prettify Json file
+    prettify_json.prettify(configuration_FILEPATH)
 
-            quote = False
-            result = ''
-
-            #Loop over each character to see if there is a quote
-            for char in content:
-
-                #Add a line jump after each coma placed before a quote
-                if char == ',' and quote:
-                    result += ',\n'
-                else:
-                    result += char
-
-                #If a quote is detected directly look for the next char
-                if char == '"' or char == "]":
-                    quote = True
-                    continue
-                else :
-                    quote = False
-
-    #Save result
-    with open(configuration_FILEPATH, 'w') as file:
-        file.write(result)
 
     #Save a redressed image
     warped_image = cv2.warpPerspective(frame, transform_matrix, [width, height], flags=cv2.INTER_LINEAR)
-    out_filename = FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]+"test_24/calibration_result.jpg"
+    out_filename = "media/calibration_result.jpg"
     cv2.imwrite(filename=out_filename, img=warped_image)
 
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Résultat de la calibration disponnible dans test_24/calibration_result.jpg.")
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Résultat de la calibration disponnible dans {out_filename}.")
     return True
 
 
@@ -195,5 +175,10 @@ def redressImage(frame, transform_matrix, size):
 
 
 if __name__=="__main__":
-    frame = cv2.imread(filename="/home/rayane/Royone/Inge3M/projet/Balise_2024/board.jpg")
+
+    #When this function is called from terminal take picture
+    photo = takePhoto.takePhoto(name="calibration_photo.jpg")
+    frame = cv2.imread(filename=photo)
+
+    #Then call the function
     calibrateCameraUsingAruco(frame)

@@ -29,7 +29,7 @@ with sqlite3.connect(FILE_PATH_FOR_DATABASE) as connection:
 
     try :
         #Create these tables if they dont exist
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS robots
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_robots
                     (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     type TEXT,
@@ -38,25 +38,7 @@ with sqlite3.connect(FILE_PATH_FOR_DATABASE) as connection:
                     position_theta INTEGER
                     )
                     ''')
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS pamis
-                    (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    type TEXT,
-                    num INTEGER,
-                    position_x INTEGER,
-                    position_y INTEGER,
-                    position_theta INTEGER
-                    )
-                    ''')
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS plants
-                    (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    position_x INTEGER,
-                    position_y INTEGER,
-                    position_theta INTEGER
-                    )
-                    ''')
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS solarpanel
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_pamis
                     (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     type TEXT,
@@ -66,10 +48,49 @@ with sqlite3.connect(FILE_PATH_FOR_DATABASE) as connection:
                     position_theta INTEGER
                     )
                     ''')
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS score
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_plants
+                    (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    position_x INTEGER,
+                    position_y INTEGER,
+                    position_theta INTEGER
+                    )
+                    ''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_solarpanel
+                    (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    type TEXT,
+                    num INTEGER,
+                    position_x INTEGER,
+                    position_y INTEGER,
+                    position_theta INTEGER
+                    )
+                    ''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_pots
+                    (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    position_x INTEGER,
+                    position_y INTEGER
+                    )
+                    ''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS b_score
                     (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     points INTEGER
+                    )
+                    ''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS r_aruco
+                    (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    tag INTEGER,
+                    ax INTEGER,
+                    ay INTEGER,
+                    bx INTEGER,
+                    by INTEGER,
+                    cx INTEGER,
+                    cy INTEGER,
+                    dx INTEGER,
+                    dy INTEGER
                     )
                     ''')
         connection.commit()

@@ -3,7 +3,7 @@ import os
 import sys
 import rospy
 import sqlite3
-from balise_msgs.msg import ArrayPositionPx, ArrayPositionPxWithType
+from balise_msgs.msg import ArrayPositionPx, ArrayPositionPxWithType, ArrayPositionPxRectangle
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -16,12 +16,12 @@ DATABASE_PATH = init_database.FILE_PATH_FOR_DATABASE #database path
 
 
 
-"""
-Insert data received into its appropriate table.
-    table_name (str)    ->      table name.
-    data (dict)         ->      data to insert with key as column and value as data.
-"""
 def insertDataIntoDatabase(table_name:str, data:dict):
+    """
+    Insert data received into its appropriate table.
+        table_name (str)    ->      table name.
+        data (dict)         ->      data to insert with key as column and value as data.
+    """
 
     #Get keys
     keys = ','.join(data.keys())
@@ -56,11 +56,13 @@ def insertDataIntoDatabase(table_name:str, data:dict):
 
 
 
-"""
-Callback for main robots position.
-Insert data in a database.
-"""
+
 def robotPosCallback(data):
+    """
+    Callback for main robots position.
+    Insert data in a database.
+    """
+
     data_dict = {}
 
     #Fill the dict with robot data 
@@ -69,16 +71,19 @@ def robotPosCallback(data):
         data_dict["position_x"] = robot.x
         data_dict["position_y"] = robot.y
         data_dict["position_theta"] = robot.theta
-    
-    insertDataIntoDatabase("robots", data_dict)
+
+        #Update database
+        insertDataIntoDatabase("b_robots", data_dict)
 
 
 
-"""
-Callback for pamis position.
-Insert data in a database.
-"""
+
 def pamiPosCallback(data):
+    """
+    Callback for pamis position.
+    Insert data in a database.
+    """
+
     data_dict = {}
 
     #Fill the dict with pami data 
@@ -90,15 +95,18 @@ def pamiPosCallback(data):
         data_dict["position_y"] = pami.y
         data_dict["position_theta"] = pami.theta
     
-    insertDataIntoDatabase("pamis", data_dict)
+        #Update database
+        insertDataIntoDatabase("b_pamis", data_dict)
 
 
 
-"""
-Callback for plants position.
-Insert data in a database.
-"""
+
 def plantPosCallback(data):
+    """
+    Callback for plants position.
+    Insert data in a database.
+    """
+
     data_dict = {}
 
     #Fill the dict with plant data 
@@ -107,13 +115,16 @@ def plantPosCallback(data):
         data_dict["position_y"] = plant.y
         data_dict["position_theta"] = plant.theta
     
-    insertDataIntoDatabase("plants", data_dict)
+        #Update database
+        insertDataIntoDatabase("b_plants", data_dict)
     
 
-"""
-Callback for solar panel orientation
-"""
+
 def solarpanelPosCallback(data):
+    """
+    Callback for solar panels orientation.
+    """
+
     data_dict = {}
 
     #Fill the dict with solar panel data 
@@ -125,14 +136,44 @@ def solarpanelPosCallback(data):
         data_dict["position_y"] = solarpanel.y
         data_dict["position_theta"] = solarpanel.theta
     
-    insertDataIntoDatabase("pamis", data_dict)
+        #Update database
+        insertDataIntoDatabase("b_solarpanel", data_dict)
+
+
+
+
+def arucoPosFromRobotCallback(data):
+    """
+    Callback for aruco tags raw position detected by robot front camera.
+    """
+
+    data_dict = {}
+
+    #Fill the dict with aruco tag data 
+    for tag in data.array_of_rectangles:
+        data_dict["tag"] = tag.id
+
+        data_dict["ax"] = tag.a_px.x
+        data_dict["ay"] = tag.a_px.y
+
+        data_dict["bx"] = tag.b_px.x
+        data_dict["by"] = tag.b_px.y
+
+        data_dict["cx"] = tag.c_px.x
+        data_dict["cy"] = tag.c_px.y
+
+        data_dict["dx"] = tag.d_px.x
+        data_dict["dy"] = tag.d_px.y
+    
+        #Update database
+        insertDataIntoDatabase("r_aruco", data_dict)
     
 
-"""
-Fetch and parse data from ros on ihm sub topics
-"""
-def subscriber():
 
+def subscriber():
+    """
+    Fetch and parse data from ros on ihm sub topics.
+    """
     
     # Tell node name to rospy
     rospy.init_node('listener', anonymous=True)
@@ -143,6 +184,7 @@ def subscriber():
     rospy.Subscriber("balise/position/plants", ArrayPositionPx, plantPosCallback)
     rospy.Subscriber("balise/position/solarpanel", ArrayPositionPxWithType, solarpanelPosCallback)
     #rospy.Subscriber("balise/position/pots", ArrayPositionPx, callback)
+    rospy.Subscriber("robot1/position/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
 
     # Keeps python from exiting until this node is stopped
     # also it permits to this node to listen to new messages on mentioned topics
