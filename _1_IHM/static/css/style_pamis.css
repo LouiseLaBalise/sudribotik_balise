@@ -74,7 +74,7 @@
     border-bottom: 2px solid var(--pamis-secondary-color); /* add a line at the bottom*/
     padding: 4px;
     text-align: center; /*align inner text in center*/
-    color: var(--balise-text-color);/*text color*/
+    color: var(--beacon-text-color);/*text color*/
     transition: .4s;
 }
 .grid-container input:disabled{

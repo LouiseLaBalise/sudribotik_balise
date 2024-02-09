@@ -1,24 +1,24 @@
-/*Style de la page balise*/
+/*Style de la page beacon*/
 
 .page-content{
     display: flex;
     flex-direction: column; /*items in columns*/
     height: 100vh; /*100% viewport height*/
-    color: var(--balise-text-color);
+    color: var(--beacon-text-color);
 }
 
 /*Tab colors management*/
 .tab{
-    background-color: var(--balise-tab-background-color);
+    background-color: var(--beacon-tab-background-color);
 }
 .tab:hover {
-    background-color: var(--balise-tab-hover-background-color);
+    background-color: var(--beacon-tab-hover-background-color);
 }
 .tab.current{
-    background-color: var(--balise-tab-current-background-color);
+    background-color: var(--beacon-tab-current-background-color);
 }
 .tab-content {
-    background-color: var(--balise-background-color);
+    background-color: var(--beacon-background-color);
 }
 
 
@@ -69,7 +69,7 @@
     height: 200px;/*bar size*/
     width: 2px;
     margin: 15px;
-    background-color: var(--balise-secondary-color); /*color of the vertical bar*/
+    background-color: var(--beacon-secondary-color); /*color of the vertical bar*/
 }
 
 /*Input form*/
@@ -78,14 +78,14 @@
     outline: none; /*remove outline*/
     border: none; /*removes the default border*/
     background-color: transparent; /*background transparent.*/
-    border-bottom: 2px solid var(--balise-secondary-color); /* add a line at the bottom*/
+    border-bottom: 2px solid var(--beacon-secondary-color); /* add a line at the bottom*/
     text-align: center; /*align inner text in center*/
-    color: var(--balise-text-color);/*text color*/
+    color: var(--beacon-text-color);/*text color*/
     transition: .4s;
 }
 #photoForm input:disabled{
     background-color: rgb(0 0 0 / 10%);/*light opaque background*/
-    border-bottom: 2px solid var(--balise-disable-color); 
+    border-bottom: 2px solid var(--beacon-disable-color); 
     transition: .4s;
 }
 #photoForm input[type="number"]{
@@ -134,7 +134,7 @@ input::-webkit-outer-spin-button,
     bottom: 0;
     width: 54px;/*set width*/
     height: 22px;/*set height*/
-    background-color: var(--balise-toggle-off-background-color);
+    background-color: var(--beacon-toggle-off-background-color);
     border-radius: 34px;
 }
 #photoForm .slider::before { /*style for the circle inside toggle when off*/
@@ -144,13 +144,13 @@ input::-webkit-outer-spin-button,
     width: 14px;
     left: 6px;
     bottom: 4px;
-    background-color: var(--balise-toggle-circle-color);
+    background-color: var(--beacon-toggle-circle-color);
     border-radius: 50%;
     -webkit-transition: .2s;
     transition: .2s;
   }
 #photoForm input:checked + .slider { /*toggle span when checked on*/
-    background-color: var(--balise-toggle-on-background-color);
+    background-color: var(--beacon-toggle-on-background-color);
 }
 #photoForm input:checked + .slider::before { /*circle when checked on*/
     -webkit-transform: translateX(28px);
@@ -173,7 +173,7 @@ input::-webkit-outer-spin-button,
     display: none; /*start hidding*/
     position: absolute;
     z-index: 1; /*on top of everything*/
-    background-color: var(--balise-tooltip-background-color);
+    background-color: var(--beacon-tooltip-background-color);
     color: black;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 10px;
@@ -202,13 +202,13 @@ input::-webkit-outer-spin-button,
     width: 110px; /*button size*/
     height: 110px;
     font-size: 15px;
-    background-color: var(--balise-button-photo-background-color);
+    background-color: var(--beacon-button-photo-background-color);
     border-radius: 100px;
     margin-bottom: 15px;
 }
 
 #photoForm button:hover{
-    background-color: var(--balise-button-photo-hover-background-color);
+    background-color: var(--beacon-button-photo-hover-background-color);
 }
 
 #resultMessage #resultMessageParagraph li{
@@ -220,7 +220,7 @@ input::-webkit-outer-spin-button,
 /*2nd TAB*/
 .video_stream_container{
     width:fit-content;
-    border: 3px solid var(--balise-secondary-color);
+    border: 3px solid var(--beacon-secondary-color);
     border-radius: 6px;
     overflow: hidden;
     margin-top: 40px;
@@ -239,7 +239,7 @@ input::-webkit-outer-spin-button,
     margin-bottom: 15px;
 }
 .items-container{
-    border: 1px solid var(--balise-secondary-color);
+    border: 1px solid var(--beacon-secondary-color);
     border-radius: 2px;
     width: 50%; /*set width*/
     margin-left: 40px; /*set margin-left*/
@@ -250,7 +250,7 @@ input::-webkit-outer-spin-button,
     width: 100%;
 }
 .items-container .title{
-    background-color: var(--balise-secondary-color);
+    background-color: var(--beacon-secondary-color);
 }
 .items-container td{
     padding: 8px;
@@ -259,7 +259,7 @@ input::-webkit-outer-spin-button,
     height: 26px;
 }
 .item-photo:hover{
-    background-color: var(--balise-table-hover-background-color);
+    background-color: var(--beacon-table-hover-background-color);
     cursor: pointer; 
 }
 

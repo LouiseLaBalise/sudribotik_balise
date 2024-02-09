@@ -25,21 +25,21 @@
     --pamis-button-stop-background-color: #da64ca;
     --pamis-button-stop-hover-background-color: #CC1C1C;
 
-    /*BALISE THEME*/
-    --balise-background-color: #494D5F;
-    --balise-text-color: ivory;
-    --balise-secondary-color: #845BB3;
-    --balise-tab-background-color: var(--balise-secondary-color);
-    --balise-tab-current-background-color: var(--balise-background-color);
-    --balise-tab-hover-background-color: var(--balise-background-color);
-    --balise-disable-color: var(--disable-color);
-    --balise-toggle-off-background-color: var(--balise-disable-color);
-    --balise-toggle-on-background-color: var(--balise-secondary-color);
-    --balise-toggle-circle-color: ivory;
-    --balise-tooltip-background-color: var(--tooltip-background-color);
-    --balise-button-photo-background-color: rgb(225, 105, 145);
-    --balise-button-photo-hover-background-color: rgb(64, 119, 94);
-    --balise-table-hover-background-color: #a982f3;
+    /*beacon THEME*/
+    --beacon-background-color: #494D5F;
+    --beacon-text-color: ivory;
+    --beacon-secondary-color: #845BB3;
+    --beacon-tab-background-color: var(--beacon-secondary-color);
+    --beacon-tab-current-background-color: var(--beacon-background-color);
+    --beacon-tab-hover-background-color: var(--beacon-background-color);
+    --beacon-disable-color: var(--disable-color);
+    --beacon-toggle-off-background-color: var(--beacon-disable-color);
+    --beacon-toggle-on-background-color: var(--beacon-secondary-color);
+    --beacon-toggle-circle-color: ivory;
+    --beacon-tooltip-background-color: var(--tooltip-background-color);
+    --beacon-button-photo-background-color: rgb(225, 105, 145);
+    --beacon-button-photo-hover-background-color: rgb(64, 119, 94);
+    --beacon-table-hover-background-color: #a982f3;
 }
 
 /*Basic settings of every body of this site */

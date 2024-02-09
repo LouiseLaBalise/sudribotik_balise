@@ -13,7 +13,7 @@ configuration_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
 
 sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
 from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc
-from balise_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
+from beacon_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
 
 
 """
@@ -26,16 +26,16 @@ def publisher():
         config = json.load(f)
 
     # This node will publish blue and yellow robot position
-    robotsPos_pub = rospy.Publisher("balise/position/robots", ArrayPositionPxWithType, queue_size=10)
+    robotsPos_pub = rospy.Publisher("beacon/position/robots", ArrayPositionPxWithType, queue_size=10)
 
     # This node will publish all blue and yellow PAMIs position
-    pamisPos_pub = rospy.Publisher("balise/position/pamis", ArrayPositionPxWithType, queue_size=10)
+    pamisPos_pub = rospy.Publisher("beacon/position/pamis", ArrayPositionPxWithType, queue_size=10)
 
     # This node will publish all fragile and resistant plants
-    plantsPos_pub = rospy.Publisher("balise/position/plants", ArrayPositionPx, queue_size=10)
+    plantsPos_pub = rospy.Publisher("beacon/position/plants", ArrayPositionPx, queue_size=10)
 
     # This node will publish all iron pots
-    #potPos_pub = rospy.Publisher("balise/position/pots", ArrayPositionPx, queue_size=10)
+    #potPos_pub = rospy.Publisher("beacon/position/pots", ArrayPositionPx, queue_size=10)
 
     #Tell node name to rospy
     rospy.init_node("b_cam_position", anonymous=True)
@@ -58,7 +58,7 @@ def publisher():
 
         #This node will publish all blue, yellow and mid solar panel position and orientation
         # before image is redressed.
-        solarPos_pub = rospy.Publisher("balise/position/solarpanel", ArrayPositionPxWithType, queue_size=10)
+        solarPos_pub = rospy.Publisher("beacon/position/solarpanel", ArrayPositionPxWithType, queue_size=10)
         solarPos_pub.publish(getPositionSolarPanelMsg(frame,
                                                       config["SOLAR_PANEL_ID"][0]))
 

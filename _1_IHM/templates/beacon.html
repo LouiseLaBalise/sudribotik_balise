@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_balise.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_beacon.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_tabs.css')}}">
     <link rel="shortcut icon" href="#" /> <!--No favicon-->
 </head>
@@ -19,7 +19,7 @@
 
     <!-- Tabs Content 1-->
     <div id="tab1_content" class="tab-content">
-            <form action="{{ url_for('balise') }}" method="post" id="photoForm">
+            <form action="{{ url_for('beacon') }}" method="post" id="photoForm">
                 <div class="options" id="basic_options">
                     <h3>Options basiques</h3>
                 <ul>
@@ -204,7 +204,7 @@
     var media_path = JSON.parse('{{media_path | tojson | safe}}');
     var photo_modal_link = "{{url_for('getPhotoModal', filename='')}}";
 </script>
-<script type=text/JavaScript src="/static/js/balise-route.js"></script> <!--Load script for this route -->
+<script type=text/JavaScript src="/static/js/beacon-route.js"></script> <!--Load script for this route -->
 
 </div></body>    
 

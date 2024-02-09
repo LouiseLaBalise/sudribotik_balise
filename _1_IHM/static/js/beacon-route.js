@@ -56,7 +56,7 @@ function openTab(tabId) {
     }
 
     //Change url to delete the anchor
-    history.replaceState({ tabId: tabId }, null, "/balise");
+    history.replaceState({ tabId: tabId }, null, "/beacon");
 }
 
 
@@ -92,7 +92,7 @@ var photoFormData = $('#photoForm').serialize();
     //Ajax request with JQuery type Post
     $.ajax({
         type: 'POST',
-        url: "/balise",
+        url: "/beacon",
         data: photoFormData,
         success: function(response){ //'reponse' was created in flask app
 
@@ -113,7 +113,7 @@ var photoFormData = $('#photoForm').serialize();
        },
         error: function(error){ //error from AJAX
             //Display errors in the console
-            console.log('Error from balise-route.js:', error);
+            console.log('Error from beacon-route.js:', error);
             }
         });
 }

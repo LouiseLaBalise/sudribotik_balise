@@ -21,7 +21,7 @@ TEMPLATES_AUTO_RELOAD = True #reload when template change
 MEDIA_FOLDER_PATH = FILE_PATH.split("_1_IHM")[0]+"_3_TRAITEMENT_d_IMAGES/media/"
 PHOTO_NAME_SUFFIXE = "_via_ihm"
 PHOTO_EXTENSION = ".jpg"
-streaming_mode=False #true when client open tab2 of balise to see the camera view (2nd tab of balise)
+streaming_mode=False #true when client open tab2 of beacon to see the camera view (2nd tab of beacon)
 sse_pamis=True # [NOT IN USE] false when client quit pami page
 pami_redress_image_before_detecting_aruco=False#true when toggle is switched
 fail_redress = False #true if an attemp to redress went wrong
@@ -223,16 +223,16 @@ def pamis():
 
 #######################################################################################
 #                                                                                     #
-#                                      BALISE                                         #
+#                                      BEACON                                         #
 #                                                                                     #
 #######################################################################################
 
 
 
 
-"""balise route"""
-@app.route('/balise', methods=['GET', 'POST'])
-def balise():
+"""beacon route"""
+@app.route('/beacon', methods=['GET', 'POST'])
+def beacon():
 
     #Get photo of all photos in PHOTO_PATH
     list_photos = makePhotoList(MEDIA_FOLDER_PATH)
@@ -355,7 +355,7 @@ def balise():
         return jsonify(response)
 
     #Main get method
-    return render_template("balise.html", list_photos=list_photos, media_path=MEDIA_FOLDER_PATH)
+    return render_template("beacon.html", list_photos=list_photos, media_path=MEDIA_FOLDER_PATH)
 
 
 
@@ -363,7 +363,7 @@ def balise():
 
 
 
-"""Video for balise tab2"""
+"""Video for beacon tab2"""
 @app.route('/video_stream')
 def videoStream():
     #When this function is called it returns a 'multipart/x-mixed-replace' in a HTTP response.
