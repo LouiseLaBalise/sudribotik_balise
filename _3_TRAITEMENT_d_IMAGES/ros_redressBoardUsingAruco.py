@@ -26,6 +26,9 @@ Return function success.
 """
 def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"):
 
+
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Début de la calibration...")
+
     #Get Aruco constants
     configuration_FILEPATH = FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]+"init/configuration.json"    
     with open (configuration_FILEPATH, "r") as f:
@@ -174,8 +177,11 @@ def redressImage(frame, transform_matrix, size):
 
 
 if __name__=="__main__":
+    
+    import takePhoto #sry
 
     #When this function is called from terminal take picture
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Prise de la photo...")
     photo = takePhoto.takePhoto(name="calibration_photo.jpg")
     frame = cv2.imread(filename=photo)
 

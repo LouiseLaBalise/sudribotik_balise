@@ -8,7 +8,7 @@ import traceback
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-FILE_PATH_FOR_DATABASE = FILE_PATH
+FILE_PATH_FOR_DATABASE = FILE_PATH.split(FILE_NAME)[0]+"datastream_beacon.db"
 
 MAX_DATA_COUNT = 50 #max of rows alowed in a table
 

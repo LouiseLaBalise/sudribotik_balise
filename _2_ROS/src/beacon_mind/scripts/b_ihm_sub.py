@@ -127,6 +127,8 @@ def arucoPosFromRobotCallback(data):
         #Update database
         databaseManager.insertData("r_aruco", data_dict)
     
+    print(data)
+    
 
 
 def subscriber():
@@ -135,7 +137,7 @@ def subscriber():
     """
     
     # Tell node name to rospy
-    rospy.init_node('listener', anonymous=True)
+    rospy.init_node('b_ihm', anonymous=True)
 
     # This node will listen to these topics
     rospy.Subscriber("beacon/position/robots", ArrayPositionPxWithType, robotPosCallback)
@@ -143,7 +145,7 @@ def subscriber():
     rospy.Subscriber("beacon/position/plants", ArrayPositionPx, plantPosCallback)
     rospy.Subscriber("beacon/position/solarpanel", ArrayPositionPxWithType, solarpanelPosCallback)
     #rospy.Subscriber("beacon/position/pots", ArrayPositionPx, callback)
-    rospy.Subscriber("robot1/position/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
+    rospy.Subscriber("robot1/mind/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
 
     # Keeps python from exiting until this node is stopped
     # also it permits to this node to listen to new messages on mentioned topics
