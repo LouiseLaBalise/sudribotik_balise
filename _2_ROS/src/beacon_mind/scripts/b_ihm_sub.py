@@ -146,6 +146,9 @@ def subscriber():
     rospy.Subscriber("beacon/position/solarpanel", ArrayPositionPxWithType, solarpanelPosCallback)
     #rospy.Subscriber("beacon/position/pots", ArrayPositionPx, callback)
     rospy.Subscriber("robot1/mind/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
+    
+    #Set shutdown info
+    rospy.on_shutdown(lambda:print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Arrêt de la balise."))
 
     # Keeps python from exiting until this node is stopped
     # also it permits to this node to listen to new messages on mentioned topics
@@ -155,4 +158,5 @@ def subscriber():
 
 
 if __name__ == '__main__':
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Lancement de la balise.")
     subscriber()
