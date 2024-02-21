@@ -25,7 +25,6 @@ next_client_number = len(clients) + 1  # Calcul du numéro du prochain client di
 
 sel = selectors.DefaultSelector()
 
-host, port = sys.argv[1], int(sys.argv[2])
 
 # Création d'un socket TCP en IPv4
 lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -99,16 +98,21 @@ def service_connection(key, mask):
     else:
         print("No data available to be read or sent")
 
-# Boucle principale
-try:
-    while True:
-        events = sel.select(timeout=None)
-        for key, mask in events:
-            if key.data is None:
-                accept_wrapper(key.fileobj)
-            else:
-                service_connection(key, mask)
-except KeyboardInterrupt:
-    print("Caught keyboard interrupt, exiting")
-finally:
-    sel.close()
+if __name__ == "__main__":
+
+    host, port = sys.argv[1], int(sys.argv[2])
+    # Boucle principale
+    try:
+        while True:
+            events = sel.select(timeout=None)
+            for key, mask in events:
+                if key.data is None:
+                    accept_wrapper(key.fileobj)
+                else:
+                    service_connection(key, mask)
+    except KeyboardInterrupt:
+        print("Caught keyboard interrupt, exiting")
+    finally:
+        sel.close()
+
+
