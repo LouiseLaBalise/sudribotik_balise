@@ -2,32 +2,34 @@ import cv2
 import os
 import sys
 import numpy as np
-import argparse
 import json
 
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
+MEDIA_FOLDER = f"{FILE_PATH.split(FILE_NAME)[0]}media/"
 sys.path.insert(1, FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]) #add parent folder to python path
 from init import prettify_json
 
-"""
-Calibrate the camera to get the matrix transformation between the camera view and the board.
-Matrix transformation, height and width of the final frame will be stored in the init/configuration.json file.
-An outputed image is generated in test_24/ to see calibration results.
 
-    frame (np.array)    ->      inputed image.
-    corner_ids (tuple)  ->      ids of the 4 mendatory ArUco tags.
-    method (str)        ->      chose method between CORNER and CENTER, it will be the point of reference
-                                used to determine the matrix transformation. CORNER is set by default.
+def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CORNER"):
+    """
+    Calibrate the camera to get the matrix transformation between the camera view and the board.
 
-Return function success.
-"""
-def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORNER"):
+    Parameters: 
+        - frame (np.array): inputed image.
+        - corner_ids (tuple): ids of the 4 mendatory ArUco tags.
+        - method (str): chose method between CORNER and CENTER, it will be the point of reference
+                    used to determine the matrix transformation. CORNER is set by default.
 
+    Returns:
+        - bool: function success.
 
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Début de la calibration...")
+    Note:
+        Matrix transformation, height and width of the final frame will be stored in the init/configuration.json file.
+        An outputed image is generated in test_24/ to see calibration results.
+    """
 
     #Get Aruco constants
     configuration_FILEPATH = FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]+"init/configuration.json"    
@@ -41,7 +43,7 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
 
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Il faut 4 ids de tags ArUco. Impossible de calibrer la caméra.")
+        print(f"Log {FILE_NAME} : Il faut 4 ids de tags ArUco. Impossible de calibrer la caméra.")
         return False
 
     #Create ArUco dictionary
@@ -55,7 +57,7 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
 
     #Quit if there is not even 1 id detected
     if ids is None :
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
+        print(f"Log {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
         return False
 
     #All 4 Aruco markers are needed to perform image to reddress
@@ -73,14 +75,14 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
 
     #If not all ids have been detected stop function
     if corner_ids_no_detected:
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de calibrer la caméra.")
+        print(f"Log {FILE_NAME} : Tag(s) {corner_ids_no_detected} non detecté(s). Impossible de calibrer la caméra.")
         return False
 
     #Sort corners pos to have [bottom-left, top-left, top-right, bottom-right]
     sorted_tags = corners_pos_detected_ids
-    sorted_tags = sorted(sorted_tags, key=lambda coord: coord[0][0][0])#sort by x axis
-    sorted_tags[:2] = sorted(sorted_tags[:2], reverse=True, key=lambda coord: coord[0][0][1])#reverse sort by y axis for the left
-    sorted_tags[2:] = sorted(sorted_tags[2:],key=lambda coord: coord[0][0][1])#normal sort by y axis for the right
+    sorted_tags = sorted(sorted_tags, reverse=True, key=lambda coord: coord[0][0][1])#Reverse sort by y axis
+    sorted_tags[:2] = sorted(sorted_tags[:2], key=lambda coord: coord[0][0][0])#Normal sort by x axis for the bottom
+    sorted_tags[2:] = sorted(sorted_tags[2:], reverse=True, key=lambda coord: coord[0][0][0])#Reverse sort by x axis for the top
 
     #Calc offset to get real corners of the board
     pixels_per_mm = (sorted_tags[0][0][3][1]-sorted_tags[3][0][0][1])/HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM
@@ -88,6 +90,13 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
     height_offset = HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM * pixels_per_mm
 
     if method=="CORNER" or method: #default methods
+        #Sort corners inside of tags following the previous sorting pattern
+        for k in range(4):
+            temp_sort = sorted_tags[k][0].tolist() #convert to list to facilitate sorting
+            temp_sort = sorted(temp_sort, reverse=True, key=lambda coord: coord[1])
+            temp_sort[:2] = sorted(temp_sort[:2], key=lambda coord: coord[0])
+            temp_sort[2:] = sorted(temp_sort[2:],  reverse=True, key=lambda coord: coord[0])
+            sorted_tags[k][0] = np.array(temp_sort, dtype=np.float32)#back to np array
 
         #Add each tag outter corner to src points
         src_pts = np.float32([])
@@ -116,21 +125,22 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
         src_pts = src_pts.reshape(-1, 2)
 
 
-    #Get max width
-    width_down = np.sqrt(((src_pts[3][0] - src_pts[0][0]) ** 2) + ((src_pts[0][1] - src_pts[3][1]) ** 2))
-    width_up = np.sqrt(((src_pts[2][0] - src_pts[1][0]) ** 2) + ((src_pts[1][1] - src_pts[2][1]) ** 2))
-    width = int(max(width_up, width_down))
+    #Get max height - pattern is src_pts[up/down and left/right][x=0/y=1]
+    height_up = np.sqrt(((src_pts[0][0] - src_pts[3][0]) ** 2) + ((src_pts[0][1] - src_pts[3][1]) ** 2))
+    height_down = np.sqrt(((src_pts[1][0] - src_pts[2][0]) ** 2) + ((src_pts[1][1] - src_pts[2][1]) ** 2))
+    max_height = int(max(height_up, height_down))
 
-    #Get max height
-    height_left = np.sqrt(((src_pts[1][0] - src_pts[0][0]) ** 2) + ((src_pts[0][1] - src_pts[1][1]) ** 2))
-    height_right = np.sqrt(((src_pts[3][0] - src_pts[2][0]) ** 2) + ((src_pts[3][1] - src_pts[2][1]) ** 2))
-    height = int(max(height_left, height_right))
+    #Get max width
+    width_up = np.sqrt(((src_pts[0][0] - src_pts[1][0]) ** 2) + ((src_pts[0][1] - src_pts[1][1]) ** 2))
+    width_down = np.sqrt(((src_pts[2][0] - src_pts[3][0]) ** 2) + ((src_pts[2][1] - src_pts[3][1]) ** 2))
+    max_width = int(max(width_up, width_down))
+
 
     #Get destination points (where src points will be map in the output image)
-    dst_pts = np.float32([[0, height-1],
-                          [0, 0],
-                          [width - 1, 0],
-                          [width - 1, height - 1]])
+    dst_pts = np.float32([[0, max_height-1],
+                                [max_width - 1, max_height - 1],
+                                [max_width - 1, 0],
+                                [0, 0]])
 
     #Cast src_pts to float32
     src_pts = np.float32(src_pts)
@@ -139,36 +149,46 @@ def calibrateCameraUsingAruco(frame, corner_ids = (20, 21, 22, 23), method="CORN
     transform_matrix = cv2.getPerspectiveTransform(src_pts, dst_pts)
 
     #Save warp perspective parameters
-    config["TRANSFORM_MATRIX"] = transform_matrix.tolist()
-    config["REDRESS_SIZE"] = [width, height]
+    config["AUTO_TRANSFORM_MATRIX"] = transform_matrix.tolist()
+    config["AUTO_REDRESS_SIZE"] = [max_width, max_height]
     with open(configuration_FILEPATH, "w") as json_file:
         json.dump(config, json_file)
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Calibration terminée.")
 
     #Prettify Json file
     prettify_json.prettify(configuration_FILEPATH)
+    print(f"Log {FILE_NAME} : Calibration terminée.")
 
 
     #Save a redressed image
-    warped_image = cv2.warpPerspective(frame, transform_matrix, [width, height], flags=cv2.INTER_LINEAR)
-    out_filename = "media/calibration_result.jpg"
-    cv2.imwrite(filename=out_filename, img=warped_image)
+    res, warped_image = redressImage(frame, transform_matrix, [max_width, max_height])
+    out_filename = "redress_result.jpg"
+    cv2.imwrite(filename=MEDIA_FOLDER+out_filename, img=warped_image)
 
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Résultat de la calibration disponnible dans {out_filename}.")
+    print(f"Log {FILE_NAME} : Résultat de la calibration disponnible dans {out_filename}.")
     return True
 
 
 
-"""
-Redress an image using a transform matrix.
-    frame (np.array)                ->      inputed image.
-    transform_matrix (np.array)     ->      transformation matrix between the camera view and the board.
-    size (list)                     ->      width and height of the outputed image.
 
-Return function success and frame redressed.
-"""
 def redressImage(frame, transform_matrix, size):
+    """
+    Redress an image using a transform matrix.
 
+    Parameters:
+        - frame (np.array): inputed image.
+        - transform_matrix (np.array): transformation matrix between the camera view and the board.
+        - size (list): width and height of the outputed image.
+
+    Returns:
+        - bool: function success.
+        - np.array: frame redressed.
+
+    Note:   The parameters <transform_matrix> and <size> are already stored into the configuration file so you may wonder 
+            why do we have to pass them by parameters instead of just access the JSON file directly in this function.
+            It's mostly because this function will be used for each frame took by the beacon camera.
+            In lieu of opening,closing,re-opening,re-closing the config file, opening it just one time on the caller side
+            will save a lot of time and ressources.  (same as undistortImage())
+    """
     #Apply transformation matrix to the image
     warped_image = cv2.warpPerspective(frame, transform_matrix, size,flags=cv2.INTER_LINEAR)
 
@@ -177,13 +197,12 @@ def redressImage(frame, transform_matrix, size):
 
 
 if __name__=="__main__":
-    
-    import takePhoto #sry
+    try :
+        #Get shell argument
+        file = sys.argv[1]
+        frame = cv2.imread(filename=file)
 
-    #When this function is called from terminal take picture
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Prise de la photo...")
-    photo = takePhoto.takePhoto(name="calibration_photo.jpg")
-    frame = cv2.imread(filename=photo)
-
-    #Then call the function
-    calibrateCameraUsingAruco(frame)
+        #Then call the function
+        calibrateBoardResdressement(frame)
+    except TypeError:
+        print("Vous devez mettre une image valide possédent les tags aruco 20, 21, 22 et 23 en argument shell.")

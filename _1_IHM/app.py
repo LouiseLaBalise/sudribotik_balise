@@ -2,7 +2,7 @@ import sys
 import os
 import cv2
 import traceback
-import time, json
+import json
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
 FILE_PATH = os.path.abspath(__file__)
@@ -11,7 +11,8 @@ FILE_NAME = os.path.basename(FILE_PATH)
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
 from init import get_hotspot_ip_address
 from _3_TRAITEMENT_d_IMAGES import (takePhoto, redressBoardUsingAruco, detectAruco, detectColor,
-                                    ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc)
+                                    ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc,
+                                    ros_undistortImage)
 from scripts.formatdata import formatBytes, formatSeconds
 
 
@@ -35,7 +36,8 @@ with open (configuration_FILEPATH, "r") as f:
 """Homepage route"""
 @app.route('/')
 def index():
-    return render_template('index.html') #look for the index.html template in ./templates/
+    #return render_template('index.html') #look for the index.html template in ./templates/
+    return beacon() #just for now until index page is complated
 
 
 
@@ -105,7 +107,7 @@ def getAllPamisPosition():
         else:
             corner = all_aruco_corners[all_aruco_ids.index(id)]
             px, py = ros_arucoCalc.getCenterArucoTag(corner)
-            angle = ros_arucoCalc.getAngle(corner)
+            angle = ros_arucoCalc.getAngle(corner, unit="degrees")
             pamis_position.append((str(px), str(py), str(angle)))
     
     return pamis_position
@@ -250,6 +252,7 @@ def beacon():
         denoise = request.form.get("photo_denoising", "no") == "checked"
 
         #Get form advanced options
+        undistort = request.form.get("undistort_yes_no", "no") == "checked"
         redress = request.form.get("redress_yes_no", "no") == "checked"
         detect_aruco = request.form.get("aruco_yes_no", "no") == "checked"
         detect_color = request.form.get("color_yes_no", "no") == "checked"
@@ -263,7 +266,6 @@ def beacon():
 
         try:
             #Take photo according to parameters
-            path_to_photo_taken = ""
             path_to_photo_taken = takePhoto.takePhoto(name=real_photo_name,
                                                      tms=photo_tms,
                                                      quality=photo_quality,
@@ -273,19 +275,30 @@ def beacon():
             #If photo is not taken (it will throw a NoneType error)
             if (not path_to_photo_taken):
                 print(f"Log [{FILE_NAME}]: Problème lors de la prise de photo.")
-                return
+                response = {'success': False, 'error': "Impossible de prendre une photo."}
+                return jsonify(response)
 
             all_processed_images=[]#path to processed image list
             path_to_photo_processed=path_to_photo_taken
 
             #Compute image based on advanced options
-            #1st aruco tags
-            if detect_aruco:
-                ret, _, _, path_to_photo_processed = detectAruco.detectAruco(filename=path_to_photo_processed,
-                                                             drawId=True)
-                all_processed_images.append(path_to_photo_processed)
-
-                if not ret: processed_info+="Aucun ArUco n'a pu être détecté.\n"
+            #1st undistort
+            if undistort:
+                #undistort will be the only option to use its ros function because no calibrate function on the hmi.
+                #it takes time and effort for something effortlessly doable in the shell.
+                frame = cv2.imread(path_to_photo_taken)
+                ret, undistorted_frame = ros_undistortImage.undistortImage(frame,
+                                                                           config["AUTO_K_DISTORTION"],
+                                                                           config["AUTO_D_DISTORTION"],
+                                                                           config["AUTO_ORIGINAL_PHOTO_SIZE"])
+                if not ret:
+                    processed_info+="Impossible de supprimer la distortion. Avez-vous calibré la caméra ?\n"
+                
+                else :
+                    #We need to operate a savefile here because it is not implemented in the ros function
+                    path_to_photo_processed = path_to_photo_processed.split(".jpg")[0] + "_undistorted.jpg"
+                    cv2.imwrite(filename=path_to_photo_processed, img=undistorted_frame)
+                    all_processed_images.append(path_to_photo_processed)
 
             #2nd redress
             if redress:
@@ -299,7 +312,16 @@ def beacon():
 
                 if not ret: processed_info+="L'image n'a pas pu être redréssée.\n"
 
-            #3rd color and surface
+            #3rd aruco tags
+            if detect_aruco:
+                ret, _, _, path_to_photo_processed = detectAruco.detectAruco(filename=path_to_photo_processed,
+                                                                             drawId=True)
+                all_processed_images.append(path_to_photo_processed)
+
+                if not ret: processed_info+="Aucun ArUco n'a pu être détecté.\n"
+
+
+            #4th color and surface
             if detect_color:
                 hue = (int(request.form["hue_min"]), int(request.form["hue_max"]))
                 saturation = (int(request.form["sat_min"]), int(request.form["sat_max"]))
@@ -326,10 +348,11 @@ def beacon():
 
                 if not ret: processed_info+="La détection de couleur n'a pas été réalisée.\n"
 
-            #Delete files created except og and finale one
+            #Delete intermidiate files created except og and finale one
             if all_processed_images : all_processed_images.pop(-1)
             for file_path in all_processed_images:
-                if os.path.isfile(file_path):#test if the file exist quand même
+                #test if the file exist and if its not the og photo and if its not the last photo processed
+                if os.path.isfile(file_path) and file_path!=path_to_photo_taken and file_path!=path_to_photo_processed:
                     os.remove(file_path)
 
             #Create the message to display

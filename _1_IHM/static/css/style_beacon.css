@@ -219,7 +219,7 @@ input::-webkit-outer-spin-button,
 
 /*2nd TAB*/
 .video_stream_container{
-    width:fit-content;
+    width:60%;
     border: 3px solid var(--beacon-secondary-color);
     border-radius: 6px;
     overflow: hidden;

@@ -10,9 +10,12 @@ This file is used to store aruco related function used by our ROS system.
 def getCenterArucoTag(corners):
     """
     Calculate center of an Aruco tag.
-        corner (list)    ->      aruco corner.
+    
+    Parameters:
+        - corner (list): aruco corner.
 
-    Return a tuple (int, int).
+    Returns
+        - tuple: x and y postions in int.
     """
     #Get x pos (these could be inversed but not important here)
     low_x = corners[0][0]
@@ -26,12 +29,16 @@ def getCenterArucoTag(corners):
 
 
 
-def getAngle(corner):
+def getAngle(corner, unit="radians"):
     """
     Get angle rotation of an aruco tag given its corners.
-        corner(list)    ->    corner of a aruco tag.
 
-    Return an angle in degrees. From 0° to 360°.
+    Parameters:
+        - corner (list): corner of a aruco tag.\n
+        - unit (str): unit cast (radians [-pi;pi] or degrees [0;360])
+
+    Returns:
+        - float: angle in the choosen unit.
     """
     #Get points
     top_left, top_right, bot_right, bot_left = corner
@@ -43,14 +50,15 @@ def getAngle(corner):
     #Get angle
     angle = math.atan2(adjacent, opposite)
 
-    #Cast from radians to degrees 
-    angle = angle * 180/math.pi
-    
-    #And add pi/2 (i fucking dont know why)
-    angle+=90
+    if unit == "degrees":
+        #Cast from radians to degrees 
+        angle = angle * 180/math.pi
+        
+        #And add pi/2 (i seriously dont know why)
+        angle+=90
 
-    #Force range from 0° to 360°
-    if angle < 0 :
-        angle+=360
+        #Force range from 0° to 360°
+        if angle < 0 :
+            angle+=360
 
-    return int(angle)
+    return angle

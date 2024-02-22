@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import glob
 
+print("\n\n\nTHIS SCRIPT CALIBRATE THE FLAT CAMERA. DO NOT USE THIS FOR THE FISH EYE.\n\n\n")
 
 #Criteria is used to determine when to stop an iterative algorithm,
 #by count of iteration, by accuracy or by both (stop when one of the two is reached)

@@ -2,11 +2,18 @@ from datetime import datetime
 
 
 
-"""Format bytes numbers (in b, kB, MB or GB)
-arg : bytes_size:int
-Return a tuple : ( size:int , unit:str ) -> (125, "kB")
-"""
+
 def formatBytes(bytes_size:int):
+    """
+    Format bytes numbers in b, kB, MB or GB.
+
+    Parameters:
+        - bytes_size (int): bytes number to format.
+
+    Returns:
+        - tuple : size and unit like for exemple (125, "kB").
+    """
+
     units = ['b', 'kB', 'MB', 'GB'] #units
     size = bytes_size
 
@@ -19,11 +26,17 @@ def formatBytes(bytes_size:int):
     return f"{size:.1f}", 'GB'
 
 
-"""Format seconds into date
-arg : seconds:float
-Return a tuple : (date:str , hour:str ) -> ("26 juin. 2023", "15:48:07")
-"""
+
 def formatSeconds(seconds:float):
+    """
+    Format seconds into date.
+    
+    Parameters:
+        - seconds:float
+    Returns:
+        - tuple : date and hour like for exemple ("26 juin. 2023", "15:48:07").
+    """
+
     # Define months
     months = ["jan.", "fév.", "mars", "avr.", "mai", "juin", "juill.", "août", "sept", "oct", "nov", "déc."]
     

@@ -10,17 +10,21 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 
-"""
-Redress a board with 4 Aruco tags.
-    filename (str)      ->      name of the inputed image.
-                                output will be store next to filename.
-    corner_ids (tuple)  ->      ids of the 4 mendatory ArUco tags
-    method (str)        ->      chose method, CORNER is by default.
 
-Return function success and filename.
-"""
 def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORNER"):
+    """
+    Redress a board with 4 Aruco tags.
 
+    Parameters:
+        - filename (str): name of the inputed image.
+                          output will be store next to filename.
+        - corner_ids (tuple): ids of the 4 mendatory ArUco tags
+        - method (str): chose method, CORNER is by default.
+
+    Returns:
+        - bool: function success
+        - str: image path.
+    """
     #FOR EDITION 2024
     HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
     HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 450

@@ -12,16 +12,23 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 
-"""
-Detect ArUco markers.
-    filename (str)      ->      name/path of the inputed image.
-                                output will be store next to filename.
-    drawId (bool)       ->      draw a square and id on detected markers.
-    axis (bool)         ->      show axis of detected markers.
 
-Return function success, corners positions, their ids, image path.
-"""
 def detectAruco(filename:str, drawId=True, axis=False):
+    """
+    Detect ArUco markers.
+
+    Parameters:
+        - filename (str): name/path of the inputed image.
+                          output will be store next to filename.
+        - drawId (bool): draw a square and id on detected markers.
+        - axis (bool): show axis of detected markers.
+
+    Returns:
+        - bool: function success.
+        - list: corners positions.
+        - list: tag ids.
+        - str: image path.
+"""
 
     #Get photo to parse
     img = cv2.imread(filename=filename)

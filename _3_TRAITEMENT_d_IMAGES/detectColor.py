@@ -9,23 +9,29 @@ import argparse
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
-"""
-Detect HSV color range on an image.
-    filename (str)      ->      name of the inputed image.
-    hue (tuple)          ->      range of hue values on the hue compass between 0 and 180.
-    saturation (tuple)   ->      range of saturation between 0 and 255.
-    values (tuple)       ->      range of values between 0 and 255.
-                                output will be store next to filename.
-    contoured (bool)    ->      flag for contouring detected colors on the output.
-    rectangled (bool)   ->      flag for drawing a rectangle on detected colors on the output.
-    denoise (bool)      ->      flag for denoising inputed image.
-    minSurface (int)    ->      number of minimumu pixels for a detected area to be take into account.
-    maxSurface (int)    ->      number of maximum pixels for a detected area to be take into account.
 
-Return success, a list with positions of all area detected and photo path.
-"""
-def colorDetection(filename:str, hue:tuple, saturation:(50, 255), value:(50, 255),
+def colorDetection(filename:str, hue:tuple, saturation:tuple[50, 255], value:tuple[50, 255],
                    contoured=False, rectangled=False, denoise=False, minSurface=0, maxSurface=99999):
+    """
+    Detect HSV color range on an image.
+
+    Parameters:
+        - filename (str): name of the inputed image.
+        - hue (tuple): range of hue values on the hue compass between 0 and 180.
+        - saturation (tuple): range of saturation between 0 and 255.
+        - values (tuple): range of values between 0 and 255.
+                          output will be store next to filename.
+        - contoured (bool): flag for contouring detected colors on the output.
+        - rectangled (bool): flag for drawing a rectangle on detected colors on the output.
+        - denoise (bool): flag for denoising inputed image.
+        - minSurface (int): number of minimumu pixels for a detected area to be take into account.
+        - maxSurface (int): number of maximum pixels for a detected area to be take into account.
+
+    Returns:
+        - bool: function success.
+        - list: positions of all area detected.
+        - str: image path.
+    """
 
     ret = False #return succes
 

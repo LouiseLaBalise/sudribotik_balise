@@ -8,24 +8,22 @@ FILE_NAME = os.path.basename(FILE_PATH)
 
 
 
-"""
-Callback for pamis position.
-Insert data in a database.
-"""
 def pamiPosCallback(data):
-
+    """
+    Callback for pamis position.
+    Insert data in a database.
+    """
     #Fill the dict with pami data 
     for pami in data.array_of_positionspx_with_type:
         pass#send location to the pami over wifi
 
 
 
-"""
-Fetch and parse data from ros to pamis
-"""
-def subscriber():
 
-    
+def subscriber():
+    """
+    Fetch and parse data from ros to pamis
+    """
     # Tell node name to rospy
     rospy.init_node('listener', anonymous=True)
 

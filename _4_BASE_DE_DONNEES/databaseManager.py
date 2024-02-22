@@ -47,7 +47,7 @@ def init_database_beacon():
                         type TEXT,
                         position_x INTEGER,
                         position_y INTEGER,
-                        position_theta INTEGER
+                        position_theta REAL
                         )
                         ''')
             cursor.execute(''' CREATE TABLE IF NOT EXISTS b_pamis
@@ -57,7 +57,7 @@ def init_database_beacon():
                         num INTEGER,
                         position_x INTEGER,
                         position_y INTEGER,
-                        position_theta INTEGER
+                        position_theta REAL
                         )
                         ''')
             cursor.execute(''' CREATE TABLE IF NOT EXISTS b_plants
@@ -65,7 +65,7 @@ def init_database_beacon():
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         position_x INTEGER,
                         position_y INTEGER,
-                        position_theta INTEGER
+                        position_theta REAL
                         )
                         ''')
             cursor.execute(''' CREATE TABLE IF NOT EXISTS b_solarpanel
@@ -75,7 +75,7 @@ def init_database_beacon():
                         num INTEGER,
                         position_x INTEGER,
                         position_y INTEGER,
-                        position_theta INTEGER
+                        position_theta REAL
                         )
                         ''')
             cursor.execute(''' CREATE TABLE IF NOT EXISTS b_pots

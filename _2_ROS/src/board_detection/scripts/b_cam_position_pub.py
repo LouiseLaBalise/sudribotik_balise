@@ -16,11 +16,12 @@ from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, 
 from beacon_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
 
 
-"""
-Publish position of Robots, Elements and Arucos on the board
-"""
+
 def publisher():
- 
+    """
+    Publish position of Robots, Elements and Arucos on the board
+    """
+
     #Get Aruco constants    
     with open (configuration_FILEPATH, "r") as f:
         config = json.load(f)
@@ -96,16 +97,21 @@ def publisher():
 
 
 
-"""
-Get message for realtime position of all robots.
-    corners (list)      ->      all detected aruco corners.
-    ids (list)          ->      all detected aruco ids.
-    blue_rid (int)      ->      blue robot id.
-    yellow_rid (int)    ->      yellow robot id.
 
-Return an ArrayPositionPxWithType msg.
-"""
 def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
+    """
+    Get message for realtime position of all robots.
+
+    Parameters:
+        - corners (list): all detected aruco corners.
+        - ids (list): all detected aruco ids.
+        - blue_rid (int): blue robot id.
+        - yellow_rid (int): yellow robot id.
+
+    Returns:
+        - ArrayPositionPxWithType : msg generation.
+    """
+
     msg = [] #create msg
     blue_msg = PositionPxWithType() 
     yellow_msg = PositionPxWithType()
@@ -132,16 +138,20 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     return msg
 
 
-"""
-Get message for realtime position of all pamis.
-    corners (list)      ->      all detected aruco corners.
-    ids (list)          ->      all detected aruco ids.
-    blue_pids (list)    ->      blue pami ids.
-    yellow_pids (list)  ->      yellow pami ids.
 
-Return an ArrayPositionPxWithType msg.
-"""
 def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
+    """
+    Get message for realtime position of all pamis.
+    
+    Parameters:
+        - corners (list): all detected aruco corners.
+        - ids (list): all detected aruco ids.
+        - blue_pids (list): blue pami ids.
+        - yellow_pids (list): yellow pami ids.
+
+    Returns:
+        - ArrayPositionPxWithType : msg generation.
+    """
     msg = [] #create msg
     blue_msg = PositionPxWithType() 
     yellow_msg = PositionPxWithType()
@@ -173,15 +183,20 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
 
 
 
-"""
-Get message for realtime position of all plants.
-    frame (numpy.ndArray)         ->      data array of the image.
-    plant_hsv_range (list)        ->      plants hsv ranges.
-    plant_hsv_surface (list)      ->      plants hsv surfaces.
 
-Return an ArrayPositionPx msg.
-"""
 def getPositionPlantMsg(frame, plant_hsv_range, plant_hsv_surface):
+    """
+    Get message for realtime position of all plants.
+
+    Parameters:
+        - frame (numpy.ndArray): data array of the image.
+        - plant_hsv_range (list): plants hsv ranges.
+        - plant_hsv_surface (list): plants hsv surfaces.
+
+    Returns:
+        - ArrayPositionPx : msg generation.
+    """
+
     msg = [] #create msg
     plant_msg = PositionPx()
 
@@ -207,16 +222,23 @@ def getPositionPlantMsg(frame, plant_hsv_range, plant_hsv_surface):
 
 
 
-"""
-Get message for realtime position of all solar panels.
-Also redistibute panels into 3 groups : blue, yellow or mid.
-Panels are sorted by x inside their group.
-    frame (numpy.ndArray)         ->      data array of the image.
-    solar_id (int)      ->      solar panel id.
 
-Return an ArrayPositionPxWithType msg. 
-"""
 def getPositionSolarPanelMsg(frame, solar_id):
+    """
+    Get message for realtime position of all solar panels.
+
+    Parameters:
+        - frame (numpy.ndArray): data array of the image.
+        - solar_id (int): solar panel id.
+
+    Returns:
+        - ArrayPositionPxWithType : msg generation.
+
+    Note:
+        Also redistibute panels into 3 groups : blue, yellow or mid.
+        Panels are sorted by x inside their group.
+    """
+
     msg = [] #create msg
     panel_msg = PositionPxWithType()
 

@@ -60,7 +60,8 @@ function openTab(tabId) {
 }
 
 
-/*Manage enabling/disabling inputs in advanced options*/
+/*Manage enabling/disabling values inputs in advanced options
+after a toggle is pressed*/
 function toggleInput(checkbox, class_params){
     //Get checkbox state
     var is_checked = checkbox.checked;
@@ -89,6 +90,13 @@ function submitPhotoForm() {
 //Get form data
 var photoFormData = $('#photoForm').serialize();
 
+//Get paragrapph info elemennt
+var paragraph = document.getElementById("resultMessageParagraph");
+paragraph.innerHTML = "<ul>"
+                     +"<li>Photo prise avec succès.</li>"
+                     +"<li>Traitement en cours...</li>"
+                     +"</ul>"; //to say to user that he rightfully clicked
+
     //Ajax request with JQuery type Post
     $.ajax({
         type: 'POST',
@@ -96,7 +104,6 @@ var photoFormData = $('#photoForm').serialize();
         data: photoFormData,
         success: function(response){ //'reponse' was created in flask app
 
-            var paragraph = document.getElementById("resultMessageParagraph");
             //Display a response message
             if (response.success) {
                 paragraph.innerHTML = "<ul>"
