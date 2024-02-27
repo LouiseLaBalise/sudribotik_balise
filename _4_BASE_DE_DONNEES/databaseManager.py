@@ -19,16 +19,19 @@ MAX_DATA_COUNT = 50 #max of rows alowed in a table
 def init_database_beacon():
     """
     This function delete a previous database then create and initalize an empty database.
-    There is currently 6 tables initialized :
-            b_robots\n
-            b_pamis\n
-            b_plants\n
-            b_solarpanel\n
-            b_score\n
-            
-            r_aruco
-            
-    You can add more following the gloabl pattern.
+    
+    
+    Note:
+        There is currently 6 tables initialized :
+                b_robots\n
+                b_pamis\n
+                b_plants\n
+                b_solarpanel\n
+                b_score\n
+                
+                r_aruco
+                
+        You can add more following the gloabl pattern.
     """
 
     #Delete previous one if it exists
@@ -119,11 +122,13 @@ def insertData(table_name:str, data:dict):
     """
     Insert data into its appropriate table.
 
-        table_name (str)    ->      table name.\n
-        data (dict)         ->      data to insert with key as column and value as data.
-                                    values must match accepted SQL types format.
+    Pararmeters:
+        - table_name (str): table name.
+        - data (dict): data to insert with key as column and value as data.
+                       values must match accepted SQL types format.
     
-    Return function success.
+    Returns:
+        - bool: function success.
     """
     success = False
 
