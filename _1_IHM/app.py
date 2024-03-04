@@ -9,7 +9,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
-from init import get_hotspot_ip_address
+from init import get_hotspot_ip
 from _3_TRAITEMENT_d_IMAGES import (takePhoto, redressBoardUsingAruco, detectAruco, detectColor,
                                     ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc,
                                     ros_undistortImage)
@@ -460,7 +460,7 @@ def getPhotoModal(filename):
 
 if __name__=="__main__":
     #Check for wlan0 in case of a hotspot is on
-    host_ip = get_hotspot_ip_address.get_ip()
+    host_ip = get_hotspot_ip.get_ip()
 
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app

@@ -3,12 +3,13 @@ import fcntl
 import struct
 
 
-"""
-Dynamically get our hotspot IPv4 address using low-level protocol.
+def get_hotspot_ip():
+    """
+    Dynamically get your hotspot IPv4 address.
 
-Return hotspot ip address or localhost one.
-"""
-def get_ip():
+    Returns:
+        - str: hotspot ip address or localhost one.
+    """
     try:
         #Create a socket using IPv4 and UDP protocol (because its a low-level protocol),
         # minimum needed to do a system call with <ioctl>
