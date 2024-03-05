@@ -19,29 +19,6 @@ def save_clients(filename, clients):
     with open(filename, 'w') as file:
         json.dump(clients, file)
 
-clients_file = 'clients.json'  # Nom du fichier JSON
-clients = load_clients(clients_file)  # Chargement des clients existants depuis le fichier JSON
-next_client_number = len(clients) + 1  # Calcul du numéro du prochain client disponible
-
-sel = selectors.DefaultSelector()
-
-
-# Création d'un socket TCP en IPv4
-lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Liaison de la socket à l'adresse IP et au port spécifié
-lsock.bind((host, port))
-
-# Configuration de la socket en mode écoute pour accepter les connexions entrantes.
-lsock.listen()
-print(f"Listening on {(host, port)}")
-
-# Configuration de la socket en mode non bloquant
-lsock.setblocking(False)
-
-# Enregistrement de la socket avec le selecteur sel pour surveiller si des données sont prêtes à être lues sur la socket
-sel.register(lsock, selectors.EVENT_READ, data=None)
-
 # Création d'une nouvelle connexion sur le serveur
 def accept_wrapper(sock):
 
@@ -101,6 +78,29 @@ def service_connection(key, mask):
 if __name__ == "__main__":
 
     host, port = sys.argv[1], int(sys.argv[2])
+    clients_file = 'clients.json'  # Nom du fichier JSON
+    clients = load_clients(clients_file)  # Chargement des clients existants depuis le fichier JSON
+    next_client_number = len(clients) + 1  # Calcul du numéro du prochain client disponible
+
+    sel = selectors.DefaultSelector()
+
+    # Création d'un socket TCP en IPv4
+    lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Liaison de la socket à l'adresse IP et au port spécifié
+    lsock.bind((host, port))
+
+    # Configuration de la socket en mode écoute pour accepter les connexions entrantes.
+    lsock.listen()
+    print(f"Listening on {(host, port)}")
+
+    # Configuration de la socket en mode non bloquant
+    lsock.setblocking(False)
+
+    # Enregistrement de la socket avec le selecteur sel pour surveiller si des données sont prêtes à être lues sur la socket
+    sel.register(lsock, selectors.EVENT_READ, data=None)
+
+
     # Boucle principale
     try:
         while True:
