@@ -120,7 +120,7 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     if blue_rid in ids:
         #Get center of tag
         blue_msg.x, blue_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(blue_rid)])
-        blue_msg.theta = 0 #No angle for now        
+        blue_msg.theta = ros_arucoCalc.getAngle(corners)      
         blue_msg.type = "blue" #Robot is blue
         #Append the blue pos into msg
         msg.append(blue_msg)
@@ -130,7 +130,7 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     if yellow_rid in ids:
         #Get center of the tag
         yellow_msg.x, yellow_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(yellow_rid)])
-        yellow_msg.theta = 0 #No angle for now        
+        yellow_msg.theta = ros_arucoCalc.getAngle(corners)         
         yellow_msg.type = "yellow" #Robot is yellow
         #Append the yellow pos into msg
         msg.append(yellow_msg)
