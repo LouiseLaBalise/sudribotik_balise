@@ -7,6 +7,10 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 
+class PamisNode:
+    """
+    This Ros node is a used as a gateway between the beacon and pamis.
+    """
 
 def pamiPosCallback(data):
     """
