@@ -1,0 +1,125 @@
+/*Style home page*/
+
+.page-content{
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /*100% viewport height*/    
+    color: var(--home-text-color);
+    background-color: var(--home-background-color);
+}
+
+/*Grid management*/
+.grid-container{
+    display: grid;
+    grid-template-columns: 10fr 7fr; /*two columns*/
+    grid-template-rows: 10fr 7fr; /*two rows*/
+    gap: 0px; /*no gap*/
+    width:100%; /*full page*/
+    height: 100%;
+}
+
+/*All grids*/
+.grid-item{
+    display: flex;
+    flex-direction: row;
+}
+
+/*Presentation grid*/
+.grid-item.presentation{
+    color: var(--home-secondary-color);/*text color*/
+    
+}
+.grid-item.presentation h1{
+    margin-left: auto;/*push-right*/
+    margin-top: 0; /*no margin top*/
+    height: fit-content; /*minimal height*/
+    font-size: 80px; /*big font-size*/
+    color: var(--home-text-color);
+}
+
+.grid-item.presentation .text-presentation{
+    align-self: center;/*align horizontally*/
+    margin-left: 12%;/*offset of align horizontally*/
+    margin-bottom: 2%;/*offset of align vertically*/
+    padding: 10px;
+    width: 70%; /*shrink the box*/
+    border: 10px dashed var(--home-secondary-color); /*set border*/
+    border-radius: 15px;
+
+}
+.grid-item.presentation .text-presentation h3{
+    margin: 0; /*no margin*/
+    padding: 0; /*no padding*/
+    color: var(--home-text-highlight-color);
+}
+.grid-item.presentation .text-presentation p{
+    margin: 0;
+    padding: 6pt 0 6pt 6pt; /*set padding*/
+}
+
+
+
+/*Information grid*/
+.grid-item.information{
+    background-color: var(--home-secondary-color);
+    color: var(--home-background-color); /*text color*/
+}
+.grid-item.information h1{
+    height: fit-content; /*minimal height*/
+    font-size: 80px; /*big font-size*/
+    color: var(--home-text-color);
+}
+
+
+
+/*Utility grid*/
+.grid-item.utility{
+    background-color: var(--home-secondary-color);
+    color: var(--home-background-color); /*text color*/
+}
+.grid-item.utility h1{
+    margin-left: auto;/*push-right*/
+    margin-bottom: 0;/*push bottom*/
+    align-self: flex-end;/*push bottom*/
+    height: fit-content; /*minimal height*/
+    font-size: 80px; /*big font-size*/
+    color: var(--home-text-color);
+}
+
+
+
+/*Credit grid */
+.grid-item.credits{
+    color: var(--home-secondary-color); /*text color*/
+}
+.grid-item.credits h1{
+    align-self: flex-end;/*push bottom*/
+    height: fit-content; /*minimal height*/
+    font-size: 80px; /*big font-size*/
+    color: var(--home-text-color);
+}
+.grid-item.credits .text-credits{
+    text-align: center;/*text vertical center*/
+    align-self: center;/*align horizontally*/
+    margin-left: 7%;/*offset of align horizontally*/
+    margin-bottom: 4%;/*offset of align vertically*/
+    padding: 10px; /*set padding*/
+    width: 50%; /*shrink the box*/
+    height: fit-content;
+    margin-top: 6%; /*try to vertically center the box*/
+    border: 7px dashed var(--home-secondary-color); /*set border*/
+    border-radius: 15px;
+
+}
+.grid-item.credits .text-credits h3{
+    margin: 0; /*no margin*/
+    padding: 0; /*no padding*/
+    color: var(--home-text-highlight-color);
+}
+.grid-item.credits .text-credits p{
+    margin: 4pt 0 12pt 0; /*set marging*/
+}
+.grid-item.credits .text-credits .hgl{
+    color: var(--home-text-highlight-color);
+
+}

@@ -2,11 +2,17 @@
 :root {
     --sidebar-width: 110px;
     --navbar-background-color: #8689A0;;
-    --navbar-selected-color: #606271;
+    --navbar-hover-color: #606271;
 
     --webpage-background-color: #E5EAF5;/*#3D3D3D;/**/
     --disable-color: rgb(146, 146, 146);
     --tooltip-background-color: rgba(255, 255, 255, 80%);
+
+    /*HOME THEME*/
+    --home-background-color: #ef3636;
+    --home-text-color: black;
+    --home-secondary-color: #FFF9DE;
+    --home-text-highlight-color: #88ff00;
 
     /*PAMIS THEME*/
     --pamis-background-color: #0d214f;
@@ -17,7 +23,7 @@
     --pamis-tab-hover-background-color: var(--pamis-background-color);
     --pamis-disable-color: var(--disable-color);
     --pamis-toggle-off-background-color: var(--pamis-disable-color);
-    --pamis-toggle-on-background-color: #eded51;/*var(--pamis-secondary-color);*/
+    --pamis-toggle-on-background-color: #eded51;
     --pamis-toggle-circle-color: #ff6c22;
     --pamis-tooltip-background-color: var(--tooltip-background-color);
     --pamis-button-goto-background-color: #ff6c22;
@@ -70,7 +76,7 @@ body{
 }
 
 /*Sidebar list container*/
-.sidebar .whole-unordered-list-container{
+.sidebar .whole-list-container{
     display: flex;
     flex-direction: column; /*menu in column*/
     list-style-type: none; /*remove discs*/
@@ -79,15 +85,29 @@ body{
     align-items: center;
 }
 
-/*Sidebar list item*/
+/*Sidebar list item size font and color*/
 .sidebar li{
     font-size: 12px; /*set font size*/
     height: 100%; /*max size to occupy the whole square*/
     width: 100%;
 }
-.sidebar li:hover,
-.sidebar li[class="selected"]{
-    background-color: var(--navbar-selected-color);
+.sidebar li:hover{
+    background-color: var(--navbar-hover-color);
+}
+.sidebar li[class="home selected"]{
+    background-color: var(--home-background-color);
+}
+.sidebar li[class="match selected"]{
+    background-color: var(--navbar-hover-color);
+}
+.sidebar li[class="main-robot selected"]{
+    background-color: var(--navbar-hover-color);
+}
+.sidebar li[class="pamis selected"]{
+    background-color: var(--pamis-background-color);
+}
+.sidebar li[class="beacon selected"]{
+    background-color: var(--beacon-background-color);
 }
 
 /*Sidebar links*/

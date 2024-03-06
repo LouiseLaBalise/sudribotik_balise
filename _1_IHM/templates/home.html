@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+{% include 'navbar.html' %}<!--import navbar-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_tabs.css')}}">
+    <link rel="shortcut icon" href="#" /> <!--No favicon-->
+    <script type=text/JavaScript src="/static/js/home-route.js"></script> <!--Load script for this route -->
+</head>
+
+<body><div class="page-content">
+    <div class="grid-container">
+        
+        <!--TOP-LEFT-->
+        <div class="grid-item presentation">
+
+            <div class="text-presentation">
+                <h3>pourquoi ?</h3>
+                <p>Cette interface web sert à <b>debuger et manipuler</b> les différents éléments de l'écosystème
+                    Eurobot de Sudriabobtik avec Louise.</p>
+
+                <h3>comment ?</h3>
+                <p>Rien de plus simple! Utilisez la <b>barre de navigation</b> située à gauche.</p>
+
+                <h3>que faire ?</h3>
+                <p>
+                    - L'onglet <b>Match</b> permet d'afficher le score lors d'un match test.
+                    <br>
+                    - L'onglet <b>Robot</b> Principal permet de contrôler les différents actionneurs du robot en temps 
+                    réel.
+                    <br>
+                    - L'onglet <b>PAMIs</b> (Petits Actionneurs Mobiles Indépendants) permet de contrôler jusqu'à 6 pamis.
+                    <br>            
+                    - L'onglet <b>Balise</b> permet de prendre des photos du terrain de jeux et de les retoucher avec 
+                    différentes options.
+                </p>
+            </div>
+
+            <h1>he</h1>
+            
+        </div>
+
+        <!--TOP-RIGHT-->
+        <div class="grid-item information">
+            <h1>llo</h1>
+        </div>
+
+        <!--BOTTOM-LEFT-->
+        <div class="grid-item utility">
+            <h1>lou</h1>
+        </div>
+
+        <!--BOTTOM-RIGHT-->
+        <div class="grid-item credits">
+
+            <h1>ise</h1>
+
+            <div class="text-credits">
+                <h3>par qui ?</h3>
+                <p>
+                    Demirjian Alexandre
+                    <br>
+                    Morel Erwan
+                    <br>
+                    Waïdi Rayane <span class="hgl">:)</span>
+                </p>
+                <h3>contact</h3>
+                <p>@ : waidi.rayane75@gmail.com</p>
+            </div>
+        </div>
+
+    </div>
+
+
+</div></body>    
+
+
+
+</html>

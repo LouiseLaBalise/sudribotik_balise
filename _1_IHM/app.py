@@ -9,7 +9,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
-from init import get_hotspot_ip
+from init import get_hotspot_ip_address
 from _3_TRAITEMENT_d_IMAGES import (takePhoto, redressBoardUsingAruco, detectAruco, detectColor,
                                     ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc,
                                     ros_undistortImage)
@@ -35,9 +35,8 @@ with open (configuration_FILEPATH, "r") as f:
 
 """Homepage route"""
 @app.route('/')
-def index():
-    #return render_template('index.html') #look for the index.html template in ./templates/
-    return beacon() #just for now until index page is complated
+def home():
+    return render_template('home.html') #look for the home.html template in ./templates/
 
 
 
@@ -398,9 +397,9 @@ def videoStream():
 
 """Generator of frames from video"""
 def generateFrames():
-    video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
+    video_capture = None#cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
 
-    while streaming_mode:
+    while streaming_mode and video_capture:
         ret,frame=video_capture.read() #read an image from camera
         if not ret:continue
         ret, jpeg = cv2.imencode('.jpg', frame) #convert image in jpg
@@ -410,7 +409,8 @@ def generateFrames():
         #function is called again. note that it returns bytes
         yield (b'--frame\r\n' #'frame' is the delimiter of each piece of data
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')#We tell the client that we sent jpeg img
-    video_capture.release() #free video capturing if not in streamin mode anymore
+    
+    if video_capture : video_capture.release() #free video capturing if not in streamin mode anymore
 
 
 """These routes are used to start and stop video stream 
@@ -460,7 +460,7 @@ def getPhotoModal(filename):
 
 if __name__=="__main__":
     #Check for wlan0 in case of a hotspot is on
-    host_ip = get_hotspot_ip.get_ip()
+    host_ip = get_hotspot_ip_address.get_hotspot_ip()
 
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app

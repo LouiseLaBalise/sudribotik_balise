@@ -7,8 +7,8 @@
     <body>
         <div class ="sidebar-container">
             <nav class="sidebar">
-                <ul class="whole-unordered-list-container">
-                    <li>
+                <ul class="whole-list-container">
+                    <li class="home">
                         <a href="/">
                             <div class="is-menu">
                             <img class="navbar-icon" src="{{ url_for('static', filename='/icons/home_64px.png')}}">
@@ -16,7 +16,7 @@
                             </div>
                         </a>                        
                     </li>
-                    <li>
+                    <li class="match">
                         <a href="#">
                             <div class="is-menu">
                             <img class="navbar-icon" src="{{ url_for('static', filename='/icons/battle_64px.png')}}">
@@ -24,7 +24,7 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <li class="main-robot">
                         <a href="#" >
                             <div class="is-menu">
                             <img class="navbar-icon" src="{{ url_for('static', filename='/icons/exoskeleton_64px.png')}}">
@@ -32,7 +32,7 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <li class="pamis">
                         <a href="/pamis">
                             <div class="is-menu">
                             <img class="navbar-icon" src="{{ url_for('static', filename='/icons/babyrobot_64px.png')}}">
@@ -40,7 +40,7 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                    <li class="beacon">
                         <a href="/beacon">
                             <div class="is-menu">
                             <img class="navbar-icon" src="{{ url_for('static', filename='/icons/lighthouse_64px.png')}}">

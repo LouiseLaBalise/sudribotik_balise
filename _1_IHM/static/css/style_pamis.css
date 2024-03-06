@@ -1,4 +1,4 @@
-/*Style de la page pamis*/
+/*Style pamis page*/
 
 .page-content{
     display: flex;
@@ -12,13 +12,13 @@
 .tab{
     background-color: var(--pamis-tab-background-color);
 }
-.tab:hover {
+.tab:hover{
     background-color: var(--pamis-tab-hover-background-color);
 }
 .tab.current{
     background-color: var(--pamis-tab-current-background-color);
 }
-.tab-content {
+.tab-content{
     background-color: var(--pamis-background-color);
 }
 
@@ -32,7 +32,7 @@
 .side-panel{grid-area: 1 / 4 /span 2;}
 
 /*Grid*/
-.grid-container {
+.grid-container{
     display: grid; /*Use a grid to display pamis infos*/
     height: 100%; /*full page height*/
 }
