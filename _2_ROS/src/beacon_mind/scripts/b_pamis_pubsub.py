@@ -5,9 +5,10 @@ import rospy
 import traceback
 import json
 import socket
+import types
 import selectors
 from std_msgs.msg import Int32MultiArray
-from beacon_msgs.msg import ArrayPositionPxWithType
+from beacon_msgs.msg import ArrayPositionPxWithType, ArrayPositionPx
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -29,10 +30,12 @@ class PamisNode:
 
         #This node will listen to these topics
         rospy.Subscriber("beacon/position/pamis", ArrayPositionPxWithType, self.pamiPosCallback)
+        rospy.Subscriber("beacon/position/plants", ArrayPositionPx, self.plantPosCallback)
         self.color = color #save color
         with open (CONFIG_FILEPATH, "r") as f:
             self.config = json.load(f)
         self.pami_info = {key:None for key in self.config[color+"_PAMI_IDS"]} #get pami id
+        self.pami_targets = self.config[color+"_PAMI_TARGETS"] #get pami targets
 
 
         #This node will publish to this topic
@@ -46,7 +49,7 @@ class PamisNode:
         """
         Initialize socket for pami to connect to.
         """
-        HOST = "192.168.0.110" #ip address on the tplink
+        HOST = "192.168.0.106" #ip address on the tplink
         PORT = 45000 #port communication
 
         #Initialize ipv4 TCP socket
@@ -67,6 +70,62 @@ class PamisNode:
         self.selector.register(lsock, selectors.EVENT_READ, data=None)
 
 
+    def createSocketClient(self, socket):
+        """
+        Create a new socket between server and a client.
+
+        Parameters:
+            - socket (socket):  
+        """
+        #Accept new connection request receive by our socket
+        socket_to_client, address_client = socket.accept()
+
+        #Set the new socket to no blocking mode
+        socket_to_client.setblocking(False)
+
+        #Create a simple data object
+        data = types.SimpleNamespace(address=address_client, input=b"", output=b"")
+
+        #Specify which event to monitor
+        events = selectors.EVENT_READ | selectors.EVENT_WRITE
+
+        #Save the new socket
+        self.selector.register(socket_to_client, events, data=data)
+
+
+    def serviceSocketClient(self, key, mask):
+        """
+        Process data requested by a pami.
+
+        Parameters:
+            - key (selector): data attach to a socket
+            - mask (int): event mask selecting a specific event 
+        """
+
+        socket_pami = key.fileobj #get pami's socket
+        data = key.data #get attached data
+
+        #If a read is requested
+        if mask & selectors.EVENT_READ:
+
+            received_data = socket.recv(1024) #get receive data of max 1024 bytes
+            pami_number = key.laddr[0][-1] #get pami number
+            pami_tag = self.config[self.color+"_PAMI_IDS"][pami_number] #get tag number of the pami
+
+            #Give the pami its position
+            if received_data == b"GET_SELF_POSITION":
+                data.output = self.pami_info[pami_tag] #give the pami its position
+            
+            #Give the pami its target
+            elif received_data == b"GOTO_POSITION":
+                data.output = self.pami_targets[pami_number]
+            
+            #Close connection
+            else:
+                print(f"Closing connection to {data.address}\n")
+                self.selector.unregister(socket_pami)
+                socket_pami.close()
+
 
     def run(self):
 
@@ -75,14 +134,23 @@ class PamisNode:
 
         while not rospy.is_shutdown():
             
-            #Wait timeout time for something to be read
-            if self.selector : 
-                events = self.selector.select(timeout=None)
-            else :
-                events = []
-        
-            for key, mask in events: 
-                print(events)
+            #Wait timeout time for something to be read 
+            events = self.selector.select(timeout=0.1)
+            
+            #Loop through events
+            for key, mask in events:
+
+                #If no data are received
+                if key.data is None:
+                    #Create a new socket connection
+                    self.createSocketClient(key.fileobj)
+                    
+                else:
+                    self.serviceSocketClient(key, mask)
+
+
+                    
+
 
             #Publish 
             #self.connected_pamis_pub.publish()
@@ -101,6 +169,12 @@ class PamisNode:
             self.pami_info[tag_id] = (pami.x, pami.y, pami.theta) #get pami position
 
 
+    def plantPosCallback(self, data):
+        """
+        Callback for plants position.
+        """
+        #Update plant position  
+        self.plant_position = data.array_of_positionspx
 
 
     def subscriber():
