@@ -37,14 +37,15 @@ class PamisNode:
 
         #This node will publish to this topic
         self.connected_pamis_pub = rospy.Publisher("beacon/connected/pamis", Int32MultiArray, queue_size=10)
+        self.selector = None #Event manager on the socket
         
 
     def initConnection(self):
         """
         Initialize websocket for pami to connect to.
         """
-        HOST = "192.168.0.110" #ip address on the tplink
-        PORT = "40000" #port communication
+        HOST = "192.168.0.106" #ip address on the tplink
+        PORT = "45000" #port communication
 
         #Initialize ipv4 TCP socket
         lsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -56,8 +57,8 @@ class PamisNode:
         lsock.setblocking(False)
 
         #Watch out for new data
-        sel = selectors.DefaultSelector()
-        sel.register(lsock, selectors.EVENT_READ, data=None)
+        self.selector = selectors.DefaultSelector()
+        self.selector.register(lsock, selectors.EVENT_READ, data=None)
 
         #Listen mode
         lsock.listen()
@@ -69,9 +70,18 @@ class PamisNode:
         rate = rospy.Rate(10) #in hz
 
         while not rospy.is_shutdown():
+            
+            #Wait timeout time for something to be read
+            if self.selector : 
+                events = self.selector.select(timeout=None)
+            else :
+                events = []
 
-            #Publish
-            self.connected_pamis_pub.publish()
+            for key, mask in events: 
+                print(events)
+
+            #Publish 
+            #self.connected_pamis_pub.publish()
 
             rate.sleep() #wait according to publish rate
 
