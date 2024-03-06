@@ -69,6 +69,10 @@
     font-size: 80px; /*big font-size*/
     color: var(--home-text-color);
 }
+.grid-item.information .text-information{
+    margin-top: 20%;
+    margin-left: 25%;
+}
 
 
 

@@ -33,6 +33,14 @@ with open (configuration_FILEPATH, "r") as f:
     config = json.load(f)["IHM_PAMI_IDS"]
     
 
+
+#######################################################################################
+#                                                                                     #
+#                                       HOME                                          #
+#                                                                                     #
+#######################################################################################
+    
+
 """Homepage route"""
 @app.route('/')
 def home():
@@ -397,7 +405,7 @@ def videoStream():
 
 """Generator of frames from video"""
 def generateFrames():
-    video_capture = None#cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
+    video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
 
     while streaming_mode and video_capture:
         ret,frame=video_capture.read() #read an image from camera

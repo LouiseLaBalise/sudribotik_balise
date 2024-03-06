@@ -18,8 +18,8 @@
 
             <div class="text-presentation">
                 <h3>pourquoi ?</h3>
-                <p>Cette interface web sert à <b>debuger et manipuler</b> les différents éléments de l'écosystème
-                    Eurobot de Sudriabobtik avec Louise.</p>
+                <p>Cette interface web sert à <b>debuger et manipuler</b> Louise, la carte Raspberry Pi4 utilisée dans la balise
+                    Sudriabobtik lors de la compétition Eurobot.</p>
 
                 <h3>comment ?</h3>
                 <p>Rien de plus simple! Utilisez la <b>barre de navigation</b> située à gauche.</p>
@@ -28,7 +28,7 @@
                 <p>
                     - L'onglet <b>Match</b> permet d'afficher le score lors d'un match test.
                     <br>
-                    - L'onglet <b>Robot</b> Principal permet de contrôler les différents actionneurs du robot en temps 
+                    - L'onglet <b>Robot Principal</b> permet de contrôler les différents actionneurs du robot en temps 
                     réel.
                     <br>
                     - L'onglet <b>PAMIs</b> (Petits Actionneurs Mobiles Indépendants) permet de contrôler jusqu'à 6 pamis.
@@ -45,6 +45,16 @@
         <!--TOP-RIGHT-->
         <div class="grid-item information">
             <h1>llo</h1>
+            <div class="text-information">
+                <p>CPU Broadcom BCM2711 : <span class="hgl" id="temp_cpu"></span>°C</p>
+                <p>GPU VideoCore VI : <span class="hgl" id="temp_gpu"></span>°C</p>
+                <p>Stockage : <span class="hgl" id="stockage_space_left"></span>/<span id="stockage_space_max"></span></p>
+                <p>Camera : <span class="hgl" id="check_camera">-</span></p>
+                <p>USB 3.0 n°1 : <span class="hgl" id="check_usb31">-</span></p>
+                <p>USB 3.0 n°2 : <span class="hgl" id="check_usb32">-</span></p>
+                <p>USB 2.0 n°1 : <span class="hgl" id="check_usb32">-</span></p>
+                <p>USB 2.0 n°2 : <span class="hgl" id="check_usb32">-</span></p>
+            </div>
         </div>
 
         <!--BOTTOM-LEFT-->
