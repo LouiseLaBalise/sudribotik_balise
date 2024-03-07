@@ -7,6 +7,7 @@ import json
 import socket
 import types
 import selectors
+import subprocess
 from std_msgs.msg import Int32MultiArray
 from beacon_msgs.msg import ArrayPositionPxWithType, ArrayPositionPx
 
@@ -104,6 +105,7 @@ class PamisNode:
 
         socket_pami = key.fileobj #get pami's socket
         data = key.data #get attached data
+        flag = 0
 
         #If a read is requested
         if mask & selectors.EVENT_READ:
@@ -120,11 +122,21 @@ class PamisNode:
             elif received_data == b"GOTO_POSITION":
                 data.output = self.pami_targets[pami_number]
             
-            #Close connection
+            #Give nothing if the request is not known
             else:
-                print(f"Closing connection to {data.address}\n")
-                self.selector.unregister(socket_pami)
-                socket_pami.close()
+                data.output = None
+
+        #Usually a write event is in the mask too 
+        if mask & selectors.EVENT_WRITE:
+            #If the request was known and fulfill send the response
+            if data.output:
+                flag = 1
+                socket_pami.send(data.output)
+
+        #Close connection to socket
+        self.selector.unregister(socket_pami)
+        socket_pami.close()
+        print(f"Closing connection to {data.address}\nResult : {flag}\n\n")
 
 
     def run(self):
@@ -146,14 +158,11 @@ class PamisNode:
                     self.createSocketClient(key.fileobj)
                     
                 else:
-                    self.serviceSocketClient(key, mask)
-
-
-                    
+                    self.serviceSocketClient(key, mask)  
 
 
             #Publish 
-            #self.connected_pamis_pub.publish()
+            self.connected_pamis_pub.publish(self.getConnectedPamiMsg())
 
             rate.sleep() #wait according to publish rate
 
@@ -177,19 +186,29 @@ class PamisNode:
         self.plant_position = data.array_of_positionspx
 
 
-    def subscriber():
+    def getConnectedPamiMsg(self):
         """
-        Fetch and parse data from ros to pamis
+        Get message for connected pamis. The tag is given.
         """
-        # Tell node name to rospy
-        rospy.init_node('listener', anonymous=True)
+        msg = []
 
-        #rospy.Subscriber("beacon/position/pots", ArrayPositionPx, callback)
+        #Get ip address of all pami
+        pami_ip_address = self.config["IP_ADDRESS_PAMIS"]
 
-        # Keeps python from exiting until this node is stopped
-        # also it permits to this node to listen to new messages on mentioned topics
-        # and to run specified callbacks
-        rospy.spin()
+        #Ping every ip
+        ping_result = []
+        for ip in pami_ip_address:
+            #Just one ping with 0.1 second wait time
+            result_bytes = subprocess.run(["ping", "-c", "1", "-W", "0.15", ip],
+                                    stdout=subprocess.PIPE)
+            result = result_bytes.stdout.decode("ascii").split() #get string result
+            ping_result.append("0%" in result) #append result bool
+        
+        #Get connected pami
+        msg = [tag for index, tag in enumerate(self.config[self.color+"_PAMI_IDS"]) if ping_result[index]]
+        return msg
+
+        
 
 
 
