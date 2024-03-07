@@ -10,7 +10,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 
-def colorDetection(filename:str, hue:tuple, saturation:tuple[50, 255], value:tuple[50, 255],
+def colorDetection(filename:str, hue:tuple, saturation=(50, 255), value=(50, 255),
                    contoured=False, rectangled=False, denoise=False, minSurface=0, maxSurface=99999):
     """
     Detect HSV color range on an image.
