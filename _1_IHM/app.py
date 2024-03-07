@@ -59,7 +59,9 @@ def get_home_information():
         cpu_temp_string_bytes = subprocess.run(["cat", "/sys/class/thermal/thermal_zone0/temp"],
                                                stdout=subprocess.PIPE)
         cpu_temp_string = cpu_temp_string_bytes.stdout.decode('ascii') #cast bytes to str
-        cpu_temp = str(round(int(cpu_temp_string)/1000), 1) #round by 1 after dividing the temp
+        cpu_temp = int(cpu_temp_string)/1000 #round by 1 after dividing the temp
+        cpu_temp = round(cpu_temp, 1)
+        cpu_temp = str(cpu_temp)
     except Exception: cpu_temp = "-" #default
     
     #Get GPU temperature   
@@ -72,7 +74,7 @@ def get_home_information():
     
     #Get used and max storage
     try:
-        storage_string_bytes = subprocess.run(["df", "-h", "/dev/sda5"],
+        storage_string_bytes = subprocess.run(["df", "-h", "/"],
                                               stdout=subprocess.PIPE)
         storage_string = storage_string_bytes.stdout.decode('ascii').split() #cast bytes to str and remove spaces
         used_storage = storage_string[9]+'b' #get used storage
@@ -86,12 +88,12 @@ def get_home_information():
         camera_check_string_bytes = subprocess.run(["vcgencmd", "get_camera"],
                                                   stdout=subprocess.PIPE)
         camera_check_string = camera_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        camera_check = camera_check_string.split("=")[1][0] == 1 #check if camera is detected
+        camera_check = camera_check_string.split("=")[1][0] == "1" #check if camera is detected
     except Exception: camera_check = False #default
 
     #Check for usb3A
     try:
-        usb3A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:001"],
+        usb3A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:007"],
                                                 stdout=subprocess.PIPE)
         usb3A_check_string = usb3A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
         if usb3A_check_string : usb3A = usb3A_check_string.split(":")[2][5:-1] #get device name
@@ -100,7 +102,7 @@ def get_home_information():
 
     #Check for usb3B
     try:
-        usb3B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:002"],
+        usb3B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:014"],
                                                 stdout=subprocess.PIPE)
         usb3B_check_string = usb3B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
         if usb3B_check_string : usb3B = usb3B_check_string.split(":")[2][5:-1] #get device name
@@ -109,7 +111,7 @@ def get_home_information():
 
     #Check for usb2A
     try:
-        usb2A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:003"],
+        usb2A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:009"],
                                                 stdout=subprocess.PIPE)
         usb2A_check_string = usb2A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
         if usb2A_check_string : usb2A = usb2A_check_string.split(":")[2][5:-1] #get device name
@@ -118,7 +120,7 @@ def get_home_information():
 
     #Check for usb2B
     try:
-        usb2B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:004"],
+        usb2B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:016"],
                                                 stdout=subprocess.PIPE)
         usb2B_check_string = usb2B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
         if usb2B_check_string : usb2B = usb2B_check_string.split(":")[2][5:-1] #get device name
@@ -558,7 +560,7 @@ if __name__=="__main__":
 
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app
-    app.run(debug=True, host=f"{host_ip}",port=5024)
+    app.run(debug=True, host="0.0.0.0",port=5024)
 
 
 
