@@ -3,6 +3,8 @@ import os
 import cv2
 import traceback
 import json
+import numpy as np
+import subprocess
 from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
 FILE_PATH = os.path.abspath(__file__)
@@ -30,8 +32,9 @@ fail_redress = False #true if an attemp to redress went wrong
 # you'll need to restart the app to updtae
 configuration_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/configuration.json"
 with open (configuration_FILEPATH, "r") as f:
-    config = json.load(f)["IHM_PAMI_IDS"]
-    
+    config = json.load(f)
+#Get transform matrix for redress here to be used later, cast it to np.array
+transform_matrix = np.array(config["AUTO_TRANSFORM_MATRIX"])
 
 
 #######################################################################################
@@ -44,9 +47,89 @@ with open (configuration_FILEPATH, "r") as f:
 """Homepage route"""
 @app.route('/')
 def home():
-    return render_template('home.html') #look for the home.html template in ./templates/
+    return render_template("home.html") #look for the home.html template in ./templates/
 
 
+"""Update Informations displayed on the homepage top-right square"""
+@app.route("/get-home-information")
+def get_home_information():
+    
+    #Get CPU temperature    
+    try:
+        cpu_temp_string_bytes = subprocess.run(["cat", "/sys/class/thermal/thermal_zone0/temp"],
+                                               stdout=subprocess.PIPE)
+        cpu_temp_string = cpu_temp_string_bytes.stdout.decode('ascii') #cast bytes to str
+        cpu_temp = str(round(int(cpu_temp_string)/1000), 1) #round by 1 after dividing the temp
+    except Exception: cpu_temp = "-" #default
+    
+    #Get GPU temperature   
+    try:
+        gpu_temp_string_bytes = subprocess.run(["vcgencmd", "measure_temp"],
+                                               stdout=subprocess.PIPE)
+        gpu_temp_string = gpu_temp_string_bytes.stdout.decode('ascii') #cast bytes to str
+        gpu_temp = gpu_temp_string[5:-2] #strip the temp
+    except Exception: gpu_temp = "-" #default
+    
+    #Get used and max storage
+    try:
+        storage_string_bytes = subprocess.run(["df", "-h", "/dev/sda5"],
+                                              stdout=subprocess.PIPE)
+        storage_string = storage_string_bytes.stdout.decode('ascii').split() #cast bytes to str and remove spaces
+        used_storage = storage_string[9]+'b' #get used storage
+        max_storage = storage_string[8]+'b' #get max storage
+    except Exception: 
+        used_storage = "-" #default
+        max_storage = "-"
+
+    #Check for camera
+    try:
+        camera_check_string_bytes = subprocess.run(["vcgencmd", "get_camera"],
+                                                  stdout=subprocess.PIPE)
+        camera_check_string = camera_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        camera_check = camera_check_string.split("=")[1][0] == 1 #check if camera is detected
+    except Exception: camera_check = False #default
+
+    #Check for usb3A
+    try:
+        usb3A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:001"],
+                                                stdout=subprocess.PIPE)
+        usb3A_check_string = usb3A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        if usb3A_check_string : usb3A = usb3A_check_string.split(":")[2][5:-1] #get device name
+        else: usb3A = "-" #default
+    except Exception: usb3A = "-" #default
+
+    #Check for usb3B
+    try:
+        usb3B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:002"],
+                                                stdout=subprocess.PIPE)
+        usb3B_check_string = usb3B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        if usb3B_check_string : usb3B = usb3B_check_string.split(":")[2][5:-1] #get device name
+        else: usb3B = "-" #default
+    except Exception: usb3B = "-" #default
+
+    #Check for usb2A
+    try:
+        usb2A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:003"],
+                                                stdout=subprocess.PIPE)
+        usb2A_check_string = usb2A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        if usb2A_check_string : usb2A = usb2A_check_string.split(":")[2][5:-1] #get device name
+        else: usb2A = "-" #default
+    except Exception: usb2A = "-" #default
+
+    #Check for usb2B
+    try:
+        usb2B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:004"],
+                                                stdout=subprocess.PIPE)
+        usb2B_check_string = usb2B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        if usb2B_check_string : usb2B = usb2B_check_string.split(":")[2][5:-1] #get device name
+        else: usb2B = "-" #default
+    except Exception: usb2B = "-" #default
+    
+
+    return jsonify({"cpu_temp": cpu_temp, "gpu_temp": gpu_temp,
+                    "used_storage": used_storage, "max_storage": max_storage,
+                    "camera_check": camera_check,
+                    "usb3A": usb3A, "usb3B": usb3B, "usb2A": usb2A, "usb2B": usb2B})
 
 
 
@@ -74,7 +157,9 @@ def getAllPamisPosition():
     ret,frame = cap.read()
     cap.release()
 
-    nb_pamis = len(config) #get number of pamis
+    #Get all pammi tag id for the debug/ihm configuration
+    pami_ihm_tags = config["IHM_PAMI_IDS"]
+    nb_pamis = len(pami_ihm_tags) #get number of pamis
 
     #Case no image
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
@@ -82,7 +167,8 @@ def getAllPamisPosition():
     #Redress image
     global fail_redress
     if pami_redress_image_before_detecting_aruco:
-        redress_success, frame = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"])
+        redress_success, frame = ros_redressBoardUsingAruco.redressImage(frame, transform_matrix,
+                                                                         config["AUTO_REDRESS_SIZE"])
         #Case no redress
         if not redress_success : 
             print(f"Log [{os.times().elapsed}] - {FILE_NAME} : L'image n'a pas pu être redréssée.")
@@ -100,11 +186,11 @@ def getAllPamisPosition():
     if not ret : return [("N/A", "N/A", "N/A") for k in range(nb_pamis)]
 
     #Select only detected pami tags
-    pami_ids_detected = list(set(all_aruco_ids) & set(config))
+    pami_ids_detected = list(set(all_aruco_ids) & set(pami_ihm_tags))
 
     #Calculate their position
     pamis_position = []
-    for id in config :
+    for id in pami_ihm_tags :
 
         #If id has not been detected we add it to the list with no values
         if id not in pami_ids_detected:
@@ -133,7 +219,7 @@ def generate_pamis_infos():
                                "connection":getPamiConnection(tag),
                                "pos_x":all_pamis_pos[k][0],
                                "pos_y":all_pamis_pos[k][1],
-                               "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(config)]
+                               "pos_theta":all_pamis_pos[k][2] } for k,tag in enumerate(config["IHM_PAMI_IDS"])]
 
         #We need a generator to use SSE, data is jsoned in the process
         yield f"data: {json.dumps(pamis_informations)}\n\n"

@@ -23,11 +23,16 @@
     display: flex;
     flex-direction: row;
 }
+.hgl{/*highlight on all red grids*/
+    color: var(--home-text-highlight-color);
+}
+.hgl2{/*highlight on all beige grids*/
+    color: var(--home-text-highlight-secondary-color);
+}
 
 /*Presentation grid*/
 .grid-item.presentation{
     color: var(--home-secondary-color);/*text color*/
-    
 }
 .grid-item.presentation h1{
     margin-left: auto;/*push-right*/
@@ -36,7 +41,6 @@
     font-size: 80px; /*big font-size*/
     color: var(--home-text-color);
 }
-
 .grid-item.presentation .text-presentation{
     align-self: center;/*align horizontally*/
     margin-left: 12%;/*offset of align horizontally*/
@@ -50,7 +54,6 @@
 .grid-item.presentation .text-presentation h3{
     margin: 0; /*no margin*/
     padding: 0; /*no padding*/
-    color: var(--home-text-highlight-color);
 }
 .grid-item.presentation .text-presentation p{
     margin: 0;
@@ -71,9 +74,18 @@
 }
 .grid-item.information .text-information{
     margin-top: 20%;
-    margin-left: 25%;
+    margin-left: 7%;
+    padding: 20px;
 }
-
+.grid-item.information .label{
+    text-align: right; /*align text to right*/
+    vertical-align: top; /*align top of the cell*/
+    padding-right: 20px;
+}
+.grid-item.information .status-icon {
+    width: 16px; /*icon size*/
+    height: 16px;
+}
 
 
 /*Utility grid*/
@@ -118,12 +130,7 @@
 .grid-item.credits .text-credits h3{
     margin: 0; /*no margin*/
     padding: 0; /*no padding*/
-    color: var(--home-text-highlight-color);
 }
 .grid-item.credits .text-credits p{
     margin: 4pt 0 12pt 0; /*set marging*/
-}
-.grid-item.credits .text-credits .hgl{
-    color: var(--home-text-highlight-color);
-
 }

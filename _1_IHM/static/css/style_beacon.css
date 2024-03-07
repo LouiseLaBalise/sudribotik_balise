@@ -39,7 +39,7 @@
 }
 #photoForm ul {
     list-style: none; /*no disc*/
-    padding:0px /*reset default padding*/
+    padding:0px; /*reset default padding*/
 }
 
 #photoForm #basic_options{
@@ -102,7 +102,7 @@ input::-webkit-outer-spin-button,
 
 #photoForm label:not(.extension, .toggle-switch){
     display: inline-block;
-    text-align: right;
+    text-align: right; /*align text to right*/
     margin-right: 10px;
     width: 330px;
 }

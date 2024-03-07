@@ -125,7 +125,7 @@ function goPamiFormSubmit(event,pami_number){
     .then(response => response.json())//wait for a response and parse it to json
     .then(data => {
         //Display response success into the console
-        if (data.success) {
+        if (data.success){
             console.log(`Pami ${pami_number} sent to \
                         (${gotoFormData['goto_x']}, ${gotoFormData['goto_y']})`);
         }

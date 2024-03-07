@@ -4,6 +4,7 @@ window.onload = checkAnchor;
 /*Check anchors from url to go on a specific tab*/
 function checkAnchor() {
     var anchor = window.location.hash.substring(1); //get anchor
+    
     if (anchor) {
         openTab(anchor); //go to this tab
     }
@@ -14,7 +15,7 @@ function checkAnchor() {
 
 /*Manage tab clicks*/
 function openTab(tabId) {
-
+    
     //Hide tabs content
     var tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(function (content) {
@@ -56,7 +57,7 @@ function openTab(tabId) {
     }
 
     //Change url to delete the anchor
-    history.replaceState({ tabId: tabId }, null, "/beacon");
+    //history.replaceState({ tabId: tabId }, null, "/beacon");
 }
 
 
