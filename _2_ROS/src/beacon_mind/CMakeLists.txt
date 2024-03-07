@@ -159,7 +159,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
  catkin_install_python(PROGRAMS
   scripts/b_ihm_sub.py
-  scripts/b_pamis_sub.py
+  scripts/b_pamis_pubsub.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -8,7 +8,7 @@ import json
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 CONFIG_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"    
-sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
+sys.path.insert(1, FILE_PATH.split("test_24")[0]) #add parent folder to python path
 from init import prettify_json
 
 # Chargement des données clients depuis un fichier JSON
