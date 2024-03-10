@@ -1,6 +1,11 @@
 import socket
 import fcntl
 import struct
+import os
+import sys
+
+FILE_PATH = os.path.abspath(__file__)
+FILE_NAME = os.path.basename(FILE_PATH)
 
 
 def get_optimal_ip():
@@ -11,24 +16,25 @@ def get_optimal_ip():
     Give localhost ip third.
 
     Returns:
+        - str: optimal ip name.
         - str: optimal ip address.
     """
     
     #Get and return ethernet IP if it exists
     ethernet_ip = get_ethernet_ip()
     if ethernet_ip is not None:
-        return ethernet_ip
+        return "ethernet", ethernet_ip
     
     
     else:
         #Get and return hotpost IP if it exists
         hotspot_ip = get_hotspot_ip()
         if hotspot_ip:
-            return hotspot_ip
+            return "hotspot", hotspot_ip
 
         else:
             #Return localhost IP
-            return socket.gethostbyname(socket.gethostname()) #get hostname associated ip address
+            return "localhost", socket.gethostbyname(socket.gethostname()) #get hostname associated ip address
 
 
 def get_ethernet_ip():
