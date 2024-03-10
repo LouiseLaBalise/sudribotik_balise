@@ -5,7 +5,7 @@ import traceback
 import json
 import numpy as np
 import subprocess
-from flask import Flask, render_template, request, jsonify, Response, send_from_directory
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory, session
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -28,6 +28,7 @@ streaming_mode=False #true when client open tab2 of beacon to see the camera vie
 sse_pamis=True # [NOT IN USE] false when client quit pami page
 pami_redress_image_before_detecting_aruco=False#true when toggle is switched
 fail_redress = False #true if an attemp to redress went wrong
+pseudo_session = {} #global dictionary to store some variable like a session
 #Load all pamis tag at the start of the app, meaning if these have to change,
 # you'll need to restart the app to updtae
 configuration_FILEPATH = FILE_PATH.split("_1_IHM")[0]+"init/configuration.json"
@@ -37,23 +38,31 @@ with open (configuration_FILEPATH, "r") as f:
 transform_matrix = np.array(config["AUTO_TRANSFORM_MATRIX"])
 
 
+
+
 #######################################################################################
 #                                                                                     #
 #                                       HOME                                          #
 #                                                                                     #
 #######################################################################################
     
-
-"""Homepage route"""
 @app.route('/')
+@app.route('/accueil')
 def home():
+    """
+    Homepage route
+    """
+
     return render_template("home.html") #look for the home.html template in ./templates/
 
 
-"""Update Informations displayed on the homepage top-right square"""
+
+
 @app.route("/get-home-information")
 def get_home_information():
-    
+    """
+    Update Informations displayed on the homepage top-right square.
+    """ 
     #Get CPU temperature    
     try:
         cpu_temp_string_bytes = subprocess.run(["cat", "/sys/class/thermal/thermal_zone0/temp"],
@@ -85,53 +94,45 @@ def get_home_information():
 
     #Check for camera
     try:
-        camera_check_string_bytes = subprocess.run(["vcgencmd", "get_camera"],
-                                                  stdout=subprocess.PIPE)
-        camera_check_string = camera_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        camera_check = camera_check_string.split("=")[1][0] == "1" #check if camera is detected
-    except Exception: camera_check = False #default
+        #We will check for camera just one time at the start of the page because we dont want to take a pic every seconds
+        if "camera_checked" not in pseudo_session :
+            cap = cv2.VideoCapture(0, cv2.CAP_V4L2) #take a pic
+            camera_check, frame = cap.read() #get return as camera check
+            cap.release() #release camera
+            pseudo_session["camera_checked"] = camera_check #store camera result
 
-    #Check for usb3A
-    try:
-        usb3A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:007"],
-                                                stdout=subprocess.PIPE)
-        usb3A_check_string = usb3A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        if usb3A_check_string : usb3A = usb3A_check_string.split(":")[2][5:-1] #get device name
-        else: usb3A = "-" #default
-    except Exception: usb3A = "-" #default
+        #Get camera result previously stored
+        else:
+            camera_check = pseudo_session["camera_checked"]
 
-    #Check for usb3B
-    try:
-        usb3B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:014"],
-                                                stdout=subprocess.PIPE)
-        usb3B_check_string = usb3B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        if usb3B_check_string : usb3B = usb3B_check_string.split(":")[2][5:-1] #get device name
-        else: usb3B = "-" #default
-    except Exception: usb3B = "-" #default
+    except Exception: 
+        cap.release()
+        camera_check = False #default
 
-    #Check for usb2A
+    #Check for all usb port
     try:
-        usb2A_check_string_bytes = subprocess.run(["lsusb", "-s", "001:009"],
+        usb_check_string_bytes = subprocess.run(["lsusb"],
                                                 stdout=subprocess.PIPE)
-        usb2A_check_string = usb2A_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        if usb2A_check_string : usb2A = usb2A_check_string.split(":")[2][5:-1] #get device name
-        else: usb2A = "-" #default
-    except Exception: usb2A = "-" #default
+        usb_check_string = usb_check_string_bytes.stdout.decode('ascii') #cast bytes to str
+        
+        #Loop through all devices
+        all_usb_devices = [device.split(":")[2][5:-1] for device in usb_check_string.split("\n") if len(device)>4]
+        
+        #Get device name excluding those starting by the word 'Linux'
+        device_names =  [name  for name in all_usb_devices if name.split()[0] != "Linux"]
 
-    #Check for usb2B
-    try:
-        usb2B_check_string_bytes = subprocess.run(["lsusb", "-s", "001:016"],
-                                                stdout=subprocess.PIPE)
-        usb2B_check_string = usb2B_check_string_bytes.stdout.decode('ascii') #cast bytes to str
-        if usb2B_check_string : usb2B = usb2B_check_string.split(":")[2][5:-1] #get device name
-        else: usb2B = "-" #default
-    except Exception: usb2B = "-" #default
+        #Fill with '-' if there is less than 4 devices pluged in
+        device_names = device_names[:4] + ["-"] * max(0, 4 - len(device_names))
+        print(device_names)
+
+    except Exception: device_names = ["-"]*4 #default
+
     
 
     return jsonify({"cpu_temp": cpu_temp, "gpu_temp": gpu_temp,
                     "used_storage": used_storage, "max_storage": max_storage,
                     "camera_check": camera_check,
-                    "usb3A": usb3A, "usb3B": usb3B, "usb2A": usb2A, "usb2B": usb2B})
+                    "usb1": device_names[0], "usb2": device_names[1], "usb3": device_names[2], "usb4": device_names[3]})
 
 
 
@@ -144,15 +145,44 @@ def get_home_information():
 
 
 
-"""Returns whether a Pami is connected or not, based on their tag"""
+
 def getPamiConnection(tag):
-    return False
+    """
+    Get connection status of a pamis knowing its tag.
+    
+    Parameters:
+        - tag (int): ArUco tag ID number of the pami. There is a special line
+                    for pamis of the HMI in the configuration.json file.
+    
+    Returns:
+        - bool: pami is connected or not.
+    
+    Note:
+        The ip address is stored in the configuration.json file.
+        The index of the tag in IHM_PAMI_IDS  give its IP address in IP_ADDRESS_PAMIS.
+    """
+
+    #Retrieve the ip address of the pami.
+    index_pami_ihm = config["IHM_PAMI_IDS"].index(tag)
+
+    #Get corresponding IP
+    ip_pami = config["IP_ADDRESS_PAMIS"][index_pami_ihm]
+
+    #Ping ip with a low wait time
+    result_bytes = subprocess.run(["ping", "-c", "1", "-W", "0.13", ip_pami],
+                                  stdout=subprocess.PIPE)
+    result = result_bytes.stdout.decode("ascii").split() #get string result
+
+    #If the result text got '0%' in it (from 0% packet loss) it means that the ping succeed.
+    return "0%" in result
 
 
-"""Take a photo and return position of all pamis tags inside,
-This function use ros functions to process faster.
- return a list of tuples (x, y, theta)"""
 def getAllPamisPosition():
+    """
+    Take a photo and return position of all pamis tags inside,
+    This function use ros functions to process faster.
+    return a list of tuples (x, y, theta)
+    """
 
     #Read an image from camera
     cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
@@ -209,8 +239,12 @@ def getAllPamisPosition():
 
 
 
-"""Generate json object with pamis informations inside"""
+
+
 def generate_pamis_infos():
+    """
+    Generate json object with pamis informations inside.
+    """
     while True: #generate pamis info continuously
 
         #Fetch all pami position on a single image
@@ -227,37 +261,22 @@ def generate_pamis_infos():
         yield f"data: {json.dumps(pamis_informations)}\n\n"
 
 
-"""Server-Sent Event route needed to sent pamis information to client frequently"""
 @app.route('/sse_pamis')
 def sse_pamis():
-    #return a Flask response using SSE data format
+    """
+    Server-Sent Event route needed to sent pamis information to client frequently.
+    """
+    #Return a Flask response using SSE data format
     return Response(generate_pamis_infos(), content_type='text/event-stream')
 
 
-"""route used to stop a pami"""
-@app.route('/stop_pami', methods=['POST'])
-def stop_pami():
-    
-    #Get which pami to stop
-    pami_num_to_stop = request.json["pami_number"]
-        
-    #Send a command to the pami
-    try :
-        #stop() du script d'Alexandre
-        response={"success":True}
 
 
-    except Exception as e:
-        traceback.print_exc()
-        #Create with response with success key False
-        response = {'success': False, 'error': str(e)}
-
-    #back to the client
-    return jsonify(response)
-
-"""route used to change redress image state"""
 @app.route('/pami_redress_image', methods=['POST'])
 def pami_redress_image():
+    """
+    Route used to change redress image state.
+    """
     global pami_redress_image_before_detecting_aruco
     
     #Get checkbox state
@@ -279,35 +298,64 @@ def pami_redress_image():
     return jsonify(response)
 
 
-"""pamis route"""
-@app.route('/pamis', methods=['GET', 'POST'])
+
+@app.route('/pami_goto', methods=['POST'])
+def pami_goto():
+    """
+    Pami goto() route. When called this call a goto function in the selected pami.
+    """
+    #Get pami's number
+    pami_number = int(request.json["number"])
+
+    #Get desired x and y position from the form
+    desired_x = int(request.json["goto_x"])
+    desired_y = int(request.json["goto_y"])
+    
+    #Send a command to the pami
+    try :
+        #goto() du script d'Alexandre <----------------------------------
+        response={"success":True}
+
+
+    except Exception as e:
+        traceback.print_exc()
+        #Create with response with success key False
+        response = {'success': False, 'error': str(e)}
+
+    #back to the client
+    return jsonify(response)
+
+
+
+@app.route('/pami_stop', methods=['POST'])
+def stop_pami():
+    """
+    Route used to stop a pami.
+    """    
+    #Get which pami to stop
+    pami_num_to_stop = request.json["pami_number"]
+        
+    #Send a command to the pami
+    try :
+        #stop() du script d'Alexandre <----------------------------------
+        response={"success":True}
+
+
+    except Exception as e:
+        traceback.print_exc()
+        #Create with response with success key False
+        response = {'success': False, 'error': str(e)}
+
+    #back to the client
+    return jsonify(response)
+
+
+
+@app.route('/pamis')
 def pamis():
-
-    #Post method
-    if request.method == 'POST':
-
-        #Get pami's number
-        pami_number = request.json["number"]
-
-        #Get desired x and y position from the form
-        desired_x = request.json["goto_x"]
-        desired_y = request.json["goto_y"]
-        
-        #Send a command to the pami
-        try :
-            #goto() du script d'Alexandre
-            response={"success":True}
-
-
-        except Exception as e:
-            traceback.print_exc()
-            #Create with response with success key False
-            response = {'success': False, 'error': str(e)}
-
-        #back to the client
-        return jsonify(response)
-
-        
+    """
+    Pamis route.
+    """        
 
     #Go to pamis page        
     return render_template("pamis.html")
@@ -327,10 +375,12 @@ def pamis():
 
 
 
-"""beacon route"""
+
 @app.route('/beacon', methods=['GET', 'POST'])
 def beacon():
-
+    """
+    Beacon route.
+    """
     #Get photo of all photos in PHOTO_PATH
     list_photos = makePhotoList(MEDIA_FOLDER_PATH)
 
@@ -481,18 +531,23 @@ def beacon():
 
 
 
-"""Video for beacon tab2"""
 @app.route('/video_stream')
 def videoStream():
-    #When this function is called it returns a 'multipart/x-mixed-replace' in a HTTP response.
-    # Basicly it says to the server that it will receive a myriade of data,
-    # and that data will be replaced by its next data a few after. Usally used to send a stream of video frames
+    """
+    Video for beacon second tab.
 
+    Note:
+        When this function is called it returns a 'multipart/x-mixed-replace' in a HTTP response.
+        Basicly it says to the server that it will receive a myriade of data, and that data will be 
+        replaced by its next data a few after. Usally used to send a stream of video frames.
+    """
     return Response(generateFrames(), mimetype='multipart/x-mixed-replace; boundary=frame') #boundary=frame to delimitate each piece of data sent (see generate_frame())
 
 
-"""Generator of frames from video"""
 def generateFrames():
+    """
+    Generator of frames from video.
+    """
     video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2) #Open camera for video capturing
 
     while streaming_mode and video_capture:
@@ -509,27 +564,45 @@ def generateFrames():
     if video_capture : video_capture.release() #free video capturing if not in streamin mode anymore
 
 
-"""These routes are used to start and stop video stream 
-from the client side when user enter or quit a tab"""
+
 @app.route('/start_video')
 def startVideoStream():
+    """
+    This route is used to start video stream 
+    from the client side when user enter the second tab.
+    """
     global streaming_mode
     streaming_mode=True
     return 'OK'
+
 @app.route('/stop_video')
 def stopVideoStream():
+    """
+    This route is used to stop video stream 
+    from the client side when user quit the second tab.
+    """
     global streaming_mode
     streaming_mode=False
     return 'OK'
 
-"""Make a list of all photo present in PHOTO_PATH
-arg : path:str
-Return : list of dict -> [{"name":kyoto.jpg, "size":150, "unit":MB, "date":25 nov. 2022, "hour": 21:54:07}]"""
-def makePhotoList(path:str):
+
+def makePhotoList(path):
+    """
+    Make a list of all photo present in PHOTO_PATH. Each item contain the name,
+    the size and the date & hour.
+    
+    Parameters:
+        - path (str) : path to look for photos.
+    
+    Returns:
+        - list of dict : like [{"name":kyoto.jpg, "size":3200, "unit":KB, "date":26 nov. 2022, "hour": 21:34:07}]
+    """
+
     photos_list = []
 
     #Sort list by time: most recent is first
-    photos = sorted(os.scandir(MEDIA_FOLDER_PATH), key=lambda photo: photo.stat().st_mtime, reverse=True)
+    photos = sorted(os.scandir(path), key=lambda photo: photo.stat().st_mtime, reverse=True)
+
     for item in photos:
         #eject hidden files
         if item.name[0] == "." : continue
@@ -542,11 +615,13 @@ def makePhotoList(path:str):
     return photos_list
 
 
-"""Route called when click on the list of photos in the gallery
-It opens a modal window with the photo.
-"""
+
 @app.route("/gallery/<path:filename>")
 def getPhotoModal(filename):
+    """
+    Route called when click on the list of photos in the gallery
+    It opens a modal window with the photo.
+    """
     #Return photo with the correct filename in the photo folder
     return send_from_directory(MEDIA_FOLDER_PATH, filename)
 
@@ -555,8 +630,8 @@ def getPhotoModal(filename):
 
 
 if __name__=="__main__":
-    #Check for wlan0 in case of a hotspot is on
-    host_ip = ip_manager.get_optimal_ip()
+    #Check for wlan0 in case of hotspot is on
+    #host_ip = ip_manager.get_optimal_ip()
 
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app

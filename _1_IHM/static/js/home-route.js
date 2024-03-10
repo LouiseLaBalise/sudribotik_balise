@@ -20,10 +20,10 @@ function updateInformationLabel() {
                 document.getElementById('check_camera').src = "static/icons/not_connected_64px.png"
             }
 
-            document.getElementById('usb3A').textContent = data.usb3A;
-            document.getElementById('usb3B').textContent = data.usb3B;
-            document.getElementById('usb2A').textContent = data.usb2A;
-            document.getElementById('usb2B').textContent = data.usb2B;
+            document.getElementById('usb1').textContent = data.usb1;
+            document.getElementById('usb2').textContent = data.usb2;
+            document.getElementById('usb3').textContent = data.usb3;
+            document.getElementById('usb4').textContent = data.usb4;
         })
         .catch(error => console.error('Error fetching the label value:', error));
 }

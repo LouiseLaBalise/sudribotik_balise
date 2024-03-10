@@ -58,11 +58,11 @@
                     <tr>
                         <form action="{{ url_for('pamis') }}" method="post" id="gotoForm{{ i }}" onsubmit="goPamiFormSubmit(event,'{{ i }}')">
                         <td class="label"><label for="goto_x_{{ i }}">x : </label></td>
-                        <td class="value"><input class="pami-goto" type="number" id="goto_x_{{ i }}" name="goto_x_{{ i }}" min="0" max="3000"/></td>
+                        <td class="value"><input class="pami-goto" type="number" id="goto_x_{{ i }}" name="goto_x_{{ i }}" min="0" max="3000" required/></td>
                     </tr>
                     <tr>
                         <td class="label"><label for="goto_y_{{ i }}">y : </label></td>
-                        <td class="value"><input class="pami-goto" type="number" id="goto_y_{{ i }}" name="goto_y_{{ i }}" min="0" max="9999"/></td>
+                        <td class="value"><input class="pami-goto" type="number" id="goto_y_{{ i }}" name="goto_y_{{ i }}" min="0" max="2000" required/></td>
                     </tr>
                     <tr>
                         <td></td><!--empty for style :) -->

@@ -73,10 +73,10 @@ eventSource.onmessage = function(event){
         //Set its connection status
         const connection_status = document.getElementById("connection-status-icon_"+(i+1));
         /*if (pami_infos.connection){
-            connection_status.src = "{{ url_for('static', filename='/icons/connected_64px.png')}}"
+            connection_status.src = "static/icons/connected_64px.png";
         }
         else{
-            connection_status.src = "{{ url_for('static', filename='/icons/not_connected_64px.png')}}";
+            connection_status.src = "static/icons/not_connected_64px.png;
         }*/
 
         //Set its coordinate
@@ -102,7 +102,7 @@ window.onbeforeunload = function() {
 function goPamiFormSubmit(event,pami_number){
 
     //Prevents the default behaviour of the browser submitting the form
-    //it is inside a try because of when this funct get call by generalGoPamis() ther is no 'event'
+    //it is inside a try because when this funct get call by generalGoPamis() ther is no 'event'
     try{event.preventDefault();}
     catch (error){}
 
@@ -111,10 +111,16 @@ function goPamiFormSubmit(event,pami_number){
         number:pami_number, //Add pami's number in the data form
         goto_x:document.getElementById("goto_x_"+pami_number).value,
         goto_y:document.getElementById("goto_y_"+pami_number).value,
+    };
+
+    //Abort this function if x or y where omitted.
+    if (gotoFormData.goto_x==='' || gotoFormData.goto_y===''){
+        console.log("Pami ", pami_number, "not sent.");
+        return ;
     }
 
     //Fetch request with Post method
-    fetch("/pamis",{
+    fetch("/pami_goto",{
         method: 'POST',
         headers : { 
             'Content-Type': 'application/json',
@@ -126,8 +132,7 @@ function goPamiFormSubmit(event,pami_number){
     .then(data => {
         //Display response success into the console
         if (data.success){
-            console.log(`Pami ${pami_number} sent to \
-                        (${gotoFormData['goto_x']}, ${gotoFormData['goto_y']})`);
+            console.log(`Pami ${pami_number} sent to (${gotoFormData['goto_x']}, ${gotoFormData['goto_y']})`);
         }
         //Or display an error message
         else {
@@ -152,7 +157,7 @@ function generalGoPamis(){
 function stopPami(num_pami){
 
     //Fetch request with Post method
-    fetch('/stop_pami', {
+    fetch('/pami_stop', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
