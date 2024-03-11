@@ -1,9 +1,11 @@
 <launch>
 
-  <!-- Verify that the beacon has the correct IP before starting its rscore -->
-  <condition test="$(find beacon_launch)/scripts/verify_beacon_connection.py" />
+  <!-- Verify that the beacon has the correct IP before starting its roscore -->
+  <group if="$(eval env('BEACON_CAN_COMPETE')">
 
-  <!-- Use basic_start.launch -->
-  <include file="$(find beacon_launch)/launch/basic_start.launch"/>
+    <!-- Use basic_start.launch -->
+    <include file="$(find beacon_launch)/launch/basic_start.launch"/>
+
+  </group>
   
 </launch>
