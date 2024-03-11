@@ -34,13 +34,13 @@ def start_verification():
     #Force Louise to activate its hotpot if not already switched on
     if net_stat["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"][0]:
 
-        s_time = 7 #sleep time in seconds before switching on hotspot
+        s_time = 6 #sleep time in seconds before switching on hotspot
 
         print(f"Log [{FILE_NAME}]: Le hotspot ne semble pas être activé. "+\
             f"Il sera donct activé automatquement dans {s_time} secondes.")
 
         #Launch hotspot
-        subprocess.run(["nmcli", "con", "up", '"Pifi AP Mode"'], stdout=subprocess.PIPE)
+        subprocess.run(["nmcli", "con", "up", "Pifi AP Mode"], stdout=subprocess.PIPE)
 
         #Re-test for hotspot ip
         if network_manager.get_network_status()["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"][0]:
