@@ -61,7 +61,6 @@ class PamisNode:
 
         #Listen mode
         lsock.listen()
-        print(f"Listening on {HOST, PORT}")
         
         #Not blocking mode because we dont want to stop the program waiting for data to be received§/!
         lsock.setblocking(False)
@@ -190,7 +189,7 @@ class PamisNode:
         """
         Get message for connected pamis. The tag is given.
         """
-        msg = []
+        msg = Int32MultiArray()
 
         #Get ip address of all pami
         pami_ip_address = self.config["IP_ADDRESS_PAMIS"]
@@ -205,7 +204,7 @@ class PamisNode:
             ping_result.append("0%" in result) #append result bool
         
         #Get connected pami
-        msg = [tag for index, tag in enumerate(self.config[self.color+"_PAMI_IDS"]) if ping_result[index]]
+        msg.data = [tag for index, tag in enumerate(self.config[self.color+"_PAMI_IDS"]) if ping_result[index]]
         return msg
 
         

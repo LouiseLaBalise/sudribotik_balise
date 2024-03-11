@@ -65,8 +65,8 @@ def publisher():
                                                       config["SOLAR_PANEL_ID"][0]))
 
         #Redress board
-        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"],
-                                                                              config["REDRESS_SIZE"])        
+        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["AUTO_TRANSFORM_MATRIX"],
+                                                                              config["AUTO_REDRESS_SIZE"])        
         #Go to next loop if board can't be redressed
         if not ret:
             print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de redresser le plateau de jeu.")

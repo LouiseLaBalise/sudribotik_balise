@@ -37,7 +37,7 @@ def start_verification():
         s_time = 6 #sleep time in seconds before switching on hotspot
 
         print(f"Log [{FILE_NAME}]: Le hotspot ne semble pas être activé. "+\
-            f"Il sera donct activé automatiquement dans {s_time} secondes.")
+            f"Il sera donc automatiquement activé dans {s_time} secondes.")
 
         #Launch hotspot
         subprocess.run(["nmcli", "con", "up", "Pifi AP Mode"], stdout=subprocess.PIPE)
