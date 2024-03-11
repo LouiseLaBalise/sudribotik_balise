@@ -6,7 +6,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 #Load config file   
-CONFIG_FILEPATH = FILE_PATH.split("init")[0]+"init/configuration.json"
+CONFIG_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
 with open (CONFIG_FILEPATH, "r") as f:
     config = json.load(f)
 
@@ -53,23 +53,17 @@ def get_ipv4(interface):
     Returns:
         - str : ipv4 address of the interface or None
     """
-    try:
-        #Run ifconfig command to get interface infos
-        interface_string_bytes = subprocess.run(["ifconfig",interface],
-                                                stdout=subprocess.PIPE)
-        #Cast bytes to str and del newlines
-        interface_string = interface_string_bytes.stdout.decode('ascii').split("\n")
-        
-        #Slice to get ipv4 address
-        ip = interface_string[1].split()[1] 
+    #Run ifconfig command to get interface infos
+    interface_string_bytes = subprocess.run(["ifconfig",interface],
+                                            stdout=subprocess.PIPE)
+    #Cast bytes to str and del newlines
+    interface_string = interface_string_bytes.stdout.decode('ascii').split("\n")
+    
+    #Slice to get ipv4 address
+    ip = interface_string[1].split()[1] 
 
-        #Control that this is an ip and not something else (it must have 3 '.')
-        if ip.count('.') != 3:
-            return None
-        
-    except IndexError:
-        print(f"Log [{FILE_NAME}]: Êtes-vous bien une Raspberry pi sous Ubiquity ?")
-        exit(1)
-
+    #Control that this is an ip and not something else (it must have 3 '.')
+    if ip.count('.') != 3:
+        return None
     return ip
 

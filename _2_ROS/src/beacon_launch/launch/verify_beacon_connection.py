@@ -7,11 +7,11 @@ import time
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-sys.path.insert(1, FILE_PATH.split("init")[0]) #add parent folder to python path
+sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
 from init import network_manager
 
 #Load config file   
-CONFIG_FILEPATH = FILE_PATH.split("init")[0]+"init/configuration.json"
+CONFIG_FILEPATH = FILE_PATH.split("_1_ROS")[0]+"init/configuration.json"
 with open (CONFIG_FILEPATH, "r") as f:
     config = json.load(f)
 
