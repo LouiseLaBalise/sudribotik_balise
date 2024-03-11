@@ -36,7 +36,7 @@ def init_database_beacon():
 
     #Delete previous one if it exists
     if os.path.isfile(FILE_PATH_FOR_DATABASE):
-        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Supression de l'ancienne base de donnée.")
+        print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Réinitialisation de la base de donnée...")
         os.remove(FILE_PATH_FOR_DATABASE)
 
     #Connect to database and close it when <with> block is exited
@@ -110,8 +110,6 @@ def init_database_beacon():
                         )
                         ''')
             connection.commit()
-
-            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Nouvelle base de donnée crée.")
 
 
         except sqlite3.Error as e:

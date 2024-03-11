@@ -158,6 +158,7 @@ def subscriber():
 
 
 if __name__ == '__main__':
-    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Lancement de la balise.")
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Initialisation de la balise...")
     databaseManager.init_database_beacon()
+    print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Balise lancée !")
     subscriber()
