@@ -4,6 +4,7 @@ import sys
 import json
 import rospy
 import cv2
+import numpy as np
 
 
 
@@ -12,7 +13,7 @@ FILE_NAME = os.path.basename(FILE_PATH)
 configuration_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
 
 sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
-from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc
+from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc,ros_undistortImage
 from beacon_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
 
 
@@ -64,12 +65,26 @@ def publisher():
                                                       config["SOLAR_PANEL_ID"][0]))
 
         #Redress board
-        ret=True#, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"],
-                                                                                    #config["REDRESS_SIZE"])        
+        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["TRANSFORM_MATRIX"],
+                                                                              config["REDRESS_SIZE"])        
         #Go to next loop if board can't be redressed
         if not ret:
             print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de redresser le plateau de jeu.")
             continue
+        else :
+            frame = frame_redressed
+
+        #Undistort board
+        ret, undistorted_frame = ros_undistortImage.undistortImage(frame, np.array(config["AUTO_K_DISTORTION"]),
+                                                                          np.array(config["AUTO_D_DISTORTION"]),
+                                                                          config["AUTO_ORIGINAL_PHOTO_SIZE"])
+        if not ret:
+            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de supprimer la distortion. Avez-vous calibré la caméra ?\n")
+            continue
+        else :
+            frame = undistorted_frame
+        
+                
 
 
         #Search for Aruco tags
