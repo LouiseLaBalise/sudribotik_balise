@@ -23,8 +23,8 @@ if net_stat["eth0"] != config["SELF_IP_ADDRESS_ON_TPLINK"]:
     #Condition not satisfied
     print(f"Log [{FILE_NAME}]: Impossible de lancer le Louise roscore. "+\
           f"Êtes-vous bien relié par câble LAN au boîtier TP-Link ?")
-    
-    subprocess.run(["export", "BEACON_CAN_COMPETE='false'"], stdout=subprocess.PIPE)
+    os.putenv()
+    subprocess.run(["export", "BEACON_CAN_COMPETE='false'"], shell=True)
     exit(1)
 
 #Force Louise to activate its hotpot if not already switched on
@@ -49,18 +49,15 @@ if net_stat["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"]:
         print(f"Log [{FILE_NAME}]: Le hotspot n'a pas pu être activé. "+\
               f"Impossible de lancer le Louise roscore")
         
-        subprocess.run(["export", "BEACON_CAN_COMPETE='false'"], stdout=subprocess.PIPE)
+        subprocess.run(["export", "BEACON_CAN_COMPETE='false'"], shell=True)
         exit(1)
 
     
 
 #Set Ros env variable to enable same roscore comunication
-subprocess.run(["export", "ROS_MASTER_URI=http://"+config["LOUISE_IP_ON_TPLINK"]+":11311"],
-               stdout=subprocess.PIPE)
-subprocess.run(["export", "ROS_IP="+config["SELF_IP_ADDRESS_ON_TPLINK"]],
-               stdout=subprocess.PIPE)
+subprocess.run(["export", "ROS_MASTER_URI=http://"+config["LOUISE_IP_ON_TPLINK"]+":11311"], shell=True)
+subprocess.run(["export", "ROS_IP="+config["SELF_IP_ADDRESS_ON_TPLINK"]], shell=True)
 
 #All condition are satisfied
 print(f"Log [{FILE_NAME}]: Lancement du Louise roscore.")
-subprocess.run(["export", "BEACON_CAN_COMPETE='true'"],
-               stdout=subprocess.PIPE)
+subprocess.run(["export", "BEACON_CAN_COMPETE='true'"], shell=True)
