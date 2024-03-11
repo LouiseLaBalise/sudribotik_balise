@@ -6,7 +6,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 #Load config file   
-CONFIG_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
+CONFIG_FILEPATH = FILE_PATH.split("init")[0]+"init/configuration.json"
 with open (CONFIG_FILEPATH, "r") as f:
     config = json.load(f)
 
