@@ -55,3 +55,8 @@ def start_verification():
 
     #All condition are satisfied
     return True
+
+
+
+if __name__ == "__main__":
+    start_verification()
