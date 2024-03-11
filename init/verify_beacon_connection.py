@@ -23,7 +23,7 @@ if net_stat["eth0"] != config["SELF_IP_ADDRESS_ON_TPLINK"]:
     #Condition not satisfied
     print(f"Log [{FILE_NAME}]: Impossible de lancer le Louise roscore. "+\
           f"Êtes-vous bien relié par câble LAN au boîtier TP-Link ?")
-    os.putenv()
+    
     subprocess.run(["export", "BEACON_CAN_COMPETE='false'"], shell=True)
     exit(1)
 
