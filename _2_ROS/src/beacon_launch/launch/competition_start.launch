@@ -1,11 +1,6 @@
 <launch>
 
-  <!-- Verify that the beacon has the correct IP before starting its rscore -->
-  <group if="$(eval env('BEACON_CAN_COMPETE' == 'true')" />
-
     <!-- Use basic_start.launch -->
     <include file="$(find beacon_launch)/launch/basic_start.launch"/>
-    
-  </group>
-  
-</launch>
+
+</launch> 
