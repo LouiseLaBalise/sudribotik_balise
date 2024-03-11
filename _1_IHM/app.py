@@ -11,7 +11,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 sys.path.insert(1, FILE_PATH.split("_1_IHM")[0]) #add parent folder to python path
-from init import ip_manager
+from init import network_manager
 from _3_TRAITEMENT_d_IMAGES import (takePhoto, redressBoardUsingAruco, detectAruco, detectColor,
                                     ros_redressBoardUsingAruco, ros_detectAruco, ros_arucoCalc,
                                     ros_undistortImage)
@@ -630,9 +630,6 @@ def getPhotoModal(filename):
 
 
 if __name__=="__main__":
-    #Check for wlan0 in case of hotspot is on
-    #host_ip = ip_manager.get_optimal_ip()
-
     #host=0.0.0.0 -> Web app accessible by any device on the same network
     #port=5024 -> Port to access web app
     app.run(debug=True, host="0.0.0.0",port=5024)

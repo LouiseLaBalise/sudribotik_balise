@@ -11,12 +11,17 @@ SHELL [ "/bin/bash" , "-c" ]
 #----------------- Ajout des dépendances ---------------
 
 # Installation des dépendances nécessaires pour la raspberry Pi Louise, à compléter si nécessaire
-RUN apt-get update && apt-get install -y \
+#la 1ère ligne du RUN permet de mettre en cache les packages ainsi si l'on souhaite faire un autre build
+#avec les mêmes packages + un autre différents, seulement le nouveau package sera à installer. 
+RUN \
+    --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y \
     python3-pip \
     gedit \
     git \
     vim \
     iputils-ping \
+    net-tools \
     && rm -rf /var/lib/apt/lists/* 
 
 
