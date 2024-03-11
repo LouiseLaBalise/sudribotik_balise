@@ -8,7 +8,7 @@ if [ "$verification_output" == "" ]; then
     #Run roslaunch
     roslaunch beacon_launch competition_start.launch
 else
-    echo -e "Imossible de lancer Louise en mode compétition.\nLe roscore est-il lancé ?"
+    echo $verification_output
 fi
 
 
