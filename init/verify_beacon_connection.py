@@ -23,7 +23,7 @@ def start_verification():
 
     #Louise must be connected to TP-Link
     net_stat = network_manager.get_network_status()
-    if net_stat["eth0"] != config["SELF_IP_ADDRESS_ON_TPLINK"]:
+    if net_stat["eth0"] != config["SELF_IP_ADDRESS_ON_TPLINK"][0]:
 
         #Condition not satisfied
         print(f"Log [{FILE_NAME}]: Impossible de lancer le Louise roscore. "+\
@@ -32,7 +32,7 @@ def start_verification():
         return False
 
     #Force Louise to activate its hotpot if not already switched on
-    if net_stat["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"]:
+    if net_stat["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"][0]:
 
         s_time = 7 #sleep time in seconds before switching on hotspot
 
@@ -47,7 +47,7 @@ def start_verification():
         subprocess.run(["nmcli", "con", "up", '"Pifi AP Mode"'], stdout=subprocess.PIPE)
 
         #Re-test for hotspot ip
-        if network_manager.get_network_status()["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"]:
+        if network_manager.get_network_status()["wlan0"] != config["SELF_IP_ADDRESS_ON_SELF_HOTSPOT"][0]:
 
             #Condition not satisfied
             print(f"Log [{FILE_NAME}]: Le hotspot n'a pas pu être activé. "+\
