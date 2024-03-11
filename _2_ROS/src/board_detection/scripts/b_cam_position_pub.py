@@ -65,7 +65,7 @@ def publisher():
                                                       config["SOLAR_PANEL_ID"][0]))
 
         #Redress board
-        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, config["AUTO_TRANSFORM_MATRIX"],
+        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, np.array(config["AUTO_TRANSFORM_MATRIX"]),
                                                                               config["AUTO_REDRESS_SIZE"])        
         #Go to next loop if board can't be redressed
         if not ret:
