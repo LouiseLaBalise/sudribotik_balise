@@ -10,7 +10,6 @@ from init import verify_beacon_connection
 
 #Run competition_start.launch after verification success
 if verify_beacon_connection.start_verification():
-    print(f"Log [{FILE_NAME}]: Lancement du Louise roscore.")
-    subprocess.run(["roslaunch", "beacon_launch", "competition_start.launch"],
-                   stdout=subprocess.PIPE)
+    #Launch Nodes
+    subprocess.run(["roslaunch", "beacon_launch", "competition_start.launch"], stdout=subprocess.PIPE)
 

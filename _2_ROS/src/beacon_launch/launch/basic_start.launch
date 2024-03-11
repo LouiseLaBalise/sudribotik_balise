@@ -1,10 +1,8 @@
 <launch>
-  <!-- Launch the ROS master -->
-  <node pkg="roscore" type="roscore" name="roscore" output="screen"/>
 
   <node pkg="beacon_mind" type="b_ihm_sub.py" name="b_ihm" output="screen"/>
 
-  <node pkg="beacon_mind" type="b_pami_pubsub.py" name="b_pami" output="screen"/>
+  <node pkg="beacon_mind" type="b_pamis_pubsub.py" name="b_pami" output="screen"/>
 
   <node pkg="board_detection" type="b_cam_position_pub.py" name="b_camera" output="screen"/>
   

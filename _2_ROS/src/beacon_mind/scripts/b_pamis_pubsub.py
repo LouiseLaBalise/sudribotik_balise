@@ -50,7 +50,7 @@ class PamisNode:
         """
         Initialize socket for pami to connect to.
         """
-        HOST = "192.168.0.106" #ip address of the tplink
+        HOST = self.config["SELF_IP_ADDRESS_ON_TPLINK"][0]#ip address of the tplink
         PORT = 45000 #port communication
 
         #Initialize ipv4 TCP socket

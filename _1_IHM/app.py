@@ -433,8 +433,8 @@ def beacon():
                 #it takes time and effort for something effortlessly doable in the shell.
                 frame = cv2.imread(path_to_photo_taken)
                 ret, undistorted_frame = ros_undistortImage.undistortImage(frame,
-                                                                           config["AUTO_K_DISTORTION"],
-                                                                           config["AUTO_D_DISTORTION"],
+                                                                           np.array(config["AUTO_K_DISTORTION"]),
+                                                                           np.array(config["AUTO_D_DISTORTION"]),
                                                                            config["AUTO_ORIGINAL_PHOTO_SIZE"])
                 if not ret:
                     processed_info+="Impossible de supprimer la distortion. Avez-vous calibré la caméra ?\n"
