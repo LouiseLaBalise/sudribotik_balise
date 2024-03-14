@@ -93,7 +93,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
         #Add each tag outter corner to src points
         src_pts = np.float32([])
-        sorted_tags[0][0][0] = sorted_tags[0][0][0][0] - width_offset, sorted_tags[0][0][0][1]+height_offset
         src_pts = np.append(src_pts, sorted_tags[0][0][0])
         src_pts = np.append(src_pts, sorted_tags[1][0][1])
         src_pts = np.append(src_pts, sorted_tags[2][0][2])
@@ -104,7 +103,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
 
         # Draw point on the image
-        #cv2.circle(image, np.int32(sorted_tags[0][0][3]), 15, (255, 0, 0), -1)  # -1 fills the circle with color
         #cv2.circle(image, np.int32(sorted_tags[3][0][0]), 15, (0, 255, 0), -1)  # -1 fills the circle with color
         #cv2.circle(image, np.int32(src_pts[2]), 15, (0, 0, 255), -1)  # -1 fills the circle with color
         #cv2.circle(image, np.int32(src_pts[3]), 15, (0, 0, 0), -1)  # -1 fills the circle with color
@@ -142,10 +140,10 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     #/!\ note that in some scenarios board will not be rotated due to a very distorted photo
     # as board height appearing taller than its width
     if (src_pts[1][0] - src_pts[0][0] > src_pts[0][1] - src_pts[3][1]): #for edition 2024 this config would be choosen
-        dst_pts = np.float32([[0, max_height-1],
-                                [max_width - 1, max_height - 1],
-                                [max_width - 1, 0],
-                                [0, 0]])
+        dst_pts = np.float32([[2300, 450],
+                                [700, 450],
+                                [700, 1550],
+                                [2300, 1550]])
     else:
         print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Board rotated.")
         dst_pts = np.float32([[0, 0],
@@ -160,8 +158,8 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     transform_matrix = cv2.getPerspectiveTransform(src_pts, dst_pts)
 
     #Apply transformation matrix to the image
-    warped_image = cv2.warpPerspective(image, transform_matrix, (max_width, max_height),flags=cv2.INTER_LINEAR)
-
+    warped_image = cv2.warpPerspective(image, transform_matrix, (3000, 2000),flags=cv2.INTER_LINEAR)
+    
 
     #Save image
     out_filename = filename.split('.')

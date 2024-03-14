@@ -456,16 +456,9 @@ def beacon():
 
                 if not ret: processed_info+="L'image n'a pas pu être redréssée.\n"
 
-            #3rd aruco tags
-            if detect_aruco:
-                ret, _, _, path_to_photo_processed = detectAruco.detectAruco(filename=path_to_photo_processed,
-                                                                             drawId=True)
-                all_processed_images.append(path_to_photo_processed)
-
-                if not ret: processed_info+="Aucun ArUco n'a pu être détecté.\n"
 
 
-            #4th color and surface
+            #3rd color and surface
             if detect_color:
                 hue = (int(request.form["hue_min"]), int(request.form["hue_max"]))
                 saturation = (int(request.form["sat_min"]), int(request.form["sat_max"]))
@@ -492,6 +485,14 @@ def beacon():
 
                 if not ret: processed_info+="La détection de couleur n'a pas été réalisée.\n"
 
+            #4th aruco tags
+            if detect_aruco:
+                ret, _, _, path_to_photo_processed = detectAruco.detectAruco(filename=path_to_photo_processed,
+                                                                             drawId=True)
+                all_processed_images.append(path_to_photo_processed)
+
+                if not ret: processed_info+="Aucun ArUco n'a pu être détecté.\n"
+            
             #Delete intermidiate files created except og and finale one
             if all_processed_images : all_processed_images.pop(-1)
             for file_path in all_processed_images:
