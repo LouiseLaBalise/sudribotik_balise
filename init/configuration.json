@@ -1,19 +1,23 @@
 {
 	"_this_is_a_comment": "Make sure to put EVERYTHING in a list",
 
-	"WHO_AM_I": ["Louise"],
+	"WHO_AM_I": ["Louise", "BLUE"],
 
     "BLUE_ROBOT_MAIN_ID": [1],
 
+    "BLUE_ROBOT_FINISH_TARGETS": [[250, 1800], [2800, 100]],
+
     "YELLOW_ROBOT_MAIN_ID": [16],
+
+    "YELLOW_ROBOT_FINISH_TARGETS": [[250, 1800], [2800, 100]],
 
     "BLUE_PAMI_IDS": [51, 52, 53, 54, 55, 56],
 
     "YELLOW_PAMI_IDS": [71, 72, 73, 74, 75, 76],
 
-    "BLUE_PAMI_TARGETS": [[500, 500], [500, 500], [500, 500], [500, 500], [500, 500], [500, 500]],
+    "BLUE_PAMI_TARGETS": [[0, 750], [100, 250], [0, 650], [100, 1750], [3000, 1450], [2900, 1000]],
 
-    "YELLOW_PAMI_TARGETS": [[500, 500], [500, 500], [500, 500], [500, 500], [500, 500], [500, 500]],
+    "YELLOW_PAMI_TARGETS": [[0, 750], [100, 250], [0, 650], [100, 1750], [3000, 1450], [2900, 1000]],
 
     "IHM_PAMI_IDS": [51, 52, 1, 72, 6, 71],
 

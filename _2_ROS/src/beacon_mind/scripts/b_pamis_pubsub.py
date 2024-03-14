@@ -27,7 +27,7 @@ class PamisNode:
     def __init__(self, color="BLUE"):
 
         #Initialize  and tell node name to rospy
-        rospy.init_node('r_lidar', anonymous=True)
+        rospy.init_node('b_pamis', anonymous=True)
 
         #This node will listen to these topics
         rospy.Subscriber("beacon/position/pamis", ArrayPositionPxWithType, self.pamiPosCallback)

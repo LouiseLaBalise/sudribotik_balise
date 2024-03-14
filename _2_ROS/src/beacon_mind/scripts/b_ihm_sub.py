@@ -13,9 +13,6 @@ from _4_BASE_DE_DONNEES import databaseManager
 
 
 
-
-
-
 def robotPosCallback(data):
     """
     Callback for main robots position.

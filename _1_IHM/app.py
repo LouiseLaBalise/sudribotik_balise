@@ -123,7 +123,6 @@ def get_home_information():
 
         #Fill with '-' if there is less than 4 devices pluged in
         device_names = device_names[:4] + ["-"] * max(0, 4 - len(device_names))
-        print(device_names)
 
     except Exception: device_names = ["-"]*4 #default
 
