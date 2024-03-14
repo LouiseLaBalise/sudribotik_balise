@@ -451,8 +451,7 @@ def beacon():
                               int(request.form["redress_id3"]),
                               int(request.form["redress_id4"]))
                 ret, path_to_photo_processed = redressBoardUsingAruco.redressBoardUsingAruco(filename=path_to_photo_processed,
-                                                                     corner_ids=corner_ids,
-                                                                     method="CENTER")
+                                                                     corner_ids=corner_ids)
                 all_processed_images.append(path_to_photo_processed)
 
                 if not ret: processed_info+="L'image n'a pas pu être redréssée.\n"

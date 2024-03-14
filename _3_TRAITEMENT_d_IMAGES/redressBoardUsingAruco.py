@@ -28,7 +28,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     #FOR EDITION 2024
     HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
     HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 450
-    WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 692.3
+    WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 700
 
     #Load image
     image = cv2.imread(filename=filename)
@@ -93,6 +93,7 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
         #Add each tag outter corner to src points
         src_pts = np.float32([])
+        sorted_tags[0][0][0] = sorted_tags[0][0][0][0] - width_offset, sorted_tags[0][0][0][1]+height_offset
         src_pts = np.append(src_pts, sorted_tags[0][0][0])
         src_pts = np.append(src_pts, sorted_tags[1][0][1])
         src_pts = np.append(src_pts, sorted_tags[2][0][2])
