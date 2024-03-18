@@ -186,11 +186,19 @@ def redressImage(frame, transform_matrix, size):
 
 if __name__=="__main__":
     try :
-        #Get shell argument
-        file = sys.argv[1]
-        frame = cv2.imread(filename=file)
+        if len(sys.argv)!=2:
+            #Take photo
+            print(f"Log {FILE_NAME} : Aucun argument donc prise d'une photo...")
+            ret, frame = takePhoto.takePhoto(tms=0.01, quality=10, anonymous=True)
+            if not ret:
+                print(f"Log {FILE_NAME} : Problème lors de la prise de photo.")
+        
+        elif len(sys.argv)==2:
+            #Get shell argument
+            file = sys.argv[1]
+            frame = cv2.imread(filename=file)
 
         #Then call the function
         calibrateBoardResdressement(frame)
-    except TypeError:
-        print("Vous devez mettre une image valide possédent les tags aruco 20, 21, 22 et 23 en argument shell.")
+    except :
+        print("Vous devez mettre une image valide possédent les tags aruco 20, 21, 22 et 23 en argument shell ou ne rien mettre et laisser la caméra prendre une photo (donc ).")

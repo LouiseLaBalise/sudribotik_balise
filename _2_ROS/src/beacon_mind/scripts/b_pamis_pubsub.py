@@ -109,7 +109,7 @@ class PamisNode:
         #If a read is requested
         if mask & selectors.EVENT_READ:
 
-            received_data = socket.recv(1024) #get receive data of max 1024 bytes
+            received_data = socket.recv() #get receive data of max 1024 bytes
             pami_number = key.laddr[0][-1] #get pami number
             pami_tag = self.config[self.color+"_PAMI_IDS"][pami_number] #get tag number of the pami
 

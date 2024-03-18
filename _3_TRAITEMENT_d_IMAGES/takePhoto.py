@@ -1,13 +1,14 @@
 import os
 import sys
 import argparse
+import numpy as np
 import cv2
-
+import subprocess
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-MAX_NB_PHOTOS = 50 #To limit ressources taken
+MAX_NB_PHOTOS = 5000 #To limit ressources taken
 
 """
 Take a photo.
@@ -15,10 +16,11 @@ Take a photo.
     tms (int)        ->       timeout in ms before the photo is taken
     quality (int)    ->       quality output out of 100%
     denoise (bool)   ->       denoise the photo taken
+    anonymous (bool) ->       keep photo or just its pixels data value (for ROS). Don't work with denoise.
 
 Return the path where the photo has been stored.
 """
-def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
+def takePhoto(name="photo.jpg", tms=0.01, quality=50, denoise=False, anonymous=False):
     if tms<1 : tms=1 #timeout at 0 cause bugs
     #1 step : create path to store the img
     photo_idx = -1
@@ -27,6 +29,21 @@ def takePhoto(name="photo.jpg", tms=50, quality=50, denoise=False):
     path_to_current_photo = ""
     suf=""
     if denoise: suf+="d"
+
+    #Take an anonymous photo
+    if anonymous:
+        ret = False
+        #Take photo
+        process = subprocess.run(["raspistill", "-n", "-t", str(tms), "-o", "-"], stdout=subprocess.PIPE)
+        image_bytes=process.stdout
+
+        #Convert it to an Opencv image format
+        nparr = np.frombuffer(image_bytes, np.uint8)
+        image_opencv = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        
+        if image_opencv.any(): ret=True
+        return ret, image_opencv
+
 
     #Each time a photo is taken its name increment
     while(os.path.isfile(path_to_current_photo) or path_to_current_photo==""):

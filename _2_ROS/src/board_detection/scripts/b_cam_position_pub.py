@@ -13,7 +13,7 @@ FILE_NAME = os.path.basename(FILE_PATH)
 configuration_FILEPATH = FILE_PATH.split("_2_ROS")[0]+"init/configuration.json"
 
 sys.path.insert(1, FILE_PATH.split("_2_ROS")[0]) #add parent folder to python path
-from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc,ros_undistortImage
+from _3_TRAITEMENT_d_IMAGES import ros_redressBoardUsingAruco, ros_detectAruco, ros_detectColor, ros_arucoCalc,ros_undistortImage, takePhoto
 from beacon_msgs.msg import PositionPx, PositionPxWithType, ArrayPositionPx, ArrayPositionPxWithType
 
 
@@ -47,11 +47,14 @@ def publisher():
 
 
     #Open camera for video capturing
-    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+    #cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
 
     while not rospy.is_shutdown():
 
-        ret,frame = cap.read() #read an image from camera
+        #with raspistill
+        ret, frame = takePhoto.takePhoto(tms=0.01, quality=10,anonymous=True)
+        #with opencv
+        #ret,frame = cap.read() #read an image from camera
 
         #Go to next loop if there is no image to read
         if not ret:
@@ -64,15 +67,6 @@ def publisher():
         solarPos_pub.publish(getPositionSolarPanelMsg(frame,
                                                       config["SOLAR_PANEL_ID"][0]))
 
-        #Redress board
-        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, np.array(config["AUTO_TRANSFORM_MATRIX"]),
-                                                                              config["AUTO_REDRESS_SIZE"])        
-        #Go to next loop if board can't be redressed
-        if not ret:
-            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de redresser le plateau de jeu.")
-            continue
-        else :
-            frame = frame_redressed
 
         #Undistort board
         ret, undistorted_frame = ros_undistortImage.undistortImage(frame, np.array(config["AUTO_K_DISTORTION"]),
@@ -85,15 +79,24 @@ def publisher():
             frame = undistorted_frame
         
                 
+        #Redress board
+        ret, frame_redressed = ros_redressBoardUsingAruco.redressImage(frame, np.array(config["AUTO_TRANSFORM_MATRIX"]),
+                                                                              config["AUTO_REDRESS_SIZE"])        
+        #Go to next loop if board can't be redressed
+        if not ret:
+            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Impossible de redresser le plateau de jeu.")
+            continue
+        else :
+            frame = frame_redressed
 
 
         #Search for Aruco tags
         ret, corners, ids = ros_detectAruco.detectAruco(frame)#frame_redressed
         #Go to next loop if Aruco cannot be detected
         if not ret:
-            #print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun Aruco détecté.")
+            print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Aucun Aruco détecté.")
             continue
-
+        
         robotsPos_pub.publish(getPositionRobotMsg(corners, ids,
                                                   config["BLUE_ROBOT_MAIN_ID"][0],
                                                   config["YELLOW_ROBOT_MAIN_ID"][0]))
@@ -106,8 +109,6 @@ def publisher():
         #potPos_pub.publish(getPositionPotMsg())
 
         rate.sleep() #wait according to publish rate
-
-    cap.release() #free camera
 
 
 
@@ -130,12 +131,13 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     msg = [] #create msg
     blue_msg = PositionPxWithType() 
     yellow_msg = PositionPxWithType()
-
+    
+    #Select only pamis's corners
     #Blue robot has been detected
     if blue_rid in ids:
         #Get center of tag
         blue_msg.x, blue_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(blue_rid)])
-        blue_msg.theta = ros_arucoCalc.getAngle(corners)      
+        blue_msg.theta = ros_arucoCalc.getAngle(corners[ids.index(blue_rid)])      
         blue_msg.type = "blue" #Robot is blue
         #Append the blue pos into msg
         msg.append(blue_msg)
@@ -145,7 +147,7 @@ def getPositionRobotMsg(corners, ids, blue_rid, yellow_rid):
     if yellow_rid in ids:
         #Get center of the tag
         yellow_msg.x, yellow_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(yellow_rid)])
-        yellow_msg.theta = ros_arucoCalc.getAngle(corners)         
+        yellow_msg.theta = ros_arucoCalc.getAngle(corners[ids.index(yellow_rid)])         
         yellow_msg.type = "yellow" #Robot is yellow
         #Append the yellow pos into msg
         msg.append(yellow_msg)
@@ -170,8 +172,6 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     msg = [] #create msg
     blue_msg = PositionPxWithType() 
     yellow_msg = PositionPxWithType()
-
-    #Select only pamis's corners
     all_blue_pami_ids = list( set(ids) & set(blue_pids) )
     all_yellow_pami_ids = list( set(ids) & set(yellow_pids) )
 
@@ -179,7 +179,7 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     for blue_pami_id in all_blue_pami_ids :
         #Get center of tag        
         blue_msg.x, blue_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(blue_pami_id)])
-        blue_msg.theta = ros_arucoCalc.getAngle(corners)
+        blue_msg.theta = ros_arucoCalc.getAngle(corners[ids.index(blue_pami_id)], unit='d')
         blue_msg.type = f"blue_{blue_pami_id}" #pami is an blue
         #Append the blue pos into msg
         msg.append(blue_msg)
@@ -189,7 +189,7 @@ def getPositionPamiMsg(corners, ids, blue_pids, yellow_pids):
     for yellow_pami_id in all_yellow_pami_ids :
         #Get center of tag
         yellow_msg.x, yellow_msg.y = ros_arucoCalc.getCenterArucoTag(corners[ids.index(yellow_pami_id)])
-        yellow_msg.theta = ros_arucoCalc.getAngle(corners)        
+        yellow_msg.theta = ros_arucoCalc.getAngle(corners[ids.index(yellow_pami_id)])
         yellow_msg.type = f"yellow_{yellow_pami_id}" #pami is an yellow
         #Append the yellow pos into msg
         msg.append(yellow_msg)

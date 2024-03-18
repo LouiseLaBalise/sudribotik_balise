@@ -35,7 +35,7 @@ def getAngle(corner, unit="radians"):
 
     Parameters:
         - corner (list): corner of a aruco tag.\n
-        - unit (str): unit cast (radians [-pi;pi] or degrees [0;360])
+        - unit (str): unit cast (radians [0;2pi] or degrees [0;360])
 
     Returns:
         - float: angle in the choosen unit.
@@ -50,9 +50,9 @@ def getAngle(corner, unit="radians"):
     #Get angle
     angle = math.atan2(adjacent, opposite)
 
-    if unit == "degrees":
+    if unit[0] == "d":
         #Cast from radians to degrees 
-        angle = angle * 180/math.pi
+        angle = angle * 180/math.pi 
         
         #And add pi/2 (i seriously dont know why)
         angle+=90
@@ -60,5 +60,7 @@ def getAngle(corner, unit="radians"):
         #Force range from 0° to 360°
         if angle < 0 :
             angle+=360
+        return angle
 
+    if angle<0:angle+=2*math.pi
     return angle
