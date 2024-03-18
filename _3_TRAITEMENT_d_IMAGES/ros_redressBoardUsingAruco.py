@@ -124,23 +124,11 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
         #3rd reshape src points to separate each tag
         src_pts = src_pts.reshape(-1, 2)
 
-
-    #Get max height - pattern is src_pts[up/down and left/right][x=0/y=1]
-    height_up = np.sqrt(((src_pts[0][0] - src_pts[3][0]) ** 2) + ((src_pts[0][1] - src_pts[3][1]) ** 2))
-    height_down = np.sqrt(((src_pts[1][0] - src_pts[2][0]) ** 2) + ((src_pts[1][1] - src_pts[2][1]) ** 2))
-    max_height = int(max(height_up, height_down))
-
-    #Get max width
-    width_up = np.sqrt(((src_pts[0][0] - src_pts[1][0]) ** 2) + ((src_pts[0][1] - src_pts[1][1]) ** 2))
-    width_down = np.sqrt(((src_pts[2][0] - src_pts[3][0]) ** 2) + ((src_pts[2][1] - src_pts[3][1]) ** 2))
-    max_width = int(max(width_up, width_down))
-
-
     #Get destination points (where src points will be map in the output image)
-    dst_pts = np.float32([[0, max_height-1],
-                                [max_width - 1, max_height - 1],
-                                [max_width - 1, 0],
-                                [0, 0]])
+    dst_pts = np.float32([[2300, 450],
+                          [700, 450],
+                          [700, 1550],
+                          [2300, 1550]])
 
     #Cast src_pts to float32
     src_pts = np.float32(src_pts)
@@ -150,7 +138,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
     #Save warp perspective parameters
     config["AUTO_TRANSFORM_MATRIX"] = transform_matrix.tolist()
-    config["AUTO_REDRESS_SIZE"] = [max_width, max_height]
+    config["AUTO_REDRESS_SIZE"] = [3000, 2000]
     with open(configuration_FILEPATH, "w") as json_file:
         json.dump(config, json_file)
 
@@ -160,7 +148,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
 
     #Save a redressed image
-    res, warped_image = redressImage(frame, transform_matrix, [max_width, max_height])
+    res, warped_image = redressImage(frame, transform_matrix, [3000, 2000])
     out_filename = "redress_result.jpg"
     cv2.imwrite(filename=MEDIA_FOLDER+out_filename, img=warped_image)
 
