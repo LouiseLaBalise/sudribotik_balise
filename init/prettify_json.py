@@ -1,6 +1,6 @@
+import json
 import os
 import sys
-import json
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -10,9 +10,11 @@ def prettify(json_filepath):
     """
     Prettify a json file to be human readable.
 
-    json_filepath (str)     ->      json file to prettify.
+    Parameters:
+        - json_filepath (str): json file to prettify.
 
-    Return function success.
+    Returns:
+        -bool: function success.
     """
     #Quit if parameter is not a json file
     if json_filepath.split('.')[-1] != "json":

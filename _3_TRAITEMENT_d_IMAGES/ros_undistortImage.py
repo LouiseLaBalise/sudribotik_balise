@@ -1,10 +1,10 @@
 #This file is based on this tutorial : https://medium.com/@kennethjiang/calibrate-fisheye-lens-using-opencv-333b05afa0b0
 import cv2
-import numpy as np
 import glob
+import json
+import numpy as np
 import os
 import sys
-import json
 
 
 FILE_PATH = os.path.abspath(__file__)

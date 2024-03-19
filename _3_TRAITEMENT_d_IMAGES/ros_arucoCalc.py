@@ -4,9 +4,6 @@ import math
 This file is used to store aruco related function used by our ROS system.
 """
 
-
-
-
 def getCenterArucoTag(corners):
     """
     Calculate center of an Aruco tag.
@@ -34,7 +31,7 @@ def getAngle(corner, unit="radians"):
     Get angle rotation of an aruco tag given its corners.
 
     Parameters:
-        - corner (list): corner of a aruco tag.\n
+        - corner (list): corner of a aruco tag.
         - unit (str): unit cast (radians [0;2pi] or degrees [0;360])
 
     Returns:
@@ -54,7 +51,7 @@ def getAngle(corner, unit="radians"):
         #Cast from radians to degrees 
         angle = angle * 180/math.pi 
         
-        #And add pi/2 (i seriously dont know why)
+        #And add pi/2 (i seriously dont know why) (several weeks later : may be because i dont supress negatives before this if)
         angle+=90
 
         #Force range from 0° to 360°
@@ -62,5 +59,8 @@ def getAngle(corner, unit="radians"):
             angle+=360
         return angle
 
-    if angle<0:angle+=2*math.pi
+    #Supress negatives
+    if angle<0:
+        angle+=2*math.pi
+
     return angle

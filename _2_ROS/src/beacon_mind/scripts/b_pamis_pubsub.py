@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-import os
-import sys
-import rospy
-import traceback
 import json
-import socket
-import types
+import os
+import rospy
 import selectors
+import socket
 import subprocess
+import sys
+import traceback
+import types
 from std_msgs.msg import Int32MultiArray
 from beacon_msgs.msg import ArrayPositionPxWithType, ArrayPositionPx
 

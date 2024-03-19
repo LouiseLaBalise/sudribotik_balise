@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-import os
-import sys
 import json
-import rospy
-import cv2
 import numpy as np
-
-
+import os
+import rospy
+import sys
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -45,16 +42,10 @@ def publisher():
     #Set publish rate
     rate = rospy.Rate(10) #en hz
 
-
-    #Open camera for video capturing
-    #cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
-
     while not rospy.is_shutdown():
 
-        #with raspistill
+        #Take photo with raspistill
         ret, frame = takePhoto.takePhoto(tms=0.01, quality=10,anonymous=True)
-        #with opencv
-        #ret,frame = cap.read() #read an image from camera
 
         #Go to next loop if there is no image to read
         if not ret:
@@ -290,15 +281,6 @@ def getPositionSolarPanelMsg(frame, solar_id):
         #Case right so blue
         else :
             panel_msg.type = "blue"
-
-        """#pour tester sur docker
-        if t==3:
-            cv2.circle(frame, (panel_msg.x, panel_msg.y), 8, (0, 0, 255), -1)
-            cv2.imwrite(filename="/Louise_eurobot_2024/test_board.jpg", img=frame)
-            print(panel_msg)
-            sys.exit(0)
-        
-        t+=1"""
 
         msg.append(panel_msg)
     

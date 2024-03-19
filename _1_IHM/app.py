@@ -168,12 +168,12 @@ def getPamiConnection(tag):
     ip_pami = config["IP_ADDRESS_PAMIS"][index_pami_ihm]
 
     #Ping ip with a low wait time
-    result_bytes = subprocess.run(["ping", "-c", "1", "-W", "0.13", ip_pami],
+    result_bytes = subprocess.run(["ping", "-c", "1", "-W", "0.2", ip_pami],
                                   stdout=subprocess.PIPE)
     result = result_bytes.stdout.decode("ascii").split() #get string result
 
-    #If the result text got '0%' in it (from 0% packet loss) it means that the ping succeed.
-    return "0%" in result
+    #If the result text got '64' in it it means that the ping succeed.
+    return "64" in result
 
 
 def getAllPamisPosition():

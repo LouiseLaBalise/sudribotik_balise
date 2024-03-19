@@ -1,10 +1,8 @@
 import cv2
+import json
+import numpy as np
 import os
 import sys
-import numpy as np
-import json
-
-
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)

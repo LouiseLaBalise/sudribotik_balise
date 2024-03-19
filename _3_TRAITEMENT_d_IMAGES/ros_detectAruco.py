@@ -1,19 +1,24 @@
-import os
 import cv2
 import numpy as np
+import os
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 
 
-"""
-Detect ArUco markers.
-    frame (numpy.ndArray)  ->  data array of the image.
-
-Return function success, corners positions, their ids.
-"""
 def detectAruco(frame):
+    """
+    Detect ArUco markers.
+
+    Parameters:
+        - frame (numpy.ndArray): data array of the image.
+
+    Returns:
+        - bool: function success.
+        - list: corners positions.
+        - list: detected tags id.
+    """
 
     #Get minimal Aruco ductionnary needed
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)

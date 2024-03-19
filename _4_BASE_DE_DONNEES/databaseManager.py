@@ -23,13 +23,16 @@ def init_database_beacon():
     
     Note:
         There is currently 6 tables initialized :
-                b_robots\n
-                b_pamis\n
-                b_plants\n
-                b_solarpanel\n
-                b_score\n
+                b_robots
+                b_pamis
+                b_plants
+                b_solarpanel
+                b_score
                 
+                r_self_robot
+                r_other_robots
                 r_aruco
+                r_score
                 
         You can add more following the gloabl pattern.
     """
@@ -95,6 +98,22 @@ def init_database_beacon():
                         points INTEGER
                         )
                         ''')
+            cursor.execute(''' CREATE TABLE IF NOT EXISTS r_self_robot
+                        (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        position_x INTEGER,
+                        position_y INTEGER,
+                        position_theta REAL
+                        )
+                        ''')
+            cursor.execute(''' CREATE TABLE IF NOT EXISTS r_other_robots
+                        (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        position_x INTEGER,
+                        position_y INTEGER,
+                        position_theta REAL
+                        )
+                        ''')
             cursor.execute(''' CREATE TABLE IF NOT EXISTS r_aruco
                         (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -107,6 +126,12 @@ def init_database_beacon():
                         cy INTEGER,
                         dx INTEGER,
                         dy INTEGER
+                        )
+                        ''')
+            cursor.execute(''' CREATE TABLE IF NOT EXISTS r_score
+                        (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        points INTEGER
                         )
                         ''')
             connection.commit()

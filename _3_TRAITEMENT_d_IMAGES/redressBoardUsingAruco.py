@@ -1,14 +1,11 @@
-import cv2
-import os
-import numpy as np
 import argparse
-import time
-
+import cv2
+import numpy as np
+import os
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-
 
 
 def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORNER"):
@@ -25,10 +22,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
         - bool: function success
         - str: image path.
     """
-    #FOR EDITION 2024
-    HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM = 1100
-    HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 450
-    WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM = 700
 
     #Load image
     image = cv2.imread(filename=filename)
@@ -76,11 +69,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
     sorted_tags[:2] = sorted(sorted_tags[:2], key=lambda coord: coord[0][0][0])#Normal sort by x axis for the bottom
     sorted_tags[2:] = sorted(sorted_tags[2:], reverse=True, key=lambda coord: coord[0][0][0])#Reverse sort by x axis for the top
 
-    #Calc offset to get real corners of the board
-    pixels_per_mm = (sorted_tags[0][0][3][1]-sorted_tags[3][0][0][1])/HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM
-    width_offset = WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM * pixels_per_mm
-    height_offset = HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM * pixels_per_mm
-
     if method=="CORNER" or method: #default methods
         #Sort corners inside of tags following the previous sorting pattern
         for k in range(4):
@@ -100,7 +88,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
 
         #Reshape src points to separate each tag
         src_pts = src_pts.reshape(-1, 2)
-
 
         # Draw point on the image
         #cv2.circle(image, np.int32(sorted_tags[3][0][0]), 15, (0, 255, 0), -1)  # -1 fills the circle with color
@@ -126,16 +113,6 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
         src_pts = src_pts.reshape(-1, 2)
 
 
-    #Get max height - pattern is src_pts[up/down and left/right][x=0/y=1]
-    height_up = np.sqrt(((src_pts[0][0] - src_pts[3][0]) ** 2) + ((src_pts[0][1] - src_pts[3][1]) ** 2))
-    height_down = np.sqrt(((src_pts[1][0] - src_pts[2][0]) ** 2) + ((src_pts[1][1] - src_pts[2][1]) ** 2))
-    max_height = int(max(height_up, height_down))
-
-    #Get max width
-    width_up = np.sqrt(((src_pts[0][0] - src_pts[1][0]) ** 2) + ((src_pts[0][1] - src_pts[1][1]) ** 2))
-    width_down = np.sqrt(((src_pts[2][0] - src_pts[3][0]) ** 2) + ((src_pts[2][1] - src_pts[3][1]) ** 2))
-    max_width = int(max(width_up, width_down))
-
     #Get destination points (where src points will be map in the output image) and appropriately rotate the board
     #/!\ note that in some scenarios board will not be rotated due to a very distorted photo
     # as board height appearing taller than its width
@@ -144,8 +121,18 @@ def redressBoardUsingAruco(filename, corner_ids = (20, 21, 23, 22), method="CORN
                                 [700, 450],
                                 [700, 1550],
                                 [2300, 1550]])
-    else:
+    else: #for other edition where the beacon is placed on the y axis this could be trigger but not properly work
         print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Board rotated.")
+
+        #Get max height - pattern is src_pts[up/down and left/right][x=0/y=1]
+        height_up = np.sqrt(((src_pts[0][0] - src_pts[3][0]) ** 2) + ((src_pts[0][1] - src_pts[3][1]) ** 2))
+        height_down = np.sqrt(((src_pts[1][0] - src_pts[2][0]) ** 2) + ((src_pts[1][1] - src_pts[2][1]) ** 2))
+        max_height = int(max(height_up, height_down))
+
+        #Get max width
+        width_up = np.sqrt(((src_pts[0][0] - src_pts[1][0]) ** 2) + ((src_pts[0][1] - src_pts[1][1]) ** 2))
+        width_down = np.sqrt(((src_pts[2][0] - src_pts[3][0]) ** 2) + ((src_pts[2][1] - src_pts[3][1]) ** 2))
+        max_width = int(max(width_up, width_down))
         dst_pts = np.float32([[0, 0],
                           [0, max_height-1],
                           [max_width - 1, max_height - 1],
