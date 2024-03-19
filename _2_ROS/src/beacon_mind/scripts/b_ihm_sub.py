@@ -203,7 +203,7 @@ def subscriber():
     #rospy.Subscriber("beacon/position/pots", ArrayPositionPx, callback)
     rospy.Subscriber("robot1/position/self", PositionPx, robotPosFromRobotCallback)
     rospy.Subscriber("robot1/position/otherRobots", ArrayPositionPx, otherRobotsPosFromRobotCallback)
-    rospy.Subscriber("robot1/mind/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
+    rospy.Subscriber("robot1/position/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
     rospy.Subscriber("robot1/score", Score, scoreFromRobotCallback)
     
     #Set shutdown info
