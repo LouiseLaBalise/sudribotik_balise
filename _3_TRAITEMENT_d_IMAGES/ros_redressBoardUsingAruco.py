@@ -8,6 +8,7 @@ FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 MEDIA_FOLDER = f"{FILE_PATH.split(FILE_NAME)[0]}media/"
 sys.path.insert(1, FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]) #add parent folder to python path
+from _3_TRAITEMENT_d_IMAGES import takePhoto
 from init import prettify_json
 
 
@@ -30,6 +31,10 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
         An outputed image is generated in test_24/ to see calibration results.
     """
 
+    #Save inputed frame
+    media_and_out_filename = MEDIA_FOLDER+"calibration_frame_inputed.jpg"
+    cv2.imwrite(filename=media_and_out_filename, img=frame)
+
     #Get Aruco constants
     configuration_FILEPATH = FILE_PATH.split("_3_TRAITEMENT_d_IMAGES")[0]+"init/configuration.json"    
     with open (configuration_FILEPATH, "r") as f:
@@ -43,7 +48,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
     #Quit if not 4 tags in params
     if len(corner_ids)!=4:
         print(f"Log {FILE_NAME} : Il faut 4 ids de tags ArUco. Impossible de calibrer la caméra.")
-        return False
+        return False, media_and_out_filename
 
     #Create ArUco dictionary
     aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100)
@@ -57,7 +62,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
     #Quit if there is not even 1 id detected
     if ids is None :
         print(f"Log {FILE_NAME} : Aucun tag détecté. Il en faut au moins 4.")
-        return False
+        return False, media_and_out_filename
 
     #All 4 Aruco markers are needed to perform image to reddress
     corner_ids_no_detected = [] #will store ids
