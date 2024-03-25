@@ -1,27 +1,31 @@
-import os
-import sys
 import argparse
-import numpy as np
 import cv2
+import numpy as np
+import os
 import subprocess
+import sys
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
 MAX_NB_PHOTOS = 5000 #To limit ressources taken
 
-"""
-Take a photo.
-    name (string)    ->       name of the photo
-    tms (int)        ->       timeout in ms before the photo is taken
-    quality (int)    ->       quality output out of 100%
-    denoise (bool)   ->       denoise the photo taken
-    anonymous (bool) ->       keep photo or just its pixels data value (for ROS). Don't work with denoise.
 
-Return the path where the photo has been stored.
-"""
 def takePhoto(name="photo.jpg", tms=0.01, quality=50, denoise=False, anonymous=False):
-    if tms<1 : tms=1 #timeout at 0 cause bugs
+    """
+    Take a photo.
+
+    Parameters:
+        - name (string): name of the photo.
+        - tms (int): timeout in ms before the photo is taken.
+        - quality (int): quality output out of 100%.
+        - denoise (bool): denoise the photo taken.
+        - anonymous (bool): keep photo or just its pixels data value (for ROS). Don't work with denoise.
+
+    Returns:
+        - str: path where the photo has been stored.
+    """
+    if tms<=0 : tms=0.01 #timeout at 0 cause bugs
     #1 step : create path to store the img
     photo_idx = -1
     name, ext = name.split('.')
@@ -78,14 +82,16 @@ def takePhoto(name="photo.jpg", tms=0.01, quality=50, denoise=False, anonymous=F
 
 
 
-"""
-Initialize CLI options for other function implemanting takePhoto.py module
-
-    parser (argparse.ArgumentParser)    ->     parser
-
-Return the parser with new options.
-"""
 def initParser(parser:argparse.ArgumentParser):
+    """
+    Initialize CLI options for other function implemanting takePhoto.py module
+
+    Parameters:
+        - parser (argparse.ArgumentParser): parser
+
+    Returns:
+        - argparse.ArgumentParser: parser with new options.
+    """
 
     parser.add_argument("-p",                           #short option
                        "--photo",                       #long option

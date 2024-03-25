@@ -1,6 +1,6 @@
-import subprocess
-import os
 import json
+import os
+import subprocess
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -9,6 +9,8 @@ FILE_NAME = os.path.basename(FILE_PATH)
 CONFIG_FILEPATH = FILE_PATH.split("init")[0]+"init/configuration.json"
 with open (CONFIG_FILEPATH, "r") as f:
     config = json.load(f)
+
+
 
 def get_network_status():
     """
@@ -65,5 +67,6 @@ def get_ipv4(interface):
     #Control that this is an ip and not something else (it must have 3 '.')
     if ip.count('.') != 3:
         return None
+    
     return ip
 

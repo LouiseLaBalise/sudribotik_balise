@@ -1,8 +1,6 @@
 from datetime import datetime
 
 
-
-
 def formatBytes(bytes_size:int):
     """
     Format bytes numbers in b, kB, MB or GB.

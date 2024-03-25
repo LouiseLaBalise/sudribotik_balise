@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-import os
-import sys
 import json
+import os
 import subprocess
-import time
+import sys
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)

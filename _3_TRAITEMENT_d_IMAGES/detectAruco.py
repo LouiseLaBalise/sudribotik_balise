@@ -1,16 +1,12 @@
-import os
+import argparse
 import cv2
 import numpy as np
+import os
 import sys
-import argparse
-
-
-
 
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
-
 
 
 def detectAruco(filename:str, drawId=True, axis=False):
@@ -28,7 +24,7 @@ def detectAruco(filename:str, drawId=True, axis=False):
         - list: corners positions.
         - list: tag ids.
         - str: image path.
-"""
+    """
 
     #Get photo to parse
     img = cv2.imread(filename=filename)
@@ -84,29 +80,6 @@ def detectAruco(filename:str, drawId=True, axis=False):
         out_filename = filename.split('.')
         out_filename = f"{'.'.join(out_filename[:-1])}{suffixe}.{out_filename[-1]}"
         cv2.imwrite(filename=out_filename, img=output_image)
-
-    #Draw axis on markers
-    if (axis and ids.any() and False):
-
-        #Matrix and Distortion coeff were calculated with calibration.py
-        matrix_coeff = [ 2.5959453540558084e+03, 0., 1.7015437024875371e+03,
-                        0.,2.5981150581304091e+03, 1.2459640171617973e+03,
-                        0., 0., 1. ]
-        matrix_coeff = np.array(matrix_coeff).reshape(3, 3)
-
-        distortion_coeff = np.array([ 2.0203034110644411e-01, -3.8937675520950621e-01,
-       2.8240913779598222e-03, 5.4936365788275619e-03,
-       -9.1462806356767012e-02 ])
-
-        for i in range(len(ids)):
-
-            #Estimate their position
-            rvec, tvec, marker_points = cv2.aruco.estimatePoseSingleMarkers(corners[i], 0.02,
-                                                                            matrix_coeff,
-                                                                            distortion_coeff)
-            #(rvec-tvec).any()
-            #Then draw their axis
-            cv2.aruco.drawAxis(output_image, matrix_coeff, distortion_coeff, rvec, tvec, 0.01)
 
 
     

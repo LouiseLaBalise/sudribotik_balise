@@ -1,9 +1,8 @@
-import os
-import sys
+import argparse
 import cv2
 import numpy as np
-import argparse
-
+import os
+import sys
 
 
 FILE_PATH = os.path.abspath(__file__)

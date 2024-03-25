@@ -1,21 +1,25 @@
-import os
 import cv2
 import numpy as np
 
 
-"""
-Detect HSV color range on an image.
-    frame (numpy.ndArray)   ->      data array of the image.
-    hue (tuple)             ->      range of hue values on the hue compass between 0 and 180.
-    saturation (tuple)      ->      range of saturation between 0 and 255.
-    values (tuple)          ->      range of values between 0 and 255.
-    minSurface (int)        ->      number of minimum pixels for a detected area to be take into account.
-    maxSurface (int)        ->      number of maximum pixels for a detected area to be take into account.
 
-Return bool success and a list with positions of all area detected.
-"""
-def colorDetection(frame, hue:tuple, saturation:(50, 255), value:(50, 255),
+def colorDetection(frame, hue:tuple, saturation=(50, 255), value=(50, 255),
                    minSurface=0, maxSurface=99999):
+    """
+    Detect HSV color range on an image.
+    
+    Parameters:
+        - frame (numpy.ndArray): data array of the image.
+        - hue (tuple): range of hue values on the hue compass between 0 and 180.
+        - saturation (tuple): range of saturation between 0 and 255.
+        - values (tuple): range of values between 0 and 255.
+        - minSurface (int): number of minimum pixels for a detected area to be take into account.
+        - maxSurface (int): number of maximum pixels for a detected area to be take into account.
+
+    Returns:
+        - bool: function success.
+        - list: positions of all area detected.
+    """
 
     ret = False #return succes
 

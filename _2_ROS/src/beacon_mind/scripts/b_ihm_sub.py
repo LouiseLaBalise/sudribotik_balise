@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import os
-import sys
 import rospy
-import sqlite3
-from beacon_msgs.msg import ArrayPositionPx, ArrayPositionPxWithType, ArrayPositionPxRectangle
+import sys
+from beacon_msgs.msg import ArrayPositionPx, ArrayPositionPxWithType, ArrayPositionPxRectangle, PositionPx, Score
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_NAME = os.path.basename(FILE_PATH)
@@ -95,8 +94,53 @@ def solarpanelPosCallback(data):
         #Update database
         databaseManager.insertData("b_solarpanel", data_dict)
 
+def scoreCallback(data):
+    """
+    Callback for score points.
+    """
+
+    data_dict = {}
+
+    #Fill the dict with points
+    data_dict["points"] = data.score
+
+    #Update database
+    databaseManager.insertData("b_score", data_dict)
 
 
+
+
+def robotPosFromRobotCallback(data):
+    """
+    Callback for robot self position given by odometry.
+    """
+
+    data_dict = {}
+
+    #Fill the dict with robot self position
+    data_dict["position_x"] = data.x
+    data_dict["position_y"] = data.y
+    data_dict["position_theta"] = data.theta
+
+    #Update database
+    databaseManager.insertData("r_self_robot", data_dict)
+
+
+def otherRobotsPosFromRobotCallback(data):
+    """
+    Callback for other robot position given by lidar.
+    """
+
+    data_dict = {}
+
+    #Fill the dict with other robot position 
+    for ovni in data.array_of_positionspx:
+        data_dict["position_x"] = ovni.x
+        data_dict["position_y"] = ovni.y
+        data_dict["position_theta"] = ovni.theta
+    
+        #Update database
+        databaseManager.insertData("r_other_robots", data_dict)
 
 def arucoPosFromRobotCallback(data):
     """
@@ -126,6 +170,20 @@ def arucoPosFromRobotCallback(data):
     
     print(data)
     
+    
+def scoreFromRobotCallback(data):
+    """
+    Callback for score points calculated by the robot.
+    """
+
+    data_dict = {}
+
+    #Fill the dict with points
+    data_dict["points"] = data.score
+
+    #Update database
+    databaseManager.insertData("r_score", data_dict)
+
 
 
 def subscriber():
@@ -141,8 +199,12 @@ def subscriber():
     rospy.Subscriber("beacon/position/pamis", ArrayPositionPxWithType, pamiPosCallback)
     rospy.Subscriber("beacon/position/plants", ArrayPositionPx, plantPosCallback)
     rospy.Subscriber("beacon/position/solarpanel", ArrayPositionPxWithType, solarpanelPosCallback)
+    rospy.Subscriber("beacon/score", Score, scoreCallback)
     #rospy.Subscriber("beacon/position/pots", ArrayPositionPx, callback)
-    rospy.Subscriber("robot1/mind/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
+    rospy.Subscriber("robot1/position/self", PositionPx, robotPosFromRobotCallback)
+    rospy.Subscriber("robot1/position/otherRobots", ArrayPositionPx, otherRobotsPosFromRobotCallback)
+    rospy.Subscriber("robot1/position/aruco", ArrayPositionPxRectangle, arucoPosFromRobotCallback)
+    rospy.Subscriber("robot1/score", Score, scoreFromRobotCallback)
     
     #Set shutdown info
     rospy.on_shutdown(lambda:print(f"Log [{os.times().elapsed}] - {FILE_NAME} : Arrêt de la balise."))
