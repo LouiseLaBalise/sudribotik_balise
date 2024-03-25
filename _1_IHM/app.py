@@ -453,8 +453,10 @@ def beacon():
                 if not ret:
                     processed_info+="Impossible de calibrer\n"
                 
-                all_processed_images.append(path_to_photo_processed) #add to processed images
-                
+                prefixe=""
+                if undistort : prefixe="undistorted_"
+                all_processed_images.append(prefixe+path_to_photo_processed) #add to processed images
+
             #2nd redress
             if redress and not calibrate_ros:
                 corner_ids = (int(request.form["redress_id1"]),
