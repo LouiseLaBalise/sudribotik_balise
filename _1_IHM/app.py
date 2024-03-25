@@ -427,14 +427,6 @@ def beacon():
             path_to_photo_processed=path_to_photo_taken
 
             #Compute image based on advanced options
-            #0th calibrate (this operation cancel the undistort and the redress as it is already done by this option)
-            if calibrate_ros:
-                frame = cv2.imread(path_to_photo_processed)
-                ret, path_to_photo_processed = ros_redressBoardUsingAruco.calibrateBoardResdressement(frame)
-                if not ret:
-                    processed_info+="Impossible de calibrer\n"
-                
-                all_processed_images.append(path_to_photo_processed) #add to processed images
                 
             #1st undistort
             if undistort:
@@ -454,6 +446,15 @@ def beacon():
                     cv2.imwrite(filename=path_to_photo_processed, img=undistorted_frame)
                     all_processed_images.append(path_to_photo_processed)
 
+            #0th calibrate (this operation cancel the undistort and the redress as it is already done by this option)
+            if calibrate_ros:
+                frame = cv2.imread(path_to_photo_processed)
+                ret, path_to_photo_processed = ros_redressBoardUsingAruco.calibrateBoardResdressement(frame)
+                if not ret:
+                    processed_info+="Impossible de calibrer\n"
+                
+                all_processed_images.append(path_to_photo_processed) #add to processed images
+                
             #2nd redress
             if redress and not calibrate_ros:
                 corner_ids = (int(request.form["redress_id1"]),

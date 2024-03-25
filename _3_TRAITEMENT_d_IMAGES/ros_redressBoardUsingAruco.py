@@ -32,7 +32,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
     """
 
     #Save inputed frame
-    media_and_out_filename = MEDIA_FOLDER+"calibration_failed_frame.jpg"
+    media_and_out_filename = MEDIA_FOLDER+"calibration_inputed_frame.jpg"
     cv2.imwrite(filename=media_and_out_filename, img=frame)
 
     #Get Aruco constants
@@ -88,11 +88,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
     sorted_tags[:2] = sorted(sorted_tags[:2], key=lambda coord: coord[0][0][0])#Normal sort by x axis for the bottom
     sorted_tags[2:] = sorted(sorted_tags[2:], reverse=True, key=lambda coord: coord[0][0][0])#Reverse sort by x axis for the top
 
-    #Calc offset to get real corners of the board
-    pixels_per_mm = (sorted_tags[0][0][3][1]-sorted_tags[3][0][0][1])/HEIGHT_BETWEEN_TWO_ARUCO_INTERIORS_IN_MM
-    width_offset = WIDTH_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM * pixels_per_mm
-    height_offset = HEIGHT_BETWEEN_BOARD_AND_ARUCO_EXTERIOR_IN_MM * pixels_per_mm
-
+    
     if method=="CORNER" or method: #default methods
         #Sort corners inside of tags following the previous sorting pattern
         for k in range(4):
@@ -142,7 +138,6 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
     #Save warp perspective parameters
     config["AUTO_TRANSFORM_MATRIX"] = transform_matrix.tolist()
-    config["AUTO_REDRESS_SIZE"] = [3000, 2000]
     with open(configuration_FILEPATH, "w") as json_file:
         json.dump(config, json_file)
 
@@ -152,7 +147,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
 
     #Save a redressed image
-    res, warped_image = redressImage(frame, transform_matrix, [3000, 2000])
+    res, warped_image = redressImage(frame, transform_matrix, config["AUTO_REDRESS_SIZE"])
     out_filename = "calibration_result.jpg"
     cv2.imwrite(filename=MEDIA_FOLDER+out_filename, img=warped_image)
 
