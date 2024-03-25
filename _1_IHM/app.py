@@ -429,16 +429,18 @@ def beacon():
             #Compute image based on advanced options
             #0th calibrate (this operation cancel the undistort and the redress as it is already done by this option)
             if calibrate_ros:
-                frame = cv2.imread(path_to_photo_taken)
+                frame = cv2.imread(path_to_photo_processed)
                 ret, path_to_photo_processed = ros_redressBoardUsingAruco.calibrateBoardResdressement(frame)
                 if not ret:
                     processed_info+="Impossible de calibrer\n"
+                
+                all_processed_images.append(path_to_photo_processed) #add to processed images
                 
             #1st undistort
             if undistort:
                 #undistort will be the only option to use its ros function because no calibrate function on the hmi.
                 #it takes time and effort for something effortlessly doable in the shell.
-                frame = cv2.imread(path_to_photo_taken)
+                frame = cv2.imread(path_to_photo_processed)
                 ret, undistorted_frame = ros_undistortImage.undistortImage(frame,
                                                                            np.array(config["AUTO_K_DISTORTION"]),
                                                                            np.array(config["AUTO_D_DISTORTION"]),
