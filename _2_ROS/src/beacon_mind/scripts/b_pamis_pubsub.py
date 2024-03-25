@@ -74,7 +74,7 @@ class PamisNode:
         """
         Create a new socket between server and a client.
 
-        Parameters:
+        Parabmeters:
             - socket (socket):  
         """
         #Accept new connection request receive by our socket
@@ -95,7 +95,7 @@ class PamisNode:
 
     def serviceSocketClient(self, key, mask):
         """
-        Process data requested by a pami.
+    i    Process data requested by a pami.
 
         Parameters:
             - key (selector): data attach to a socket
@@ -104,22 +104,23 @@ class PamisNode:
 
         socket_pami = key.fileobj #get pami's socket
         data = key.data #get attached data
-        flag = 0
 
         #If a read is requested
         if mask & selectors.EVENT_READ:
 
-            received_data = socket.recv() #get receive data of max 1024 bytes
-            pami_number = key.laddr[0][-1] #get pami number
-            pami_tag = self.config[self.color+"_PAMI_IDS"][pami_number] #get tag number of the pami
+            received_data = socket_pami.recv(1024) #get receive data of max 1024 bytes
+            pami_number = int(str(key).split("raddr=(")[1].split("'")[1][-1]) #get pami number
+            pami_tag = self.config[self.color+"_PAMI_IDS"][pami_number-1] #get tag number of the pami
 
+            
             #Give the pami its position
             if received_data == b"GET_SELF_POSITION":
-                data.output = self.pami_info[pami_tag] #give the pami its position
-            
+                data.output = str(self.pami_info[pami_tag]).encode() #give the pami its position
+                print(self.pami_info[pami_tag])
+
             #Give the pami its target
             elif received_data == b"GOTO_POSITION":
-                data.output = self.pami_targets[pami_number]
+                data.output = str(self.pami_targets[pami_number-1]).encode()
             
             #Give nothing if the request is not known
             else:
@@ -129,13 +130,12 @@ class PamisNode:
         if mask & selectors.EVENT_WRITE:
             #If the request was known and fulfill send the response
             if data.output:
-                flag = 1
                 socket_pami.send(data.output)
 
         #Close connection to socket
         self.selector.unregister(socket_pami)
         socket_pami.close()
-        print(f"Closing connection to {data.address}\nResult : {flag}\n\n")
+       
 
 
     def run(self):
@@ -157,9 +157,8 @@ class PamisNode:
                     self.createSocketClient(key.fileobj)
                     
                 else:
+
                     self.serviceSocketClient(key, mask)  
-
-
             #Publish 
             self.connected_pamis_pub.publish(self.getConnectedPamiMsg())
 
@@ -175,6 +174,8 @@ class PamisNode:
         for pami in data.array_of_positionspx_with_type:
             tag_id = int(pami.type.split('_')[1]) #get current id
             self.pami_info[tag_id] = (pami.x, pami.y, pami.theta) #get pami position
+           
+    
 
 
     def plantPosCallback(self, data):
