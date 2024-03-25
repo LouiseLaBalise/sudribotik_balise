@@ -23,6 +23,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
     Returns:
         - bool: function success.
+        - str: image path.
 
     Note:
         Matrix transformation, height and width of the final frame will be stored in the init/configuration.json file.
@@ -147,11 +148,11 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
 
     #Save a redressed image
     res, warped_image = redressImage(frame, transform_matrix, [3000, 2000])
-    out_filename = "redress_result.jpg"
+    out_filename = "calibration_result.jpg"
     cv2.imwrite(filename=MEDIA_FOLDER+out_filename, img=warped_image)
 
     print(f"Log {FILE_NAME} : Résultat de la calibration disponnible dans {out_filename}.")
-    return True
+    return True, MEDIA_FOLDER+out_filename
 
 
 

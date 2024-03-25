@@ -401,6 +401,7 @@ def beacon():
         detect_aruco = request.form.get("aruco_yes_no", "no") == "checked"
         detect_color = request.form.get("color_yes_no", "no") == "checked"
         detect_color_surface = request.form.get("color_surface_yes_no", "no") == "checked"
+        calibrate_ros = request.form.get("calibrate_yes_no", "no") == "checked"
 
         #Create variables for the photo
         real_photo_name = "{}{}{}".format(photo_name,
@@ -426,8 +427,15 @@ def beacon():
             path_to_photo_processed=path_to_photo_taken
 
             #Compute image based on advanced options
+            #0th calibrate (this operation cancel the undistort and the redress as it is already done by this option)
+            if calibrate_ros:
+                frame = cv2.imread(path_to_photo_taken)
+                ret, path_to_photo_processed = ros_redressBoardUsingAruco.calibrateBoardResdressement(frame)
+                if not ret:
+                    processed_info+="Impossible de calibrer\n"
+                
             #1st undistort
-            if undistort:
+            if undistort and not calibrate_ros:
                 #undistort will be the only option to use its ros function because no calibrate function on the hmi.
                 #it takes time and effort for something effortlessly doable in the shell.
                 frame = cv2.imread(path_to_photo_taken)
@@ -436,7 +444,7 @@ def beacon():
                                                                            np.array(config["AUTO_D_DISTORTION"]),
                                                                            config["AUTO_ORIGINAL_PHOTO_SIZE"])
                 if not ret:
-                    processed_info+="Impossible de supprimer la distortion. Avez-vous calibré la caméra ?\n"
+                    processed_info+="Impossible de supprimer la distorsion. Avez-vous calibré la caméra en distorsion?\n"
                 
                 else :
                     #We need to operate a savefile here because it is not implemented in the ros function
@@ -445,7 +453,7 @@ def beacon():
                     all_processed_images.append(path_to_photo_processed)
 
             #2nd redress
-            if redress:
+            if redress and not calibrate_ros:
                 corner_ids = (int(request.form["redress_id1"]),
                               int(request.form["redress_id2"]),
                               int(request.form["redress_id3"]),
