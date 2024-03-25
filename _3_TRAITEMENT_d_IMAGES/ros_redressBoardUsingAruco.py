@@ -32,7 +32,7 @@ def calibrateBoardResdressement(frame, corner_ids = (20, 21, 22, 23), method="CO
     """
 
     #Save inputed frame
-    media_and_out_filename = MEDIA_FOLDER+"calibration_frame_inputed.jpg"
+    media_and_out_filename = MEDIA_FOLDER+"calibration_failed_frame.jpg"
     cv2.imwrite(filename=media_and_out_filename, img=frame)
 
     #Get Aruco constants

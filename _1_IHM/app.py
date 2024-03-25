@@ -435,7 +435,7 @@ def beacon():
                     processed_info+="Impossible de calibrer\n"
                 
             #1st undistort
-            if undistort and not calibrate_ros:
+            if undistort:
                 #undistort will be the only option to use its ros function because no calibrate function on the hmi.
                 #it takes time and effort for something effortlessly doable in the shell.
                 frame = cv2.imread(path_to_photo_taken)
